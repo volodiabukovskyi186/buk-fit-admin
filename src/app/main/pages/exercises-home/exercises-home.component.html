@@ -1,0 +1,111 @@
+<div class="h-100 w-100 p-12 container flex flex-column">
+    <div class="flex w-100 justify-content-between align-content-center">
+
+      <div class="flex  justify-content-between">
+        <h2 class="fc-primary">Вправ: {{totalUsersCount}}</h2>
+      </div>
+      <div class="flex justify-content-end ">
+        <hs-button size="medium"   class="mt-14 " [routerLink]="'/exercises-home/create-exercise'"  [text]="'Створити вправу'"></hs-button>
+      </div>
+    </div>
+
+    <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
+        <hs-table-grid style=" height: 100% !important;"  *ngIf="users.length"  [dataType]="tableGridDataTypeEnum.API" [allowMultiplySorting]="false"  [data]="users" (clickOnRow)="moveToExegesis($event.id)">
+
+            <div hsTableColumn caption="ID" width="40px" fieldName="id"  [allowResize]="true"></div>
+
+            <!-- <div hsTableColumn caption="Text" width="60%" fieldName="text"  [allowResize]="true"></div> -->
+
+            <div hsTableColumn fieldName="img" caption="Назва"  width="120px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
+                <ng-template #idNumberTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.name}}
+                    </div>
+                </ng-template>
+            </div>
+
+          <div hsTableColumn fieldName="videoURL" caption="URL video"  width="150px" [cellTemplate]="videoURLTmpl" [allowResize]="true">
+            <ng-template #videoURLTmpl let-data="cellData">
+              <div class="m-2">
+                {{data?.videoURL}}
+              </div>
+            </ng-template>
+          </div>
+
+          <div hsTableColumn fieldName="img" caption="Коментар"  width="120px" [cellTemplate]="descTmpl" [allowResize]="true">
+            <ng-template #descTmpl let-data="cellData">
+              <div class="m-2">
+                {{data?.comment}}
+              </div>
+            </ng-template>
+          </div>
+<!--            <div hsTableColumn  caption="Дія"  width="40px" [cellTemplate]="ActionTmpl" [allowResize]="true">-->
+<!--                <ng-template #ActionTmpl let-data="cellData">-->
+<!--                    <div class="m-2">-->
+<!--                    <hs-icon-button (click)="$event.stopPropagation(); deleteExercise(data)">-->
+<!--                        <i class="hs-icon icon-cross"></i>-->
+<!--                    </hs-icon-button>-->
+<!--                    </div>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+<!--            <div hsTableColumn fieldName="img" caption="Прізвище"  width="120px" [cellTemplate]="idNumberChatTmpl" [allowResize]="true">-->
+<!--                <ng-template #idNumberChatTmpl let-data="cellData">-->
+<!--                    <div class="m-2">-->
+<!--                        {{data?.lastName}}-->
+
+
+
+<!--                    </div>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+
+<!--            <div hsTableColumn fieldName="img" caption="Логін"  width="120px" [cellTemplate]="idNumberChatTmpl" [allowResize]="true">-->
+<!--                <ng-template #idNumberChatTmpl let-data="cellData">-->
+<!--                    <div class="m-2">-->
+<!--                        {{data?.login}}-->
+
+
+
+<!--                    </div>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+
+
+
+            <!-- <div hsTableColumn fieldName="Text" width="60%" [cellTemplate]="textTmpl" [allowResize]="true">
+                <ng-template #textTmpl let-data="cellData">
+                     <div class="m-2 flex" style="    white-space: initial;">
+                      {{data.text}}
+
+
+                     </div>
+                </ng-template>
+           </div> -->
+
+
+            <!-- <div hsTableColumn caption="Channel" width="200px" fieldName="username"  [allowResize]="true"></div>
+             <div hsTableColumn fieldName="date" [cellTemplate]="dateTmpl" [allowResize]="true">
+                 <ng-template #dateTmpl let-data="cellData">
+                      <div class="m-2 flex">
+
+                       {{data.date.seconds*1000| date: 'dd:MM:yyyy HH:mm'}}
+
+
+                      </div>
+                 </ng-template>
+            </div> -->
+
+
+        </hs-table-grid>
+    </div>
+
+  <mat-paginator
+    [length]="totalUsersCount"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
+<!-- <img [src]="imageUrl" alt=""> -->
+
