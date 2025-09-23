@@ -1,0 +1,591 @@
+
+@import "variables";
+
+
+$ui-text: black;
+$ui-backgroundSecondary:  white;
+$ui-icon: black;
+
+$ui-primary-light: $hs-primary;
+$ui-primary: $hs-primary-dark;
+
+$ui-secondary: $hs-secondary-grey-01;
+
+
+cs-text-editor {
+
+  .ck-editor {
+
+  .ck-toolbar {
+    border-bottom: 1px $hs-secondary-grey-02 solid !important;
+  }
+
+    .ck-toolbar__items {
+      display: flex;
+    //   justify-content: center;
+    }
+
+    .ck.ck-toolbar.ck-toolbar_grouping > .ck-toolbar__items {
+      background-color: white;
+    }
+
+    .ck.ck-toolbar.ck-toolbar_grouping {
+      background-color: white;;
+      border: none;
+    }
+
+    .ck.ck-editor {
+      outline: none;
+    }
+
+    .ck.ck-button__label {
+      color: $ui-text;
+    }
+
+    .ck.ck-dropdown {
+      border-radius: 40px;
+    }
+
+    #fontSize {
+      .ck.ck-button.ck-fontsize-option.ck-on.ck-button_with-text {
+        color: white !important;
+      }
+
+      .ck.ck-on.ck-button__label {
+        color: white !important;
+      }
+    }
+
+    .ck.ck-button:active {
+      border: 1px solid transparent;
+      outline: none;
+      box-shadow: transparent !important;
+
+    }
+
+    .ck-editor.ck.ck-button.ck-on:active i {
+      color: white !important;
+    }
+
+    .ck.ck-off.ck-button:not(.ck-disabled):active {
+      i {
+        color: white !important;
+      }
+
+      .font-size {
+        color: $ui-text;
+      }
+
+      .ck-button__label {
+        color: white !important;
+      }
+    }
+
+    .ck.ck-button.ck-on {
+      box-shadow: none !important;
+    }
+
+    .ck-disabled,
+    .ck-button {
+      position: relative;
+      // height: 32px; // HIDE OVERWLOW MENU
+      background-color: $ui-backgroundSecondary;
+      cursor: pointer;
+
+      i {
+        padding-top: 4px;
+        cursor: pointer;
+        font-size: 17px;
+      }
+    }
+
+    .ck.ck-button.ck-disabled {
+      cursor: default;
+
+      i {
+        cursor: default;
+      }
+
+      .ck-tooltip_s {
+        display: none;
+      }
+
+      background: transparent !important;
+    }
+
+    .cs-icon-arrow {
+      cursor: pointer;
+      font-size: 10px !important;
+      color: $ui-icon;
+    }
+
+    .ck.ck-button.ck-off {
+      i {
+        color: $ui-icon !important;
+      }
+
+      .rotate-plus-90 {
+        position: absolute;
+        right: 5px;
+        transform: rotate(90deg);
+      }
+
+    }
+
+    .ck.ck-button.ck-on {
+      i {
+        color: white;
+      }
+
+      .rotate-min-90 {
+        position: absolute;
+        right: 5px;
+        color: $ui-primary-light;
+        transform: rotate(-90deg);
+        margin-right: 4px;
+      }
+
+      &:hover {
+        background: $ui-primary-light !important;
+      }
+
+      background: $ui-primary-light;
+    }
+
+    .ck.ck-button.ck-on:not(.ck-disabled):hover,
+    a.ck.ck-button.ck-on:not(.ck-disabled):hover {
+      background: $ui-secondary;
+    }
+
+    .ck.ck-button:not(.ck-disabled):hover,
+    a.ck.ck-button:not(.ck-disabled):hover {
+      background: $ui-secondary;
+    }
+
+    .ck.ck-button.ck-disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+
+    .ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+      padding-right: 15px;
+    }
+
+    .ck.ck-dropdown__panel {
+      margin-top: 4px;
+    }
+
+    #heading {
+      .ck.ck-button.ck-dropdown__button {
+        border-radius: 17px;
+      }
+
+      .ck.ck-list__item .ck-button.ck-on {
+        background: white !important;
+
+
+        .rotate-min-90 {
+          transform: rotate(-90deg) !important;
+          color: $ui-primary-light !important;
+        }
+      }
+
+      .ck.ck-list__item .ck-button:hover {
+        background: $ui-secondary;
+      }
+
+      .ck.ck-list__item .ck-button {
+        background: white;
+
+        span {
+          color: $ui-text;
+        }
+      }
+
+      .ck.ck-list__item .ck-button.ck-on {
+        span {
+          color: $ui-primary;
+        }
+      }
+
+      .ck.ck-dropdown__panel {
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+        border-radius: 7px;
+        border: transparent;
+        overflow: hidden;
+      }
+
+      .ck.ck-button.ck-on,
+      a.ck.ck-button.ck-on {
+        border: solid 1px white;
+        background: $ui-backgroundSecondary !important;
+      }
+    }
+
+    #fontSize {
+      width: 64px;
+
+      .ck-dropdown__button {
+        border-radius: 17px;
+
+        .font-size {
+          cursor: pointer;
+        }
+      }
+
+      .ck.ck-button.ck-fontsize-option.ck-on.ck-button_with-text {
+        .ck-button__label {
+          color: $ui-primary;
+        }
+      }
+
+      .font-size {
+        padding-right: 17px;
+      }
+
+      .cs-icon-arrow {
+        margin-left: 7px;
+      }
+
+      .ck.ck-list__item .ck-button.ck-on {
+        background: white !important;
+      }
+
+      .ck.ck-list__item .ck-button:hover {
+        background: $ui-secondary;
+      }
+
+      .ck.ck-list__item .ck-button {
+        background: white;
+      }
+
+      .ck.ck-dropdown__panel {
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+        // background: var(--ck-color-dropdown-panel-background);
+        background: white;
+        border-radius: 7px;
+        border: transparent;
+        overflow: hidden;
+      }
+
+      .ck.ck-button.ck-on,
+      a.ck.ck-button.ck-on {
+        border: solid 1px white;
+        background: $ui-backgroundSecondary !important;
+      }
+
+    }
+
+    #fontColor {
+      width: 64px;
+
+      .ck-dropdown__button {
+        border-radius: 17px;
+
+        .font-color {
+          width: 50%;
+          height: 100%;
+          border-top-left-radius: 17px;
+          border-bottom-left-radius: 17px;
+          position: absolute;
+          cursor: pointer;
+          left: 0;
+        }
+
+        i {
+          position: absolute;
+          right: 15%;
+        }
+
+        .ck.ck-button.ck-on {
+          border: none;
+        }
+
+      }
+
+      .ck.ck-dropdown__panel {
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+        border-radius: 7px;
+        border: transparent;
+      }
+
+
+      .ck.ck-button.ck-on {
+        border: solid 1px $ui-primary-light;
+        background-color: $ui-backgroundSecondary;
+
+        &:hover {
+          background: $ui-secondary !important;
+        }
+      }
+
+      .ck.ck-color-table {
+        .ck.ck-color-grid__tile.ck.ck-icon {
+          border: none !important;
+          color: white !important;
+        }
+
+        padding: 12px 3px 3px 12px;
+
+        .ck-color-table__remove-color {
+          display: none;
+        }
+
+        .ck.ck-button {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin: 0 7px 7px 0;
+        }
+
+
+        .ck.ck-button.ck-on {
+          border: none;
+        }
+
+        .ck.ck-color-grid__tile.ck-on {
+
+          box-shadow: none !important;
+          position: relative;
+
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: solid 5px $ui-backgroundSecondary;
+            border-radius: 50%;
+          }
+        }
+
+        .ck.ck-color-grid__tile:focus:not(.ck-disabled), .ck.ck-color-grid__tile:hover:not(.ck-disabled) {
+          box-shadow: inset 0 0 0 1px white, 0 0 0 2px $ui-primary-light;
+        }
+      }
+    }
+
+    #undo,
+    #indent,
+    #bold,
+    #bulletedList {
+      position: relative;
+      border-top-left-radius: 17px;
+      border-bottom-left-radius: 17px;
+      margin-right: 0;
+      padding: 0 14px 0 14px;
+      box-shadow: none !important;
+    }
+
+    .ck.ck-list {
+      .ck.ck-button:active {
+        background: $ui-primary !important;
+      }
+    }
+
+    .ck.ck-button.ck-fontsize-option:active {
+      background: $ui-primary !important;
+    }
+
+    #fontSize,
+    #fontColor,
+    #heading {
+      .ck.ck-off.ck-button:not(.ck-disabled):active {
+        i {
+          color: $ui-text !important;
+        }
+
+
+      }
+
+      .ck.ck-button.ck-dropdown__button:not(.ck-disabled):active {
+        border: solid 1px $ui-primary;
+        box-shadow: none !important;
+        background: $ui-secondary !important;
+
+        .ck.ck-button__label {
+          color: $ui-text !important;
+        }
+
+        .ck-dropdown__panel {
+          .ck.ck-button__label {
+            color: yellow !important;
+          }
+        }
+
+        .cs-icon-arrow:active {
+          color: $ui-text !important;
+        }
+      }
+
+      .font-size:not(.ck-disabled):active,
+      .ck-button__label:not(.ck-disabled):active {
+        color: $ui-text !important;
+      }
+
+      .ck-dropdown__panel {
+        .font-size:not(.ck-disabled):active,
+        .ck-button__label:not(.ck-disabled):active {
+          color: white !important;
+        }
+      }
+    }
+
+
+    #undo.ck.ck-button:not(.ck-disabled):active,
+    #whiteo.ck.ck-button:not(.ck-disabled):active,
+    #outdent.ck.ck-button:not(.ck-disabled):active,
+    #indent.ck.ck-button:not(.ck-disabled):active,
+    #underline.ck.ck-button:not(.ck-disabled):active,
+    #italic.ck.ck-button:not(.ck-disabled):active,
+    #indent.ck.ck-button:not(.ck-disabled):active,
+    #bold.ck.ck-button:not(.ck-disabled):active,
+    #numbewhiteList.ck.ck-button:not(.ck-disabled):active,
+    #bulletedList.ck.ck-button:not(.ck-disabled):active {
+      box-shadow: none !important;
+      background: $ui-primary !important;
+    }
+
+    #whiteo.ck.ck-button,
+    #outdent.ck.ck-button {
+      box-shadow: none !important;
+    }
+
+    #bold {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    #underline {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    #italic {
+      position: relative;
+      margin-right: 0;
+      padding: 0 14px 0 14px;
+      border-radius: 0;
+    }
+
+    #outdent,
+    #numbewhiteList,
+    #underline,
+    #whiteo {
+      border-top-right-radius: 17px;
+      border-bottom-right-radius: 17px;
+      padding: 0 14px 0 14px;
+    }
+
+    #bulletedList.ck-off::after,
+    #undo.ck-off::after,
+    #indent.ck-off::after,
+    #bold.ck-off::after {
+      content: '';
+      width: 1px;
+      height: 14px;
+      position: absolute;
+      background: #c8ced8;
+      z-index: 10;
+      right: -1px;
+    }
+
+    #underline.ck-off::after {
+      content: '';
+      width: 1px;
+      height: 14px;
+      position: absolute;
+      background: #c8ced8;
+      z-index: 10;
+      left: -1px;
+    }
+
+    #bulletedList.ck-on::after,
+    #undo.ck-on::after,
+    #indent.ck-on::after,
+    #italic.ck-on::after,
+    #bold.ck-on::after {
+      display: none;
+    }
+
+    #bulletedList:not(.ck-disabled):active::after,
+    #undo:not(.ck-disabled):active::after,
+    #indent:not(.ck-disabled):active::after,
+    #italic:not(.ck-disabled):active::after,
+    #underline:not(.ck-disabled):active::after,
+    #bold:not(.ck-disabled):active::after {
+      display: none;
+    }
+
+
+    .ck.ck-editor__main > .ck-editor__editable {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      background: white;
+
+    }
+
+    .ck.ck-editor__main {
+      height: calc(100% - 40px) !important;
+    }
+
+    // .ck.ck-content.ck-editor__editable {
+    //   cursor: text;
+    //   word-break: break-word;
+    //   overflow: scroll;
+    // }
+
+    .ck.ck-editor__top.ck-reset_all {
+      cursor: text;
+      // position: fixed;
+      // max-width: calc(100% - 20px);
+      // width: 100%;
+    }
+
+    .ck-content-wrapper {
+      max-height: 100%;
+      height: 100%;
+      overflow: scroll;
+
+    }
+
+  }
+
+  .scroll-container {
+    .ck-editor {
+      height: 100% !important;
+      display: block;
+    }
+
+    .ck.ck-content {
+      max-height: 300px;
+    }
+
+    .ck.ck-editor__top.ck-reset_all {
+      cursor: text;
+      position: relative;
+      max-width: unset;
+      width: unset;
+    }
+  }
+
+  .scroll-wrapper {
+    .ck.ck-content.ck-editor__editable {
+      padding-top: 40px;
+    }
+
+    .ck.ck-editor__top.ck-reset_all {
+      cursor: text;
+      position: fixed;
+      // max-width: calc(100% - 20px);
+      // width: 100%;
+    }
+  }
+
+  .cs-text-editor-disabled {
+    .ck-editor {
+      opacity: .7;
+    }
+  }
+}

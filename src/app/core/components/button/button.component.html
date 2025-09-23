@@ -1,0 +1,16 @@
+<button [ngStyle]="{'min-width': width}" [type]="type">
+  <i
+    *ngIf="iconClass && iconAlign === 'left'"
+    [class]="iconClass"
+    [ngStyle]="{'font-size': iconSize+'px'}"
+  ></i>
+  <span [title]="text">{{text}}</span>
+  <div class="hs-button-content" *ngIf="!text">
+    <ng-content></ng-content>
+  </div>
+  <i
+    *ngIf="iconClass && iconAlign === 'right'"
+    [class]="iconClass"
+    [ngStyle]="{'font-size': iconSize+'px'}"
+  ></i>
+</button>

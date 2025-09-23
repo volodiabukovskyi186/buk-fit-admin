@@ -1,0 +1,24 @@
+<div class="panel-wrapper relative">
+    <!-- <div>
+        
+        <hs-panel-header></hs-panel-header>
+    </div> -->
+
+    <div class="mobile-header">
+        <div class="mobile-menu-triggrs mr-16 p-14">
+            <i class="icon-menu fs-18 pointer" *ngIf="!isOpen" (click)="openMenu(true)"></i>
+            <i class="icon-cross fs-18 pointer" *ngIf="isOpen" (click)="openMenu(false)"></i>
+        </div>
+    </div>
+
+
+    <div class="flex panel-body">
+        <div class="menu-list-side-bar">
+            <hs-menu-list></hs-menu-list>
+        </div>
+        
+        <div class="panel-content flex-1 overflow-hidden">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

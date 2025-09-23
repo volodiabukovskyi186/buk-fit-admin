@@ -1,0 +1,315 @@
+@import "variables";
+
+.f {
+  &s {
+    &-10 {
+      font-size: 10px;
+    }
+
+    &-12 {
+      font-size: 12px !important;
+    }
+
+    &-14 {
+      font-size: 14px;
+    }
+
+    &-16 {
+      font-size: 16px;
+    }
+
+    &-18 {
+      font-size: 18px;
+    }
+
+    &-20 {
+      font-size: 20px;
+    }
+
+    &-24 {
+      font-size: 24px;
+    }
+
+    &-48 {
+      font-size: 48px;
+    }
+  }
+
+  &w {
+    &-400 {
+      font-weight: 400;
+    }
+
+    &-500 {
+      font-weight: 500;
+    }
+
+    &-600 {
+      font-weight: 600;
+    }
+
+    &-700 {
+      font-weight: 700;
+    }
+  }
+
+  &c {
+    &-text {
+      color: $hs-black;
+    }
+
+    &-primary {
+      color: $hs-primary;
+    }
+
+    &-success {
+      color: $hs-success;
+    }
+
+    &-error {
+      color: $hs-error;
+    }
+
+    &-accent {
+      color: $hs-accend;
+    }
+
+    &-warning {
+      color: $hs-warning;
+    }
+
+    &-secondary-grey-00 {
+      color: $hs-secondary-grey-00;
+    }
+
+    &-secondary-grey-01 {
+      color: $hs-secondary-grey-01;
+    }
+
+    &-secondary-grey-02 {
+      color: $hs-secondary-grey-02;
+    }
+
+    &-secondary-grey-03 {
+      color: $hs-secondary-grey-03;
+    }
+
+    &-secondary-grey-04 {
+      color: $hs-secondary-grey-04;
+    }
+
+    &-secondary-blue-00 {
+      color: $hs-secondary-grey-00;
+    }
+
+    &-secondary-blue-01 {
+      color: $hs-secondary-grey-01;
+    }
+
+    &-secondary-blue-02 {
+      color: $hs-secondary-grey-02;
+    }
+
+    &-secondary-blue-03 {
+      color: $hs-secondary-grey-03;
+    }
+
+    &-white {
+      color: white;
+    }
+  }
+}
+
+.px-wrapper {
+  padding: 0 24px 0 24px;
+
+  @media (max-width: 1200px) {
+    padding: 0 16px 0 16px;
+  }
+}
+
+.py-wrapper {
+  padding: 24px 0 24px 0;
+
+  @media (max-width: 1200px) {
+    padding: 16px 0 16px 0;
+  }
+}
+
+.pl-wrapper {
+  padding-left: 24px;
+
+  @media (max-width: 1200px) {
+    padding-left: 16px;
+  }
+}
+
+.pr-wrapper {
+  padding-right: 24px;
+
+  @media (max-width: 1200px) {
+    padding-right: 16px;
+  }
+}
+
+.pt-wrapper {
+  padding-top: 24px;
+
+  @media (max-width: 1200px) {
+    padding-top: 16px;
+  }
+}
+
+.pb-wrapper {
+  padding-bottom: 24px;
+
+  @media (max-width: 1200px) {
+    padding-bottom: 16px;
+  }
+}
+
+.text {
+  &-center {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+
+  &-uppercase {
+    text-transform: uppercase;
+  }
+
+  &-capitalize {
+    text-transform: capitalize;
+  }
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+
+  // @media (max-width: 768px) {
+  //   margin: 0;
+  //   font-size: 1rem !important;
+  //   font-weight: 600 !important;
+  //   line-height: 1.5rem !important;
+  // }
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+
+  // @media (max-width: 768px) {
+  //   margin: 0;
+  //   font-size: 1rem !important;
+  //   font-weight: 600 !important;
+  //   line-height: 1.5rem !important;
+  // }
+}
+
+h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+h4 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.0625rem;
+}
+
+h5 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.125rem;
+}
+
+h6 {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 0.914rem;
+}
+
+// .hs-text-body-1 {
+//   font-size: 1rem;
+//   line-height: 1.5rem;
+//   font-weight: 500;
+// }
+
+// .hs-text-body-2 {
+//   font-size: 0.875rem;
+//   line-height: 1.125rem;
+//   font-weight: 500;
+// }
+
+.hs-text-caption {
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  font-weight: 500;
+}
+
+.hs-text-overline {
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+  font-weight: 500;
+  // text-transform: uppercase;
+}
+
+.hs-text-em {
+  font-style: italic;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.225rem;
+}
+
+.hs-text-strong {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  font-weight: 600;
+}
+
+.hs-text-small {
+  line-height: 1.375rem;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.hs-text-medium {
+  font-weight: 600;
+  line-height: 1.3125rem;
+  font-size: 0.875rem;
+}
+
+.hs-text-button {
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: 400;
+}
+
+.hs-text-pre-title {
+  font-weight: 600;
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+  letter-spacing: 0.03125rem;
+  text-transform: uppercase;
+}

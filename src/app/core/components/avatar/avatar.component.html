@@ -1,0 +1,27 @@
+<div
+  class="hs-avatar"
+  [style]=" {'box-shadow': '0 0 0 ' + borderWidth + 'px'+ ' ' + borderColor || color}"
+  [ngClass]="classList"
+>
+
+<!-- [class.hs-avatar-hidden]="!(loaded$ | async)" -->
+  <img
+  *ngIf="src"
+    class="hs-avatar-img"
+    [src]="src"
+    (error)="onError()"
+    #image
+  />
+  <div
+    class="hs-avatar-placeholder"
+    [ngStyle]="{'background-color': color}"
+  >
+
+   <ng-container *ngIf="!src">
+    {{name| getFirstsLetters}}
+   </ng-container>
+   
+    <!-- <ng-container *ngIf="name?.charAt(1)">{{name?.charAt(1)}}</ng-container> -->
+    
+  </div>
+</div>

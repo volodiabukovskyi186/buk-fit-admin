@@ -1,0 +1,32 @@
+@import 'variables';
+
+bk-confirm-dialog{
+  background: $hs-background;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .reminder-list-container {
+    overflow-y: auto;
+  }
+
+  .dialog-contianer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .dialog-body {
+      width: 100%;
+      height: 100%;
+
+    }
+
+    .ticket-reminder-field {
+
+      hs-form-field {
+        width: 100%;
+      }
+    }
+  }
+}

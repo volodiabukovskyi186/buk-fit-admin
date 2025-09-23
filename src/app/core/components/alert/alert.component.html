@@ -1,0 +1,48 @@
+<div class="m-20">
+    <div class="hs-alert-container flex hs-alert-default" *ngIf="config.size === alertSizeEnum.DEFAULT ">
+
+        <div class="pr-10 hs-alert-icon">
+            <i class="hs-icon fs-20" [class]="config.icon"></i>
+        </div>
+        <div class="hs-alert-content" >
+            <div class="hs-alert-content-text">
+                <div class="hs-alert-title flex justify-content-between" *ngIf="config.title">
+                    <span *ngIf="config.title">{{config.title}}</span>
+                    <span (click)="snackBarRef.dismiss()" class="pr-6"> <i class="hs-icon fs-18 icon-cross"></i> </span>
+                </div>
+                <div class="hs-alert-text"  *ngIf="config.description">{{config.description}}</div>
+            </div>
+    
+            <div class="hs-alert-button flex justify-content-end mt-16 "  *ngIf="config?.buttons?.length">
+               <div  *ngFor="let button of config.buttons" class="ml-10">
+                <hs-button [iconClass]="button?.icon ?? '' "  [text]="button.title " mode="outlined" (click)="button.action(); snackBarRef.dismiss()"></hs-button>
+               </div>
+            </div>
+        </div>
+    
+    </div>
+    
+    <div class="hs-alert-container flex hs-alert-large" *ngIf="config.size === alertSizeEnum.LARGE ">
+        <div class="pr-10 mt-5 hs-alert-icon">
+            <i class="hs-icon fs-20" [class]="config.icon"></i>
+        </div>
+        <div class="hs-alert-content" >
+            <div class="hs-alert-content-text">
+                <div class="hs-alert-text"  *ngIf="config.description">{{config.description}}</div>
+            </div>
+    
+            <div class="hs-alert-button flex justify-content-end " >
+               <ng-container *ngIf="config?.buttons?.length">
+                <div *ngFor="let button of config.buttons" class="flex mr-16  ml-24">
+                    <hs-button [iconClass]="button?.icon ?? '' " [text]="button.title" mode="outlined" (click)="button.action(); snackBarRef.dismiss()"></hs-button>
+                   </div>
+               </ng-container>
+               <div class="hs-alert-close pointer pr-2" (click)="snackBarRef.dismiss()"> <i class="hs-icon fs-18 hs-icon-cancel"></i> </div>
+            </div>
+    
+           
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,36 @@
+@import "typography";
+@import "variables";
+
+
+bk-login {
+  .bk-container {
+    width: 100%;
+    height: 100vh;
+    background: $hs-secondary-grey-00;
+    padding: 24px;
+    padding-top: 150px;
+  }
+
+  .bk-login-header {
+    color: $hs-primary;
+    font-size: 48px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .bk-login-error {
+    color: $hs-error;
+  }
+
+  .bk-login-form {
+    width: 450px;
+  }
+
+  @media (max-width: 768px) {
+    .bk-container {
+      padding-top: 30px;
+    }
+  }
+}

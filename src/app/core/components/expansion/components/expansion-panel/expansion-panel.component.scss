@@ -1,0 +1,25 @@
+.hs-expansion-panel {
+  display: block;
+  margin: 8px 0;
+
+  &.hs-expanded {
+    .hs-expansion-indicator {
+      transform: rotate(90deg);
+    }
+  }
+
+  .hs-expansion-panel-content {
+    flex-direction: column;
+    display: flex;
+
+    overflow: hidden;
+
+    &[style*="visibility: hidden"] * {
+      visibility: hidden !important;
+    }
+  }
+
+  .hs-expansion-indicator {
+    transition: 225ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

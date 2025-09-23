@@ -1,0 +1,22 @@
+<label class="hs-radio-button-wrapper"
+  [ngClass]="{
+  'hs-radio-button-checked': checked,
+  'hs-radio-button-disabled': disabled
+  }">
+  <input
+    type="radio"
+    [checked]="checked"
+    [value]="value"
+    [name]="name"
+    [disabled]="disabled"
+    (click)="onClick($event)"
+    (change)="onChange($event)"
+  >
+  <div class="checkmark">
+    <div class="checkmark-dot"></div>
+  </div>
+  
+  <span class="hs-radio-button-label">
+    <ng-content></ng-content>
+  </span>
+</label>

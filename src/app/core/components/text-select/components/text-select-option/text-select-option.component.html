@@ -1,0 +1,9 @@
+<div class="hs-text-select-option-wrapper" [ngClass]="{'multiply': multiple}">
+  <div *ngIf="multiple" class="pseudo-checkbox">
+    <i class="hs-icon icon-check"></i>
+  </div>
+
+  <div [title]="viewValue" class="hs-text-select-option-label">
+    <ng-content></ng-content>
+  </div>
+</div>

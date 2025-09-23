@@ -1,0 +1,58 @@
+<div class="bk-dialog flex flex-column w-100 h-100" role="dialog">
+  <div class="bk-dialog-body">
+    <hs-table-grid style="overflow: auto" *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
+                   [allowMultiplySorting]="false" [data]="users" (clickOnRow)="selectMeal($event)">
+
+<!--      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>-->
+
+      <div hsTableColumn fieldName="img" caption="Назва" width="150px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
+        <ng-template #idNumberTmpl let-data="cellData">
+          <div class="m-2">
+            {{ data?.name }}
+          </div>
+        </ng-template>
+      </div>
+
+
+      <div hsTableColumn fieldName="img" caption="Харчування" width="500px" [cellTemplate]="idNumberChatTmpl"
+           [allowResize]="true">
+        <ng-template #idNumberChatTmpl let-data="cellData">
+          <div class="m-2" style="height: 30px" position="bottom" [hsTooltip]="data?.comment" [tooltipMaxWidth]="700" >
+            <ng-container *ngIf="data?.comment?.length >= 150">
+              {{ data?.comment | slice:0:150 }}...
+            </ng-container>
+
+            <ng-container *ngIf="data?.comment?.length < 100">
+              {{ data?.comment}}
+            </ng-container>
+          </div>
+        </ng-template>
+      </div>
+
+
+
+
+    </hs-table-grid>
+
+    <div>
+      <mat-paginator
+        [length]="totalUsersCount"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+
+      <div class="bk-dialog-footer justify-content-end flex">
+        <div class="mr-8">
+          <hs-button text="Закрити" color="error" (click)="close()"></hs-button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>

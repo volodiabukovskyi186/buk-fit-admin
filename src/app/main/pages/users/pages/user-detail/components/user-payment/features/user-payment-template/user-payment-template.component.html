@@ -1,0 +1,81 @@
+<div class="flex flex-column" [formGroup]="formGroup">
+
+  <div class="pb-24">
+    <!--    <h2>Статус оплати: <span [ngClass]="{-->
+    <!--  'fc-success':isPayedControl.value,-->
+    <!--  'fc-error':!isPayedControl.value-->
+    <!--  }" >{{isPayedControl.value ? 'Оплачено': 'Не оплачено'}}</span></h2>-->
+    <!--  </div>-->
+
+    <h2>Шаблон оплати для клієнта</h2>
+
+    <div class="flex justify-content-end ">
+      <hs-button size="medium" class="mt-14" (click)="updateUser()" [text]="'Оновити шаблон оплати'"></hs-button>
+    </div>
+
+    <!--  <div class="pb-12">-->
+    <!--    <div class="flex align-items-center">-->
+    <!--      <hs-checkbox formControlName="isActive">Показувати користувачу оплату</hs-checkbox>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Тариф</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="tariff">
+          <hs-select-option [value]="userPaymentsTariffEnum.BASIC">Базовий</hs-select-option>
+          <hs-select-option [value]="userPaymentsTariffEnum.STANDARD">Стандартний</hs-select-option>
+          <hs-select-option [value]="userPaymentsTariffEnum.PREMIUM">Преміум</hs-select-option>
+        </hs-select>
+        <hs-error >Поле обовязкове до заповннення</hs-error>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Вартість</hs-label>
+        <input iqInput formControlName="price" readonly />
+        <hs-error >Поле обовязкове до заповннення</hs-error>
+      </hs-form-field>
+
+    </div>
+
+    <div class="bk-two-fields">
+      <hs-form-field class="date-till">
+        <hs-label>Дійсний з</hs-label>
+        <div class="flex">
+          <input formControlName="fromDate"
+                 [placeholder]="'DD-MM-YYYY'"
+                 iqInput iqAutofocus
+                 [matDatepicker]="picker"
+                 readonly />
+          <mat-datepicker #picker></mat-datepicker>
+          <div>
+            <hs-icon-button class="date-till-add" (click)="picker.open()">
+              <i class="hs-icon icon-calendar fs-24"></i>
+            </hs-icon-button>
+          </div>
+        </div>
+        <hs-error>Поле обовязкове до заповннення</hs-error>
+      </hs-form-field>
+
+      <hs-form-field class="date-till">
+        <hs-label>Дійсний до</hs-label>
+        <div class="flex">
+          <input formControlName="toDate" [placeholder]="'DD-MM-YYYY'" iqInput iqAutofocus [matDatepicker]="pickerTo" readonly />
+          <mat-datepicker #pickerTo></mat-datepicker>
+          <div>
+            <hs-icon-button class="date-till-add" (click)="pickerTo.open()">
+              <i class="hs-icon icon-calendar fs-24"></i>
+            </hs-icon-button>
+          </div>
+
+        </div>
+        <hs-error>Поле обовязкове до заповннення</hs-error>
+      </hs-form-field>
+    </div>
+
+    <div class="bk-text-area">
+      <hs-label>Коментар</hs-label>
+      <textarea formControlName="comment"> </textarea>
+    </div>
+  </div>
+</div>

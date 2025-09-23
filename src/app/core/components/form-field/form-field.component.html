@@ -1,0 +1,35 @@
+<div class="hs-form-field-wrapper">
+
+  <div class="hs-form-field-label" #iqLabelContent
+       [ngClass]="{'hs-form-field-label-hidden': !iqLabelContent?.children?.length}">
+    <ng-content select="hs-label"></ng-content>
+  </div>
+
+  <div class="hs-form-field-flex">
+
+    <div class="hs-form-field-prefix" *ngIf="_prefixChildren.length">
+      <ng-content select="[iqPrefix]"></ng-content>
+    </div>
+
+    <div class="hs-form-field-infix" #inputContainer>
+      <ng-content></ng-content>
+    </div>
+
+    <div class="hs-form-field-suffix" *ngIf="_suffixChildren.length">
+      <ng-content select="[iqSuffix]"></ng-content>
+    </div>
+  </div>
+
+  <div class="hs-form-field-subscript-wrapper" [ngSwitch]="_getDisplayedMessages()">
+    <div *ngSwitchCase="'error'">
+      <ng-content select="hs-error"></ng-content>
+    </div>
+
+    <div class="hs-form-field-hint-wrapper" *ngSwitchCase="'hint'">
+      <div *ngIf="hintLabel" [id]="_hintLabelId" class="hs-hint">{{hintLabel}}</div>
+      <ng-content select="hs-hint:not([align='end'])"></ng-content>
+      <div class="hs-form-field-hint-spacer"></div>
+      <ng-content select="hs-hint[align='end']"></ng-content>
+    </div>
+  </div>
+</div>

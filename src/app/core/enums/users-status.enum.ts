@@ -1,0 +1,6 @@
+export enum USER_STATUS_ENUM {
+  DELETED = 'DELETED',
+  BLOCKED = 'BLOCKED',
+  ACTIVE = 'ACTIVE',
+  NEW = 'NEW',
+}

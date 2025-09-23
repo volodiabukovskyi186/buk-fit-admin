@@ -1,0 +1,24 @@
+<div class="notification flex flex-column justify-content-between" [ngClass]="{
+    'pointer': notification?.link
+}" (click)="moveToLink(notification)">
+
+    <div>
+        <div class="notification-header flex justify-content-between">
+            <div class="notification-header-text">
+                {{notification?.title}}
+            </div>
+            <!-- <div *ngIf="notification.isCloseBtn"  class="pointer notification-header-close" (click)="removeNotification();">x</div> -->
+        </div>
+        <div class="notification-body flex pt-8 hs-text-small" [innerHTML]="notification.text | HShtmlSave">
+            <!-- {{notification?.text}} -->
+        </div>
+    </div>
+    <div style="width: 100%">
+        <div class="flex justify-content-end">
+            <!-- (click)="addReminder()" -->
+            <div *ngFor="let button of notification.buttons">
+                <hs-button class="mr-16"  [text]="button.text" [mode]="button.mode" (click)="$event.stopPropagation(); button.action(notification)" [size]="'medium'"></hs-button>
+            </div>
+        </div>
+    </div>
+</div>

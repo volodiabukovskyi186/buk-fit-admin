@@ -1,0 +1,96 @@
+<cdk-virtual-scroll-viewport [itemSize]="rowHeight" (scrolledIndexChange)="scrolledIndexChange($event)">
+  <div class="hs-table-grid-wrapper">
+  <table #tableElement >
+    <thead [ngClass]="{'hs-table-head-scrolled': isScrolled}">
+      <tr class="hs-table-row hs-table-header-row">
+        <th class="hs-table-header-cell" style="width: 50px;" *ngIf="isDrag"></th>
+        <th *ngFor="let column of tableColumns" class="hs-table-header-cell"
+          [classList]="'hs-table-header-cell ' + column.headerCellClass" [HSColumnResizable]="column.allowResize"
+          [ngClass]="{'hs-table-header-sortable': column.allowSorting}" [width]="column.width || 'auto'">
+          <div class="hs-table-header-wrap" (click)="sortByColumn(column)">
+
+  
+
+            <div class="hs-table-header-content flex align-items-center" [style]="{ 'text-align': column.contentAlign }">
+
+              <ng-container *ngIf="column.headerTemplate; else captionHeader">
+                <ng-template [ngTemplateOutlet]="column.headerTemplate" [ngTemplateOutletContext]="{column: column}">
+                </ng-template>
+              </ng-container>
+
+              <ng-template #captionHeader>
+                <span [title]="column.caption || column.fieldName">
+                  {{column.caption || column.fieldName}}
+                </span>
+                <div class="hs-table-header-sort ml-8" *ngIf="column.allowSorting" [ngClass]="{
+                  'not-sorting': !column.sortDirection,
+                  'sort-ascending-direction': column.sortDirection === 'ASC',
+                  'sort-descending-direction': column.sortDirection === 'DESC'
+                }">
+    
+                  
+                  <i class="hs-icon fs-18 icon-arrow-up" *ngIf="column.sortDirection === 'DESC'"></i>
+                  <i class="hs-icon fs-18 icon-arrow-down" *ngIf="column.sortDirection === 'ASC'"></i>
+                </div>
+              </ng-template>
+
+            </div>
+
+   
+
+
+          </div>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody #listRef="cdkDropList" [cdkDropListData]="sortedData" cdkDropList (cdkDropListDropped)="dropItem($event)">
+
+      <tr class="hs-table-row hs-table-body-row" *cdkVirtualFor="let row of sortedData; let index = index;"
+        (click)="changeSelectRow(row, index); rowClick(row)" (dblclick)="rowDoubleClick(row)" [cdkDragDisabled]="!isDrag" cdkDrag
+        [ngClass]="{
+          'active': index === selectedIndex,
+          'row-disabled': row.tableRowDisabled,
+        }">
+
+        <ng-container>
+          <i class="icon-menu drag-drop-preview-icon fs-18 pointer"></i>
+
+          <td class="hs-table-cell hs-table-cell-drag-btn" *ngIf="isDrag" cdkDragHandle
+            (click)="$event.stopPropagation()">
+            <div class="ponter flex justify-content-center">
+              <i class="hs-icon icon-menu fs-18"></i>
+            </div>
+          </td>
+        </ng-container>
+
+
+        <ng-container *ngIf="row.rule; else default">
+          <ng-container *ngFor="let column of tableColumns; let index = index; trackBy: trackByFn;">
+            <td *ngIf="row.rule[index]?.colspan" [attr.colspan]="row.rule[index]?.colspan"
+              [classList]="'hs-table-cell ' + column.cellClass" [style]="{'text-align': column.contentAlign}">
+
+              <hs-table-cell [template]="column.cellAlternativeTemplate" [rowIndex]="index" [data]="row"
+                [column]="column">
+              </hs-table-cell>
+
+            </td>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #default>
+          <td *ngFor="let column of tableColumns;trackBy: trackByFn;" [classList]="'hs-table-cell ' + column.cellClass"
+            [style]="{'text-align': column.contentAlign}">
+
+            <hs-table-cell [rowIndex]="index" [data]="row" [column]="column"></hs-table-cell>
+
+          </td>
+        </ng-template>
+
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+</cdk-virtual-scroll-viewport>

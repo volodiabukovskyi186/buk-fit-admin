@@ -1,0 +1,8 @@
+<ng-container *ngIf="column.cellTemplate else fieldValueTemplate;">
+  <ng-template [ngTemplateOutlet]="template || column.cellTemplate"
+    [ngTemplateOutletContext]="{cellData: data, rowIndex: rowIndex}"></ng-template>
+</ng-container>
+
+<ng-template #fieldValueTemplate>
+  <span class="hs-table-cell-text" [title]="data[column.fieldName]">{{data[column.fieldName]}}</span>
+</ng-template>

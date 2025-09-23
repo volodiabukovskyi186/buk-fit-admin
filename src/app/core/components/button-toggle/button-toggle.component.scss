@@ -1,0 +1,148 @@
+@import "variables";
+
+hs-button-toggle-ui {
+  flex: 1 1 0;
+  overflow: hidden;
+  padding-right: 1px;
+
+  .hs-button-toggle-item {
+    flex: 1 1 0;
+    cursor: pointer;
+    padding: 8px;
+    color: #3c4650;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    height: 32px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+
+    &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 1px;
+      height: 15px;
+      right: -2px;
+      background-color: #d2d7dd;
+    }
+
+    .hs-button-toggle-item-content {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #3c4650;
+
+      i {
+        color: #657688;
+      }
+    }
+  }
+
+  &.hs-button-toggle-item-first {
+    .hs-button-toggle-item {
+      border-bottom-left-radius: 17.5px;
+      border-top-left-radius: 17.5px;
+    }
+  }
+
+  &.hs-button-toggle-item-last {
+    padding-right: 0;
+
+    .hs-button-toggle-item {
+      border-bottom-right-radius: 17.5px;
+      border-top-right-radius: 17.5px;
+
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+  &:hover,
+  &.hs-button-toggle-item-hovered {
+    .hs-button-toggle-item {
+      border-color: #3A7EE9 !important;
+      background-color: #dde8f9;
+
+      &:after {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.hs-button-toggle-item-previous-active,
+  &.hs-button-toggle-item-previous-hovered {
+    .hs-button-toggle-item {
+      &:after {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.hs-button-toggle-item-active {
+    .hs-button-toggle-item {
+      background-color: #3A7EE9;
+      border-color: #3A7EE9 !important;
+
+      &:after {
+        background-color: transparent;
+      }
+
+      .hs-button-toggle-item-content {
+        color: white;
+
+        i {
+          color: white;
+        }
+      }
+    }
+
+    &.hs-button-toggle-item-multiple.hs-button-toggle-item-previous-active {
+      .hs-button-toggle-item {
+        &:after {
+          background-color: white;
+          top: -1px;
+          height: calc(100% + 2px);
+          z-index: 2;
+        }
+      }
+    }
+
+    &:hover:not(.hs-button-toggle-item-disabled),
+    &.hs-button-toggle-item-hovered {
+      .hs-button-toggle-item {
+        border-color: #3A7EE9 !important;
+        background-color: #dde8f9;
+
+        .hs-button-toggle-item-content {
+          color: #3c4650;
+
+          i {
+            color: #657688;
+          }
+        }
+      }
+    }
+  }
+
+  &.hs-button-toggle-item-two-buttons {
+    padding-right: 0;
+  }
+
+  &.hs-button-toggle-item-disabled {
+    background-color: $hs-secondary-grey-02;
+    .hs-button-toggle-item-content {
+      color: white;
+    }
+
+    cursor: default;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,12 @@
+<div class="breadcrumbs-container">
+    <div class="flex">
+        <div class="breadcrumb flex" *ngFor="let item of breadcrumbs; let i = index" >
+            <h6  (click)="navigate(item.path)" [ngClass]="{'breadcrumbs-active': item.isActive}">
+                {{item.title |translate}}
+                <ng-container *ngIf="item?.subTitle">{{item.subTitle}}</ng-container>
+            </h6>
+            <div class="mx-6" *ngIf="i !== breadcrumbs.length - 1">/</div>
+        </div>
+    </div>
+
+</div>

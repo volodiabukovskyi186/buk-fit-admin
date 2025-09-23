@@ -1,0 +1,25 @@
+@import 'variables';
+
+hs-breadcrumbs {
+    display: flex;
+    color: $text-silver;
+    width: 100%;
+    cursor: pointer;
+
+    .breadcrumbs-active {
+        color: $hs-black;
+    }
+
+    .breadcrumbs-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .breadcrumb {
+        &:hover {
+            color: $hs-primary !important;
+        }
+    }
+}

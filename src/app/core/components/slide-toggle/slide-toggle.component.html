@@ -1,0 +1,15 @@
+<label [for]="id">
+  <div class="iq-slide-toggle-bar"
+       [ngClass]="inputControl.value ? 'iq-slide-toggle-bar-on' : 'iq-slide-toggle-bar-off'">
+
+    <div class="iq-slide-toggle-thumb">
+      <i *ngIf="icon" [class]="icon"></i>
+    </div>
+
+    <input type="checkbox" [id]="id" (input)="toggleSlider()" [formControl]="inputControl"/>
+  </div>
+
+  <div class="ml-8 iq-text-small fc-text ellipsis iq-slide-toggle-label"  *ngIf="title">
+    {{title}}
+  </div>
+</label>

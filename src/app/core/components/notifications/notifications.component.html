@@ -1,0 +1,20 @@
+<div class="notifications-cointainer" *ngIf="notifications.length">
+    <div class="flex flex-column relative">
+        <div class="notification-close pointer flex align-items-center justify-content-center" (click)="removeByIndexNotification(0)">
+            <i class="icon-cross"></i>
+        </div>
+        <ng-container  *ngFor="let notification of notifications let i = index">
+
+       
+<!--         
+        <hs-notification *ngIf="notification.type !=='REMINDER' && notification.type !=='NEW_MESSAGE' " [notification]="notification" (remove)="removeByIndexNotification(i)">
+        </hs-notification> -->
+
+        <hs-notification-reminder *ngIf="notification.type ==='REMINDER'" (reminderUpdated)="removeByIndexNotification(i)" [data]="notification"></hs-notification-reminder>
+        <hs-user-live-notification
+         *ngIf="notification.type ==='NEW_MESSAGE'|| notification.type ==='CREATE_TICKET' || notification.type =='UPDATE_TICKET'||notification.type =='ADD_RESPONSIBLE' " 
+         (reminderUpdated)="removeByIndexNotification(i)" [notification]="notification"></hs-user-live-notification>
+
+    </ng-container>
+    </div>
+</div>

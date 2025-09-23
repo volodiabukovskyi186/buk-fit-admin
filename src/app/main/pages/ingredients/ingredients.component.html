@@ -1,0 +1,125 @@
+<div class="h-100 w-100 p-12 container">
+    <div class="flex justify-content-end ">
+        <hs-button size="medium"   class="mt-14 " [routerLink]="'/ingredients/create-ingredient'"  [text]="'Створити інградієнт'"></hs-button>
+    </div>
+    <div class="flex  justify-content-between">
+        <h1 class="fc-primary">Інградієнтів: {{totalUsersCount}}</h1>
+        <!-- <div>
+         <hs-button size="medium"   class="mt-14 mr-8"  [text]="'Надіслати повідомлення'" (click)="sendMessage()"></hs-button>
+         <hs-button size="medium"   class="mt-14 mr-8"  [text]="'Створити повідомлення'" (click)="openCreateMessageDialog()"></hs-button>
+        </div> -->
+    </div>
+
+    <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
+        <hs-table-grid style=" height: 100% !important;"  *ngIf="users.length"  [dataType]="tableGridDataTypeEnum.API" [allowMultiplySorting]="false"  [data]="users" >
+
+            <div hsTableColumn caption="ID" width="40px" fieldName="id"  [allowResize]="true"></div>
+
+            <div hsTableColumn fieldName="product" caption="Назва"  width="200px" [cellTemplate]="productTmpl" [allowResize]="true">
+                <ng-template #productTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.product}}
+                    </div>
+                </ng-template>
+            </div>
+            <!-- <div hsTableColumn caption="Text" width="60%" fieldName="text"  [allowResize]="true"></div> -->
+
+            <div hsTableColumn fieldName="proteins" caption="Білок"  width="80px" [cellTemplate]="proteinsTmpl" [allowResize]="true">
+                <ng-template #proteinsTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.proteins}} г
+                    </div>
+                </ng-template>
+            </div>
+
+
+              <div hsTableColumn fieldName="calories" caption="Жири"  width="80px" [cellTemplate]="fatsTmpl" [allowResize]="true">
+                <ng-template #fatsTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.fats}} г
+                    </div>
+                </ng-template>
+            </div>
+
+
+            <div hsTableColumn fieldName="calories" caption="Вуглеводів"  width="80px" [cellTemplate]="carbohydratesTmpl" [allowResize]="true">
+                <ng-template #carbohydratesTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.carbohydrates}} г
+                    </div>
+                </ng-template>
+            </div>
+            <div hsTableColumn fieldName="calories" caption="Калорії"  width="80px" [cellTemplate]="caloriesTmpl" [allowResize]="true">
+                <ng-template #caloriesTmpl let-data="cellData">
+                    <div class="m-2">
+                        {{data?.calories}} г
+                    </div>
+                </ng-template>
+            </div>
+            <div hsTableColumn  caption="Дія"  width="40px" [cellTemplate]="ActionTmpl" [allowResize]="true">
+                <ng-template #ActionTmpl let-data="cellData">
+                    <div class="m-2">
+                    <hs-icon-button (click)="deleteExercise(data)">
+                        <i class="hs-icon icon-cross"></i>
+                    </hs-icon-button>
+
+
+
+                    </div>
+                </ng-template>
+            </div>
+<!--            <div hsTableColumn fieldName="img" caption="Прізвище"  width="120px" [cellTemplate]="idNumberChatTmpl" [allowResize]="true">-->
+<!--                <ng-template #idNumberChatTmpl let-data="cellData">-->
+<!--                    <div class="m-2">-->
+<!--                        {{data?.lastName}}-->
+
+
+
+<!--                    </div>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+
+<!--            <div hsTableColumn fieldName="img" caption="Логін"  width="120px" [cellTemplate]="idNumberChatTmpl" [allowResize]="true">-->
+<!--                <ng-template #idNumberChatTmpl let-data="cellData">-->
+<!--                    <div class="m-2">-->
+<!--                        {{data?.login}}-->
+
+
+
+<!--                    </div>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+
+
+
+            <!-- <div hsTableColumn fieldName="Text" width="60%" [cellTemplate]="textTmpl" [allowResize]="true">
+                <ng-template #textTmpl let-data="cellData">
+                     <div class="m-2 flex" style="    white-space: initial;">
+                      {{data.text}}
+
+
+                     </div>
+                </ng-template>
+           </div> -->
+
+
+            <!-- <div hsTableColumn caption="Channel" width="200px" fieldName="username"  [allowResize]="true"></div>
+             <div hsTableColumn fieldName="date" [cellTemplate]="dateTmpl" [allowResize]="true">
+                 <ng-template #dateTmpl let-data="cellData">
+                      <div class="m-2 flex">
+
+                       {{data.date.seconds*1000| date: 'dd:MM:yyyy HH:mm'}}
+
+
+                      </div>
+                 </ng-template>
+            </div> -->
+
+
+        </hs-table-grid>
+    </div>
+
+
+</div>
+<!-- <img [src]="imageUrl" alt=""> -->
+

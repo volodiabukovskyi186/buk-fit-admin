@@ -1,0 +1,67 @@
+bk-user-create-message  {
+    max-height: 100%;
+    overflow: auto;
+    display: block;
+
+    .message {
+        border: solid 1px silver;
+
+        .images {
+            border-radius: 4px;
+            .image {
+                max-width: 33%;
+                max-height: 500px;
+                margin-right: 4px;
+                img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    height: auto;
+                }
+
+                video {
+                    width: 100%;
+                    max-height: 500px;
+                    height: auto;
+                }
+            }
+        }
+
+        .remove-media-btn {
+            cursor: pointer;
+            position: absolute;
+            font-size: 18px;
+            color: red;
+            right: 10px;
+            top: 0px;
+            z-index: 1000000;
+        }
+
+        .media-text {
+            //
+            textarea {
+                max-width: 800px;
+                width:100%;
+
+                min-height: 300px;
+                border-radius: 4px;
+                border: silver 1px solid;
+                resize: none;
+            }
+        }
+
+        .file-input {
+            visibility: hidden;
+            width: 0;
+            height: 0;
+            z-index: -10000;
+        }
+
+
+    }
+
+
+
+
+
+
+  }

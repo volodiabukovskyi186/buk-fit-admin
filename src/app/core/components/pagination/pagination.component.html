@@ -1,0 +1,28 @@
+<div class="pagination-of hs-text-caption">
+  {{page * limit - limit + 1}} - {{page * limit < elements ?page * limit : elements }} {{'GENERAL.OF' |translate}}
+    {{elements}} </div>
+
+    <div class="pagination flex hs-text-caption align-items-center">
+      <div class="flex align-items-center" *ngIf="isRowsSelect">
+        <div >{{'GENERAL.ROW_PER_PAGE' | translate}}</div>
+        <hs-select #selectcount style="width: 70px; " [dropdownMinWidth]="150" class="mr-16"
+          (selectionChange)="changeRowCount($event.value)" [value]="limit">
+          <!-- <hs-select-trigger>
+            <div >{{selectcount.triggerValue}}</div>
+          </hs-select-trigger> -->
+          <hs-select-option *ngFor="let count of rowPerPage" [value]="count">{{count}}</hs-select-option>
+        </hs-select>
+      </div>
+
+      <button class="pagination-button" [disabled]="page <= 1" (click)="prePage()">
+        <i class="icon-chevron-left_2 fs-24"></i>
+      </button>
+
+      <!-- <div  class="pagination-page" *ngFor="let page of pages" [class.active]="page === page" (click)="selectPage(page)">{{ page }}</div>
+
+    <div class="pagination-dots" *ngIf="totalPages > 3 && page < totalPages - 2">...</div> -->
+
+      <button class="pagination-button" [disabled]="page >= totalPages" (click)="nextPage()">
+        <i class="icon-chevron-right_2 fs-24"></i>
+      </button>
+    </div>

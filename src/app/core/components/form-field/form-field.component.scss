@@ -1,0 +1,150 @@
+@import 'variables';
+@import 'typography';
+
+$field-padding-bottom: 24px;
+
+hs-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  font-family: 'Inter';
+
+ 
+
+  hs-hint,
+  hs-error {
+    display: block;
+  }
+
+  &.hs-form-field-disabled {
+    pointer-events:none;
+    .hs-form-field-flex {
+      // background-color: silver;
+      opacity: 0.5;
+    }
+
+    .hs-icons {
+      opacity: 0.6;
+    }
+  }
+
+  &:not(.hs-form-field-disabled) {
+    .hs-form-field-flex {
+      &:hover {
+        box-shadow: 0 0 0 2px sivler;
+        border-color: $hs-primary;
+
+        .hs-icon {
+          color: $hs-primary;
+        }
+      }
+
+      &:focus {
+        border-color: $hs-primary !important;
+        box-shadow: none;
+       
+      }
+
+      input {
+        &::placeholder {
+          color: $hs-secondary-grey-03 !important;
+        }
+      }
+    }
+  }
+
+  .hs-form-field-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    border: 1px solid $hs-secondary-grey-02;
+    border-radius: 2px;
+    background: white;
+    height: 40px;
+    font-size: 0.875rem;
+    color: $hs-black;
+
+    .hs-form-field-infix {
+      display: block;
+      position: relative;
+      flex: auto;
+      min-width: 0;
+      //width: 180px;
+    }
+  }
+
+  .hs-input-element {
+    font: inherit;
+    background: rgba(0, 0, 0, 0);
+    color: currentColor;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    vertical-align: bottom;
+    text-align: inherit;
+    padding: 0 16px;
+    font-weight: 500;
+    height: 40px;
+  }
+
+  .hs-form-field-wrapper {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $field-padding-bottom;
+  }
+
+  .hs-form-field-label {
+    &-hidden {
+      display: none;
+      margin-bottom: 0;
+    }
+  }
+
+  .hs-form-field-subscript-wrapper {
+    @extend .hs-text-small;
+    font-size: 12px;
+    color: $hs-error;
+    position: absolute;
+    display: flex;
+    left: 0;
+    width: 100%;
+    top: calc(100% - $field-padding-bottom);
+  }
+
+  .hs-form-field-suffix {
+    padding-right: 8px;
+  }
+
+  &.hs-focused {
+    .hs-form-field-wrapper {
+      .hs-form-field-flex {
+        border-color: $hs-primary;
+        box-shadow: none !important;
+      }
+
+      .hs-icon {
+        color: $hs-primary;
+      }
+    }
+  }
+
+  &.hs-form-field-invalid {
+    .hs-form-field-wrapper {
+      .hs-form-field-flex {
+        border-color: red;
+
+        // &:hover {
+        //   box-shadow: 0 0 0 1px red;
+        // }
+      }
+    }
+  }
+}

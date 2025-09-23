@@ -1,0 +1,63 @@
+@import "variables";
+
+hs-text-button {
+  --text-button-color: #{$hs-neutrals-active};
+  --text-button-active-color: #{$hs-neutrals};
+
+  &.hs-text-button-color-success {
+    --text-button-color: #{green};
+    --text-button-active-color: #{rgb(0, 85, 0)};
+  }
+
+  &.hs-text-button-color-error {
+    --text-button-color: #{rgb(192, 0, 0)};
+    --text-button-active-color: #{rgb(134, 0, 0)};
+  }
+
+}
+
+$hs-text-button-default-color: var(--text-button-color);
+$hs-text-button-active-color: var(--text-button-active-color);
+
+hs-text-button {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4rem;
+  color: $hs-text-button-default-color;
+  position: relative;
+  user-select: none;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: transparent;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &:after {
+      background-color: $hs-text-button-default-color;
+    }
+  }
+
+  &:active {
+    color: $hs-text-button-active-color;
+
+    &:after {
+      background-color: $hs-text-button-active-color;
+    }
+  }
+
+  &.hs-text-button-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: default;
+  }
+}

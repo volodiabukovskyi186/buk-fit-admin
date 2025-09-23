@@ -1,0 +1,27 @@
+<div class=" dialog-contianer p-16 flex flex-column justify-content-between flex-1 overflow-hidden flex flex-column">
+  <div class="dialog-header flex justify-content-center ">
+    <h2>{{data?.title}}</h2>
+  </div>
+
+  <div class="dialog-body flex flex-1 flex-column justify-content-between">
+    <div class="mt-8">
+      <h4>{{data?.text}}</h4>
+    </div>
+    <div class="flex justify-content-end">
+      <div>
+        <hs-button class="mr-16" (click)="closeDialog()" text="Скасувати" [mode]="'outlined'" [size]="'medium'"></hs-button>
+      </div>
+      <div>
+        <hs-button (click)="approve()" text="Підтвердити" [size]="'medium'"></hs-button>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="dialog-footer flex justify-content-center">
+    <!-- <hs-button class="mr-16" text="No" [mode]="'outlined'"  (click)="close()"></hs-button>
+    <hs-button text="Yes" (click)="closeTicket()" ></hs-button> -->
+  </div>
+
+</div>
+

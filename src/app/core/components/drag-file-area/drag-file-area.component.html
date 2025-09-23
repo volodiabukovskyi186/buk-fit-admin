@@ -1,0 +1,10 @@
+<div class="hs-drag-file-container flex-column flex align-items-center justify-content-center"
+    (click)="openSelectFile(fileinput)" hsDragFile (fileDropped)="onFileDropped($event)">
+    <div class="mb-8">
+        <i class="icon-image"></i>
+    </div>
+    <div class="fc-secondary-grey-03 hs-text-body-2 hs-drag-file-text">
+        {{'GENERAL.UPLOAD_FILE_LIMIT'|translate}}
+        <!-- </div> accept="image/png, image/jpeg image/jpg" -->
+        <input class="d-none" type="file" accept="image/png, image/jpeg, image/jpg, .pdf, .rar, .zip, .7z, .xls, .xlsx, .doc, .docx, .rtf, .txt, .raw, .csv, .p7s, .tmp" (change)="readFile($event)" #fileinput />
+    </div>

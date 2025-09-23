@@ -1,0 +1,7 @@
+<span class="hs-content" [class.hs-content-hide-toggle]="!_showToggle()">
+  <ng-content select="hs-panel-title"></ng-content>
+  <ng-content select="hs-panel-description"></ng-content>
+  <ng-content></ng-content>
+</span>
+
+<!-- <span *ngIf="_showToggle()" [@indicatorRotate]="_getExpandedState()" class="hs-expansion-indicator"></span> -->

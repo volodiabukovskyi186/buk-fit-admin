@@ -1,0 +1,133 @@
+
+<div class="menu-list-wrapper flex flex-column">
+    <div class="w-100 flex pt-8 pl-24 ">
+        <div class="hs-log-out">
+            <i class="hs-icon icon-enter" (click)="logOut()"></i>
+        </div>
+    </div>
+    <!-- <div class="menu-search-input">
+        <i class="hs-icon icon-search"></i>
+        <input class="search-input" type="text" name="subject" [placeholder]="'GENERAL.SEARCH' ">
+
+    </div> -->
+    <div class="flex flex-column menu-list-section-wrapper" >
+        <div class="menu-list-section" *ngFor="let section of menuList">
+            <div class="menu-section mt-24 pl-6">
+                <span class="">{{section.title | uppercase}}</span>
+            </div>
+    
+            <div *ngFor="let menu of section.sections" class="menu-list-menu" [ngClass]="{'menu-list-menu-disabled': menu?.isDisabled}">
+                <hs-expansion-panel class="menu-expansion-panel" #panel [expanded]="menu.isOpen" class="m-0">
+                    <hs-expansion-panel-header style="height: unset;" [ngClass]="{
+                        'menu-list-menu-active': menu.isOpen
+                        
+                    }">
+    
+                        <div class="menu-list-menu-header flex align-items-center fw-600 w-100"
+                            routerLinkActive="active-route" [routerLink]="menu?.url" *ngIf="menu?.url">
+                            
+                            <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                        </div>
+    
+                        <span class="menu-list-menu-header flex align-items-center fw-600 " [ngClass]="{'menu-list-header-with-childred': menu?.children?.length}" (click)="moveToUrl(menu)"
+                            *ngIf="!menu?.url">
+                            <div *ngIf="menu?.children?.length" class="pr-6">
+                                <i class="hs-icon-arrow-small icon-chevron-right_2 fs-16 " *ngIf="!panel.expanded"></i>
+                                <i class="hs-icon-arrow-small icon-chevron-down_2 fs-16 " *ngIf="panel.expanded"></i>
+                            </div>
+    
+                            <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                        </span>
+    
+    
+                    </hs-expansion-panel-header>
+    
+                    <div class="pt-8 pl-10" *ngIf="menu?.children">
+                        <div class="menu-list-submenu fw-600 fs-secondary-grey-04" *ngFor="let subMenu of menu.children"
+                            [routerLink]="subMenu.url" routerLinkActive="active-route">
+                            {{subMenu.title }}
+                        </div>
+                    </div>
+    
+                </hs-expansion-panel>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+<!-- <div class="hs-manu-shadow">
+    <img src="../../../../../../../assets/images/menu/menu-shadow.png" alt="">
+</div> -->
+
+<div class="mobile-sidebar-wrapper flex" [ngClass]="{
+    'side-bar-open': isOpenMobile,
+    'side-bar-close': !isOpenMobile
+}" >
+
+    <div class="mobile-sidebar" >
+
+        <div class="menu-list-wrapper-mobile ">
+            <!-- <div class="menu-search-input">
+                <i class="hs-icon icon-search"></i>
+                <input class="search-input" type="text" name="subject" [placeholder]="'GENERAL.SEARCH' ">
+            </div> -->
+ 
+            <div class="pl-12 mt-12 w-100 flex justify-content-end">
+                <div class="hs-log-out">
+                    <i class="hs-icon icon-enter" (click)="logOut()"></i>
+                </div>
+            </div>
+            <div class="menu-list-section" *ngFor="let section of menuList">
+                <div class="menu-section mt-24">
+                    <span class="">{{section.title | uppercase}}</span>
+                </div>
+        
+                <div *ngFor="let menu of section.sections" class="menu-list-menu" [ngClass]="{'menu-list-menu-disabled': menu?.isDisabled}">
+                    <hs-expansion-panel class="menu-expansion-panel" #panel [expanded]="menu.isOpen" class="m-0">
+                        <hs-expansion-panel-header style="height: unset;" [ngClass]="{'menu-list-menu-active': menu.isOpen}">
+        
+                            <div class="menu-list-menu-header flex align-items-center fw-600 w-100"
+                                routerLinkActive="active-route" [routerLink]="menu?.url" *ngIf="menu?.url" (click)="closeMenu()">
+        
+                                <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                            </div>
+        
+                            <div class="menu-list-menu-header justify-content-between flex align-items-center fw-600 w-100" (click)="moveToUrl(menu)"
+                                *ngIf="!menu?.url">
+                           
+        
+                                <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                                <ng-container *ngIf="menu?.children?.length">
+                                    <i class="hs-icon-arrow-small icon-chevron-up_2 fs-16 " *ngIf="!panel.expanded"></i>
+                                    <i class="hs-icon-arrow-small icon-chevron-down_2 fs-16 " *ngIf="panel.expanded"></i>
+                                </ng-container>
+                            </div>
+        
+        
+                        </hs-expansion-panel-header>
+        
+                        <div class="pt-8" *ngIf="menu?.children">
+                            <div class="menu-list-submenu fw-600" *ngFor="let subMenu of menu.children"
+                                [routerLink]="subMenu.url" routerLinkActive="active-route">
+                                {{subMenu.title }}
+                            </div>
+                        </div>
+        
+                    </hs-expansion-panel>
+                </div>
+        
+            </div>
+        </div>
+<!--         
+        <div class="hs-manu-shadow">
+            <img src="../../../../../../../assets/images/menu/menu-shadow.png" alt="">
+        </div> -->
+    </div>
+
+    <div class="mobile-sidebar-shadow" (click)="closeMenu()"
+    [ngClass]="{
+        'side-bar-open-shadow': isOpenMobile,
+        'side-bar-close-shadow': !isOpenMobile
+    }"></div>
+</div>

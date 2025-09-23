@@ -1,0 +1,65 @@
+
+<div class="bk-create-user" [formGroup]="formGroup">
+    <div class="flex justify-content-end ">
+        <hs-button size="medium"   class="mt-14" (click)="createUser()" [text]="'Створити продукт'"></hs-button>
+   </div>
+
+    <div class="flex bk-two-fields">
+
+        <hs-form-field class="w-100">
+            <hs-label>Назва продукту</hs-label>
+            <input iqInput formControlName="product" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+
+        <hs-form-field class="w-100">
+            <hs-label>Калорій (розрахунку на 100г)</hs-label>
+            <input iqInput formControlName="calories" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+        </div>
+
+        <div class="flex bk-two-fields">
+        <hs-form-field class="w-100">
+            <hs-label>Вуглеводів (розрахунку на 100г)</hs-label>
+            <input iqInput formControlName="carbohydrates" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+
+        <hs-form-field class="w-100">
+            <hs-label>Жири (розрахунку на 100г)</hs-label>
+            <input iqInput formControlName="fats" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+        </div>
+        <div class="flex bk-two-fields">
+        <hs-form-field class="w-100">
+            <hs-label>Тип білку</hs-label>
+            <input iqInput formControlName="protein_type" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+
+        <hs-form-field class="w-100">
+            <hs-label>Білок (розрахунку на 100г)</hs-label>
+            <input iqInput formControlName="proteins" />
+            <hs-error>Поле обовязкове до заповнення</hs-error>
+        </hs-form-field>
+        </div>
+<!--        <hs-form-field class="ml-8 w-100">-->
+<!--            <hs-label>Прізвище</hs-label>-->
+<!--            <input iqInput formControlName="lastName" />-->
+<!--        </hs-form-field>-->
+
+<!--    <div class="flex  bk-two-fields">-->
+<!--        <hs-form-field class="w-100">-->
+<!--            <hs-label>Логін</hs-label>-->
+<!--            <input iqInput formControlName="login" />-->
+<!--        </hs-form-field>-->
+<!--        <hs-form-field class="ml-8 w-100">-->
+<!--            <hs-label>Пароль</hs-label>-->
+<!--            <input iqInput formControlName="password" />-->
+<!--        </hs-form-field>-->
+<!--    </div>-->
+
+
+</div>

@@ -1,0 +1,149 @@
+@import 'variables';
+hs-tab-switcher {
+  flex: 1 1 1;
+  overflow: hidden;
+
+  .hs-tab-switcher-item {
+    // box-shadow: 0px 1px 0px 0px transparent;
+    background: transparent;
+    cursor: pointer;
+    padding: 12px 16px;
+    color: #3c4650;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    // height: 42px;
+
+  
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+
+
+    border-bottom:  1px solid $hs-secondary-grey-01;
+
+    &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 1px;
+      height: 15px;
+      // right: -2px;
+      // background-color: #d2d7dd;
+    }
+
+    .hs-tab-switcher-item-content {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #3c4650;
+
+      i {
+        color: #657688;
+      }
+    }
+  }
+
+  &.hs-tab-switcher-item-first {
+    .hs-tab-switcher-item {
+      // border-bottom-left-radius: 17.5px;
+      // border-top-left-radius: 17.5px;
+    }
+  }
+
+  &.hs-tab-switcher-item-last {
+    padding-right: 0;
+
+    .hs-tab-switcher-item {
+      // border-bottom-right-radius: 17.5px;
+      // border-top-right-radius: 17.5px;
+
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+  &:hover,
+  &.hs-tab-switcher-item-hovered {
+    .hs-tab-switcher-item {
+      // border-color: #3A7EE9 !important;
+      // background-color: #dde8f9;
+
+      // &:after {
+      //   background-color: transparent;
+      // }
+    }
+  }
+
+  // &.hs-tab-switcher-item-previous-active,
+  // &.hs-tab-switcher-item-previous-hovered {
+  //   .hs-tab-switcher-item-content {
+  //     color: $hs-primary;
+
+  //     i {
+  //       color: $hs-primary;
+  //     }
+  //   }
+  //   .hs-tab-switcher-item {
+  //     &:after {
+  //       background-color: transparent;
+  //     }
+  //   }
+  // }
+
+  &.hs-tab-switcher-item-active {
+    .hs-tab-switcher-item {
+      // background-color: #3A7EE9;
+     
+      border-bottom: solid 2px  $hs-primary !important;
+
+      &:after {
+        background-color: transparent;
+      }
+
+      .hs-tab-switcher-item-content {
+        color: $hs-primary;
+
+        i {
+          color: $hs-primary;
+        }
+      }
+    }
+
+    &.hs-tab-switcher-item-multiple.hs-tab-switcher-item-previous-active {
+      .hs-tab-switcher-item {
+        &:after {
+          background-color: white;
+          top: -1px;
+          height: calc(100% + 2px);
+          z-index: 2;
+        }
+      }
+    }
+
+    // &:hover,
+    // &.hs-tab-switcher-item-hovered {
+    //   .hs-tab-switcher-item {
+    //     border-color: #3A7EE9 !important;
+    //     background-color: #dde8f9;
+
+    //     .hs-tab-switcher-item-content {
+    //       color: #3c4650;
+
+    //       i {
+    //         color: #657688;
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  &.hs-tab-switcher-item-two-buttons {
+    padding-right: 0;
+  }
+}

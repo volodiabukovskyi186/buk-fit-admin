@@ -1,0 +1,50 @@
+<div class="bk-create-user">
+  <div class="flex flex" *ngIf="user">
+    <div class="mr-12"> Iмя : {{ user.name }}</div>
+    <div class="mr-8"> Прізвище : {{ user.secondName }}</div>
+  </div>
+
+  <div hsButtonToggleGroup [value]="selectedView" (change)="setTabView($event)" class="mt-12" style="max-width: 900px;">
+    <hs-button-toggle-ui [value]="userInfoTabsEnum.INFO">
+      <span>Користувач</span>
+    </hs-button-toggle-ui>
+
+    <hs-button-toggle-ui [value]="userInfoTabsEnum.EXESISES" [disabled]="user?.status === userStatusEnum.NEW">
+      <span>Вправи</span>
+    </hs-button-toggle-ui>
+
+    <hs-button-toggle-ui [value]="userInfoTabsEnum.MEAL_TEXT" [disabled]="user?.status === userStatusEnum.NEW">
+      <span>Харчування текст</span>
+    </hs-button-toggle-ui>
+
+    <hs-button-toggle-ui [value]="userInfoTabsEnum.PAYMENT"  *ngIf="admin?.role == userRoleEnum.MANAGER || admin?.role == userRoleEnum.SUPER_ADMIN">
+      <span>Оплата</span>
+    </hs-button-toggle-ui>
+
+  </div>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.INFO">
+    <bk-user-info></bk-user-info>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.EXESISES">
+    <bk-exesises></bk-exesises>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.MEAL">
+    <bk-user-meals></bk-user-meals>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.CALORIES">
+    <bk-user-calories></bk-user-calories>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.MEAL_TEXT">
+    <bk-user-meals-text></bk-user-meals-text>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.PAYMENT">
+    <bk-user-payment></bk-user-payment>
+  </ng-container>
+
+</div>

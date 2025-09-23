@@ -1,0 +1,19 @@
+hs-stepper {
+  width: 100%;
+
+  .hs-stepper-container {
+    overflow: auto;
+    hs-stepper-option {
+        &:not(:last-child) {
+    
+
+          .hs-stepper-devider-container {
+            display: block;
+            }
+        }
+
+     
+      }
+}
+}
+

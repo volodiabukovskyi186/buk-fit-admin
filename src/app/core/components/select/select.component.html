@@ -1,0 +1,56 @@
+<div class="hs-select-wrapper" (click)="toggle()" [ngClass]="{
+  'hs-select-rounded': isRounded, 
+  'hs-select-empty': empty,
+  'hs-select-only-icon': onlyIcon
+}">
+
+
+  <div class="hs-select-input-wrapper" #selectInputWrapper>
+    <ng-container *ngIf="!onlyIcon">
+      <div #input class="hs-select-input" tabindex="-1" [class.disabled]="disabled" (blur)="onTouched()">
+        <div class="hs-select-placeholder" *ngIf="empty">
+          {{placeholder}}
+        </div>
+        <ng-content select="hs-select-trigger"></ng-content>
+        <div *ngIf="!selectTrigger" class="select-value-ellipsis" [title]="triggerValue">{{ triggerValue }}</div>
+      </div>
+
+      <ng-container *ngIf="icon === 'icon-chevron-down_2'">
+        <i class="hs-icon fs-24 icon-chevron-down_2 fs-secondary-grey-04" [ngClass]="{'hs-select-arrow-rotated': isDropDownOpen }"
+          (click)="onDropMenuIconClick($event)"></i>
+      </ng-container>
+
+      <ng-container *ngIf="icon !== 'icon-chevron-down_2'">
+        <i [ngClass]="[icon, 'hs-icon']" (click)="onDropMenuIconClick($event)"></i>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="onlyIcon">
+     <div class="flex align-items-center">
+      <i class="hs-icon-only" (click)="toggle($event)" style="position: relative;" [ngClass]="[icon]"></i>
+     </div>
+    </ng-container>
+  </div>
+
+
+
+</div>
+
+<hs-dropdown [offsetX]="offsetX" (moveMoveEvent)="onMouseMove()" (scrollEvent)="scrollEvent.emit($event)"
+  (openingChange)="dropdownOpeningChange($event)" [reference]="selectInputWrapper" [minWidth]="dropdownMinWidth"
+  [maxWidth]="dropdownMaxWidth" [maxHeight]="dropdownMaxHeight" style="position: relative;">
+
+  <hs-select-option *ngIf="enableSearch" class="hs-select-search-option" [disabled]="true">
+    <div class="hs-select-search-inpu-wrapper">
+      <i class="icon-search fs-18"></i>
+      <input style=" outline: none !important " (keydown)="searchKeyDown($event)" [formControl]="searchControl"
+        #searchInput class="hs-input hs-select-search-input" type="text" placeholder="Search">
+    </div>
+  </hs-select-option>
+
+  <div *ngIf="isEmptySearchResult && searchControl.value.length > 0" class="hs-select-empty-search-result">
+    List is empty
+  </div>
+
+  <ng-content></ng-content>
+</hs-dropdown>

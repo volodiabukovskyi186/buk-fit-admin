@@ -1,0 +1,74 @@
+<div class="flex flex-column w-100 notification-reminder" (click)="moveToLink(data)">
+    <div class="flex w-100">
+
+
+        <div class="w-100 flex  flex-column">
+            <div class="flex align-items-center">
+                <div class="pr-8">
+                    <div class="avatar flex justify-content-center align-items-center"
+                        [ngClass]="{'avatar-error': data.status === 'SENT'}">
+                        <i class="icon-clock fs-18"></i>
+                    </div>
+                </div>
+                <div class="flex align-items-center">
+                    <h6>Reminder from ticket  </h6>
+                    <h6 class="notification-id pointer fw-600 pl-4" > #{{data.ticketOrderId}}</h6> 
+                    <span class="reminder-notification-date mt-10 mb-12 flex ">
+                        <h6> {{data.time| date : 'HH:mm'}}</h6>
+                    </span>
+                </div>
+                <div class="pointer" [iqMenuTriggerFor]="menu">
+                    <!-- <i class="icon-more-horizontal fs-18"></i> -->
+                </div>
+            </div>
+
+            <div class="hs-text-caption mt-8">
+                {{data.text}}
+            </div>
+
+        </div>
+    </div>
+
+    <div class=" mt-8 flex reminder-notification-bottom">
+        <div>
+            <hs-button [class]="'reminder-btn-padding'" (click)="closeReminder()" [iconClass]="'icon-cross'" text="Close reminder" [size]="'medium'"
+                mode="text-primary"></hs-button>
+        </div>
+
+        <div class="pt-4" >
+            <hs-text-select #selectForSubscriber [offsetX]="-180" [value]="remindDelayTimeEnum.ONE_WEEK"
+                [dropdownMinWidth]="220" (selectionChange)="delayReminder($event)">
+                <hs-text-select-trigger>
+                    <div class="flex align-items-center">
+                        <span class="flex pr-8 ">
+                            <i class="icon-postpone fs-18"></i>
+                        </span>
+                        <!-- <span class="reminder-select-postpone fs-12" [title]="selectForSubscriber.triggerValue">{{selectForSubscriber.triggerValue}}</span> -->
+                        <span class="reminder-select-postpone fs-12"
+                            [title]="selectForSubscriber.triggerValue">Postpone</span>
+                    </div>
+                </hs-text-select-trigger>
+
+                <hs-text-select-option [value]="remindDelayTimeEnum.ONE_MINUTE" [color]="'#3FA1FB'">Postpone for 1
+                    minutes</hs-text-select-option>
+                <hs-text-select-option [value]="remindDelayTimeEnum.ONE_HOUR" [color]="'#3FA1FB'">Postpone for 1
+                    hour</hs-text-select-option>
+                <hs-text-select-option [value]="remindDelayTimeEnum.TWO_HOURS" [color]="'#3FA1FB'">Postpone for 2
+                    hours</hs-text-select-option>
+                <hs-text-select-option [value]="remindDelayTimeEnum.ONE_DAY" [color]="'#3FA1FB'">Postpone for 1
+                    day</hs-text-select-option>
+                <hs-text-select-option [value]="remindDelayTimeEnum.THREE_DAYS" [color]="'#3FA1FB'">Postpone for 3
+                    days</hs-text-select-option>
+                <hs-text-select-option [value]="remindDelayTimeEnum.ONE_WEEK" [color]="'#3FA1FB'">Postpone for 1
+                    week</hs-text-select-option>
+            </hs-text-select>
+        </div>
+    </div>
+</div>
+
+<iq-menu #menu positionX="after" positionY="above" [dropdownMenuWidth]="175" [offsetX]="-150" [offsetY]="-80">
+    <iq-menu-item>
+        Mark as read
+    </iq-menu-item>
+
+</iq-menu>

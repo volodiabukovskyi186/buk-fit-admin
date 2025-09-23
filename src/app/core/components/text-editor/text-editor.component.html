@@ -1,0 +1,9 @@
+<ckeditor #editorRef [editor]="editorBuild" (focus)="onTouch()" (blur)="onBlur()" [config]="configuration" [(ngModel)]="value"
+  (ngModelChange)="valueChange($event)" (ready)="editorReady($event)"
+  [ngClass]="{'scroll-container': scrollTextContainer , 'scroll-wrapper': !scrollTextContainer, 'cs-text-editor-disabled': disabled}"
+  [disabled]="disabled"></ckeditor>
+
+<!-- 
+
+ <ckeditor [editor]="editorBuild" [config]="configuration" (focus)="onTouch()" [config]="configuration" [(ngModel)]="value"
+ (ngModelChange)="valueChange($event)" (ready)="editorReady($event)"></ckeditor> -->

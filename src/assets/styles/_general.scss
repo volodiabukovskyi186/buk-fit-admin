@@ -1,0 +1,295 @@
+@import "variables";
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.break-word {
+  word-break: break-word;
+}
+
+.no-outline {
+  outline: none;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.bk-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
+
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.width-full {
+  width: 100% !important;
+}
+
+.height-full {
+  height: 100% !important;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.relative {
+  position: relative;
+}
+
+.panel-header {
+  width: 100%;
+  padding-top: 24px;
+  padding-left: 24px;
+  display: flex;
+}
+
+.panel-container {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  overflow: auto;
+}
+
+.field-default-width {
+  width: 320px;
+
+  hs-form-field {
+    width: 100%;
+  }
+}
+
+.hs-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.hs-splitter {
+  width: 100%;
+  height: 1px;
+  background-color: $hs-primary;
+}
+
+.hs-error-field {
+  font-size: 12px;
+  color: #d24e4e;
+  position: absolute;
+  bottom: -23px;
+}
+
+.field-input-text {
+  position: absolute;
+  bottom: -32px;
+  @extend .hs-text-caption;
+  color: $hs-secondary-grey-03;
+}
+
+.field-left {
+  margin-right: 16px;
+}
+
+.description-area {
+  max-width: 992px;
+  padding: 16px;
+  resize: none;
+  width: 100%;
+  border-radius: 2px;
+  border: solid 1px $hs-secondary-grey-02;
+}
+
+@media (max-width: 768px) {
+  .field-left {
+    margin-right: 0;
+  }
+}
+
+.hs-media-desktop {
+  @media (max-width: 1200px) {
+    display: none !important;
+  }
+}
+
+.hs-media-mobile {
+  @media (min-width: 1200px) {
+    display: none !important;
+  }
+}
+
+.absolute {
+  position: absolute;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.description-area {
+  &:hover {
+    border-color: $hs-primary;
+  }
+
+  &:focus {
+    border-color: $hs-primary;
+  }
+}
+
+.bk-two-fields {
+  width: 100%;
+  display: flex;
+  hs-form-field {
+    max-width: 350px;
+    margin-right: 8px;
+  }
+
+  @media (max-width:768px) {
+    flex-direction: column;
+    hs-form-field {
+      max-width: 100%;
+      margin-right:0;
+    }
+
+  }
+}
+
+.hs-link {
+  &:hover {
+    color: $hs-primary;
+    text-decoration: underline;
+  }
+}
+
+.bk-text-area {
+  textarea {
+    max-width:800px;
+    width: 100%;
+    height: 200px;
+    border: solid 1px silver;
+    border-radius: 2px;
+  }
+}
+
+.bk-tab {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.hs-container-shadow {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+}
+
+.hs-button-full-width {
+  // width: 100%;
+  // &.hs-button-default button {
+  //   width: 100%;
+  // }
+  button {
+    width: 100%;
+  }
+}
+
+.hs-icon {
+  font-size: 18px;
+  color: $hs-secondary-grey-03;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-33 {
+  width: 33.3%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.hs-opacity- {
+  &01 {
+    opacity: 0.1;
+  }
+
+  &02 {
+    opacity: 0.2;
+  }
+
+  &03 {
+    opacity:  0.3;
+  }
+
+  &04 {
+    opacity:  0.4;
+  }
+
+  &05 {
+    opacity:  0.5;
+  }
+
+  &06 {
+    opacity:  0.6;
+  }
+
+  &07 {
+    opacity:  0.7;
+  }
+
+  &08 {
+    opacity:  0.8;
+  }
+
+  &09 {
+    opacity:  0.9;
+  }
+
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+
+  .fc-error {
+    color: $hs-error !important;
+  }
+
+
+}

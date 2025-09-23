@@ -1,0 +1,35 @@
+<div class="flex flex-column w-100 notification-reminder pointer" (click)="moveToLink(notification)">
+    <div class="flex w-100">
+
+
+        <div class="w-100 flex  flex-column">
+            <div class="flex align-items-center">
+                <div class="pr-8">
+                    <!-- <div class="avatar flex justify-content-center align-items-center">
+                        <i class="icon-clock fs-18"></i>
+                    </div> -->
+                    <hs-avatar [name]="notification.initiatorName"></hs-avatar>
+
+                </div>
+                <div class="flex align-items-center">
+                    <h6 class="flex">{{notification.title}} <h6 class="notification-id pointer fw-600 pl-4"  > #{{notification?.ticketOrderId}}</h6> </h6>
+                     
+                    <span class="reminder-notification-date mt-10 mb-12 flex ">
+                        <h6> {{notification?.time| date : 'HH:mm'}}</h6>
+                    </span>
+                </div>
+           
+            </div>
+
+            <div class="hs-text-caption mt-8" [innerHTML]="notification.text | HShtmlSave">
+                <!-- {{notification.text}} -->
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+

@@ -1,0 +1,18 @@
+hs-radio-group {
+  display: block;
+
+  .hs-radio-group-wrapper {
+    display: flex;
+
+    .radio-items {
+      display: flex;
+    }
+  }
+}
+
+.hs-radio-group-disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+

@@ -1,0 +1,116 @@
+<div class="flex justify-content-end hs-button-container">
+
+    <div>
+      <hs-button  size="medium"  *ngIf="user?.tgUser?.id"  class="mt-14 mr-8" [mode]="'outlined'" (click)="botUpdateExesice()" [text]="'Надіслати повідомлення в бот'"></hs-button>
+    </div>
+    <div>
+      <hs-button size="medium" class="mt-14" (click)="updateExercise()"  [text]="'Оновити користувача'"></hs-button>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="mt-12">
+
+    <div formArrayName="days">
+      <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
+       <div class="flex justify-content-between">
+         <h1 class="fc-primary pb-12">День {{i + 1}}</h1>
+
+        <div>
+          <hs-button *ngIf="i == 0"  size="medium"  [mode]="'outlined-accend'" [color]="'error'"  (click)="clearAllExercises()" [text]="'Очистити всі дні'"></hs-button>
+        </div>
+       </div>
+        <div  formArrayName="exercises">
+          <div class="bk-exesises mb-12" *ngFor="let exercise of day.get('exercises').controls; let j = index" [formGroupName]="j">
+            <h4 class="pb-8">Вправа {{j + 1}}</h4>
+            <div class="flex bk-two-fields">
+              <hs-form-field class="w-100">
+                <hs-label>Назва вправи</hs-label>
+                <hs-select [enableSearch]="true"  [dropdownMinWidth]="200" formControlName="exerciseName">
+                  <hs-select-option (click)="selectExesise(p, exercise)" (keydown.enter)="selectExesise(p, exercise)"  *ngFor="let p of exersiceNames"
+                                    [value]="p.name">{{p.name}}</hs-select-option>
+                </hs-select>
+              </hs-form-field>
+
+              <hs-form-field class="w-100">
+                <hs-label>Video Url</hs-label>
+                <input iqInput formControlName="videoURL" />
+              </hs-form-field>
+
+              <hs-form-field class="w-100">
+                <hs-label>Підходи і повторення</hs-label>
+                <input iqInput formControlName="setsAndReps" />
+
+                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menuRepeat">
+                  <i class="icon-plus fs-18"></i>
+                </div>
+                <iq-menu #menuRepeat positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
+                  <iq-menu-item *ngFor="let repeat of repeatCountsOptions" (click)="selectRepeat(repeat?.text, exercise)">
+                    {{repeat?.text}}
+                  </iq-menu-item>
+
+                </iq-menu>
+              </hs-form-field>
+
+            </div>
+
+            <div class="flex bk-two-fields">
+              <hs-form-field class="w-100">
+                <hs-label>Вага</hs-label>
+                <input iqInput formControlName="weight" />
+                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menuWeight">
+                  <i class="icon-plus fs-18"></i>
+                </div>
+                <iq-menu #menuWeight positionX="after" positionY="above"  [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
+                  <iq-menu-item *ngFor="let weight of weightOptions" (click)="selectWeightTime(weight?.text, exercise)">
+                    {{weight?.text}}
+                  </iq-menu-item>
+
+                </iq-menu>
+
+
+
+              </hs-form-field>
+              <hs-form-field class="w-100">
+                <hs-label>Відпочинок</hs-label>
+                <input iqInput formControlName="restTime" />
+                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menu">
+                   <i class="icon-plus fs-18"></i>
+                </div>
+                <iq-menu #menu positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
+                  <iq-menu-item *ngFor="let time of restsTimeOptions" (click)="selectExesiseRestTime(time?.text, exercise)">
+                   {{time?.text}}
+                  </iq-menu-item>
+
+                </iq-menu>
+              </hs-form-field>
+            </div>
+
+            <div class="bk-text-area">
+                <hs-label>Коментар</hs-label>
+                <textarea formControlName="comment">
+
+                </textarea>
+            </div>
+
+           <div class="w-100 flex justify-content-end">
+              <hs-button size="medium" class="mt-14"  color="error" (click)="removeExercise(i, j)" [text]="'Видалити вправу'"></hs-button>
+           </div>
+          </div>
+
+          <hs-button size="medium" class="mt-14" (click)="addExercise(i)" [text]="'Додати вправу'"></hs-button>
+
+        </div>
+
+        <div class="w-100 flex justify-content-end">
+        <hs-button size="medium" color="error" class="mt-14" (click)="removeDay(i)" [text]="'Видалити день'"></hs-button>
+        </div>
+
+         <div class="hs-splitter w-100  mt-32 mb-32 "></div>
+
+
+      </div>
+    </div>
+    <hs-button size="medium"  color="success" class="mt-14" (click)="addDay()" [text]="'Додати день'"></hs-button>
+
+
+  </form>

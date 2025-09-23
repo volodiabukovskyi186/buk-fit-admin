@@ -1,0 +1,111 @@
+@import "variables";
+
+hs-time-picker {
+  display: block;
+  position: relative;
+
+  .hs-time-picker-wrapper {
+    display: flex;
+    height: 48px;
+
+    input {
+      padding-right: 16px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    i.hs-icon {
+      color: $hs-secondary-grey-03;
+      bottom: 12px;
+      position: absolute;
+      right: 12px;
+      font-size: 24px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.disabled {
+        opacity: .6;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &.ng-invalid {
+    &.ng-touched {
+      .hs-time-picker-wrapper {
+        .hs-input {
+          border-bottom: 1px solid $hs-error;
+
+          &:focus {
+            border-bottom: 1px solid $hs-error;
+          }
+        }
+      }
+    }
+  }
+}
+
+.hs-input {
+  border: 1px solid $hs-secondary-grey-02;
+  width: 100%;
+  color: $hs-black;
+  background: transparent;
+  padding-bottom: 2px;
+  font-size: 14px;
+  position: relative;
+  border-radius: 2px;
+  padding: 12px;
+
+  &[type=number] {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &::placeholder {
+    color: $hs-black;
+    opacity: 1;
+  }
+
+  &.hs-input-rounded {
+    border: 1px solid  $hs-background;
+    border-radius: 16px;
+    background-color: $hs-background;
+    padding: 7px 8px
+  }
+
+  &.hs-input-empty {
+    border: 1px solid $border;
+    background-color: white;
+    width: 140px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:focus {
+    // border-color: $ui-primary;
+  }
+
+  &:read-only {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &.ng-invalid {
+    &.ng-touched {
+      border-color: $hs-error;
+
+      &:focus {
+        border-color: $hs-error;
+      }
+    }
+  }
+}

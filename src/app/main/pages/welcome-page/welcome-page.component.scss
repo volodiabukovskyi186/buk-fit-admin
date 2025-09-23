@@ -1,0 +1,11 @@
+hs-welcome-page {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 100%;
+  overflow: auto;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+}

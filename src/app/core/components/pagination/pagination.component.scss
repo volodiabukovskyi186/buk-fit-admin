@@ -1,0 +1,51 @@
+@import "variables";
+
+hs-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .pagination {
+    .pagination-page {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 1px;
+
+      &:hover {
+        background: $hs-neutrals-light;
+      }
+    }
+
+    .pagination-dots {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pagination-button {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 0 1px;
+
+      &:hover:enabled {
+        background: $hs-neutrals-light;
+      }
+    }
+
+    .active {
+      background: $hs-neutrals;
+    }
+  }
+}

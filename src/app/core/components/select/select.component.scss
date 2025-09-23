@@ -1,0 +1,121 @@
+@import "variables";
+
+hs-select {
+  width: 100%;
+  outline: none !important;
+
+  &:hover {
+    .hs-icon {
+      color: $hs-primary;
+    }
+  }
+  
+  .hs-select-wrapper {
+    position: relative;
+
+    .hs-select-input-wrapper {
+      position: relative;
+      outline: 0;
+
+      .hs-icon-only {
+        position: relative;
+        top: 0;
+        left: 0;
+      }
+
+      .dropdown-options-container {
+        width: 100%;
+        border-radius: 3px;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+        display: block;
+        overflow: auto;
+        margin-top: 4px;
+      }
+
+      .hs-select-input {
+        width: 100%;
+        line-height: 16px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: currentColor;
+        cursor: pointer;
+        font-size: 14px;
+        background-color: transparent;
+        min-height: 32px;
+        padding: 0 20px 0 16px;
+
+        align-items: center;
+        display: flex;
+
+        .select-value-ellipsis {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        &.disabled + i,
+        &.disabled {
+          cursor: default;
+        }
+
+        .hs-select-placeholder {
+          color: $hs-secondary-grey-03;
+        }
+      }
+
+      i.hs-icon {
+        // color: $hs-secondary-grey-04;
+        position: absolute;
+        cursor: pointer;
+       
+        bottom: 5px;
+        right: 12px;
+
+        -webkit-transition: -webkit-transform 0.2s ease-in-out;
+        -ms-transition: -ms-transform 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
+
+        &.hs-select-arrow-rotated {
+          transform: rotate(180deg);
+          bottom: 5px;
+          color: $hs-primary;
+        }
+        
+      }
+    }
+
+    &.hs-select-rounded {
+      .hs-select-input-wrapper {
+        .hs-select-input {
+          border-radius: 17px;
+          background: gray;
+          min-height: 32px;
+          padding-left: 16px;
+          padding-right: 24px;
+          padding-bottom: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        i {
+          right: 9px;
+          bottom: 9px;
+        }
+      }
+
+      &.hs-select-empty {
+        .hs-select-input-wrapper {
+          .hs-select-input {
+            background: white;
+            border-color: gray;
+            min-width: 160px;
+          }
+        }
+      }
+    }
+  }
+
+
+
+}

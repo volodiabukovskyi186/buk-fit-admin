@@ -1,0 +1,196 @@
+<form [formGroup]="formGroup">
+
+  <div class="flex justify-content-end ">
+    <div *ngIf="user?.tgUser?.id">
+      <hs-button  size="medium"   class="mr-8" [mode]="'outlined'" (click)="botSendMessageSunvery()" [text]="'Нагадати клієнту за Анкету'"></hs-button>
+    </div>
+    <div>
+      <hs-button size="medium" class="mb-18" (click)="updateUserSurvey()" [text]="'Оновити анкету'"></hs-button>
+    </div>
+  </div>
+  <div class="flex bk-two-fields">
+    <hs-form-field class="w-100">
+      <hs-label>Стать</hs-label>
+      <hs-select [dropdownMinWidth]="200" placeholder="Жінка" formControlName="gender">
+        <hs-select-option [value]="genderEnum.MEN">Чоловік</hs-select-option>
+        <hs-select-option [value]="genderEnum.WOMEN">Жінка</hs-select-option>
+      </hs-select>
+
+      <hs-error>Поле обов’язкове</hs-error>
+    </hs-form-field>
+  </div>
+
+  <div class="bk-text-area">
+    <hs-label>Ціль </hs-label>
+    <textarea placeholder="Чого хочете досягнути завдяки тренуванням?" formControlName="goal" rows="3"> </textarea>
+  </div>
+
+  <div class="flex bk-two-fields">
+    <hs-form-field class="w-100">
+      <hs-label>Вік</hs-label>
+      <input iqInput placeholder="18" type="number" formControlName="age"/>
+    </hs-form-field>
+
+    <hs-form-field class="w-100">
+      <hs-label>Зріст (см)</hs-label>
+      <input iqInput type="number" placeholder="174" formControlName="height"/>
+    </hs-form-field>
+  </div>
+
+  <!-- Measurements -->
+  <h3 class="pb-12 pt-8">Заміри натщесерце</h3>
+
+  <div formGroupName="measurements" class="flex flex-column">
+
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Вага (кг)</hs-label>
+        <input iqInput type="number" placeholder="50" formControlName="weight"/>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Талія (см)</hs-label>
+        <input iqInput type="number" placeholder="90" formControlName="waist"/>
+      </hs-form-field>
+    </div>
+
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Стегно (см)</hs-label>
+        <input iqInput type="number" placeholder="20" formControlName="hip"/>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Рука (см)</hs-label>
+        <input iqInput type="number" placeholder="15" formControlName="arm"/>
+      </hs-form-field>
+    </div>
+
+
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Грудна клітка (см)</hs-label>
+        <input iqInput type="number" placeholder="90" formControlName="chest"/>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Плечі (см)</hs-label>
+        <input iqInput type="number"  placeholder="100" formControlName="shoulders"/>
+      </hs-form-field>
+    </div>
+  </div>
+
+
+  <div class="flex bk-two-fields">
+    <hs-form-field class="w-100">
+      <hs-label>Рівень стресу (1–10)</hs-label>
+      <hs-select [dropdownMinWidth]="200" placeholder="5" formControlName="stressLevel">
+        <hs-select-option [value]="1">1</hs-select-option>
+        <hs-select-option [value]="2">2</hs-select-option>
+        <hs-select-option [value]="3">3</hs-select-option>
+        <hs-select-option [value]="4">4</hs-select-option>
+        <hs-select-option [value]="5">5</hs-select-option>
+        <hs-select-option [value]="6">6</hs-select-option>
+        <hs-select-option [value]="7">7</hs-select-option>
+        <hs-select-option [value]="8">8</hs-select-option>
+        <hs-select-option [value]="9">9</hs-select-option>
+        <hs-select-option [value]="10">10</hs-select-option>
+      </hs-select>
+    </hs-form-field>
+
+    <hs-form-field class="w-100">
+      <hs-label>Активність протягом дня (1–10)</hs-label>
+      <hs-select [dropdownMinWidth]="200" placeholder="5" formControlName="activityLevel">
+        <hs-select-option [value]="1">1</hs-select-option>
+        <hs-select-option [value]="2">2</hs-select-option>
+        <hs-select-option [value]="3">3</hs-select-option>
+        <hs-select-option [value]="4">4</hs-select-option>
+        <hs-select-option [value]="5">5</hs-select-option>
+        <hs-select-option [value]="6">6</hs-select-option>
+        <hs-select-option [value]="7">7</hs-select-option>
+        <hs-select-option [value]="8">8</hs-select-option>
+        <hs-select-option [value]="9">9</hs-select-option>
+        <hs-select-option [value]="10">10</hs-select-option>
+      </hs-select>
+    </hs-form-field>
+  </div>
+
+
+  <div class="bk-text-area">
+    <hs-label>Непереносимості / Продукти, які не вживаєте</hs-label>
+    <textarea placeholder="Вкажить продукти які не виживаєте або маєте непереносимість, якщо такі є" formControlName="intolerances" rows="3"> </textarea>
+  </div>
+
+
+  <div class="bk-text-area">
+    <hs-label>Стан здоров’я (опис)</hs-label>
+    <textarea placeholder="Вкажіть загальний стан здоров’я чи немає якихось хворіб..." formControlName="healthStatus"
+              rows="3"> </textarea>
+  </div>
+
+  <h3 class="pb-12 pt-8">Тренування</h3>
+
+
+
+  <div formGroupName="training">
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Де бажаєте тренуватись?</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="place">
+          <hs-select-option [value]="trainingTypeEnum.GYM">В залі</hs-select-option>
+          <hs-select-option [value]="trainingTypeEnum.HOME">В дома</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
+    </div>
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Тренувалися раніше?</hs-label>
+        <hs-select [dropdownMinWidth]="200"  formControlName="trainingExperience">
+          <hs-select-option [value]="trainingExperienceEnum.NO">НІ</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.TRAINING">Теренеруюсь</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.WEEK_AGO">Тиждень тому</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.FEW_WEEK_AGO">Декілька тижнів тому</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.MONTH_AGO">Місяць тому</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.FEW_MONTH_AGO">Декілька місяців тому</hs-select-option>
+          <hs-select-option [value]="trainingExperienceEnum.YEAR_AGO">Рік тому</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
+      <ng-container *ngIf="trainingExperienceControl.value !== trainingExperienceEnum.NO && trainingExperienceControl.value">
+        <hs-form-field class="w-100">
+          <hs-label>Кількість тренувань на тиждень</hs-label>
+          <hs-select [dropdownMinWidth]="200" placeholder="3" formControlName="frequencyPerWeek">
+            <hs-select-option [value]="1">1</hs-select-option>
+            <hs-select-option [value]="2">2</hs-select-option>
+            <hs-select-option [value]="3">3</hs-select-option>
+            <hs-select-option [value]="4">4</hs-select-option>
+            <hs-select-option [value]="5">5</hs-select-option>
+            <hs-select-option [value]="6">6</hs-select-option>
+            <hs-select-option [value]="7">7</hs-select-option>
+            <hs-select-option [value]="8">8</hs-select-option>
+            <hs-select-option [value]="9">9</hs-select-option>
+            <hs-select-option [value]="10">10</hs-select-option>
+          </hs-select>
+        </hs-form-field>
+
+        <hs-form-field class="w-100">
+          <hs-label>Тип тренувань </hs-label>
+          <input iqInput type="text"  placeholder="силові, групові , кроссфіт, танці та ін." formControlName="type"/>
+        </hs-form-field>
+      </ng-container>
+
+
+    </div>
+
+
+  </div>
+
+  <ng-container *ngIf="genderControl.value === genderEnum.WOMEN">
+    <div class="flex align-items-center">
+      <hs-checkbox formControlName="breastfeeding">Грудне вигодовування</hs-checkbox>
+    </div>
+  </ng-container>
+
+
+</form>

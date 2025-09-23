@@ -1,0 +1,67 @@
+<div class="bk-container flex align-items-center flex-column"  tabindex="-1">
+  <div class="bk-login-header">
+    BUK | Panel
+  </div>
+
+  <div class="mt-20">
+    <h2>Реєстрація</h2>
+  </div>
+  <div class="bk-login-body w-100 flex justify-content-center">
+    <div class="bk-login-form flex flex-column align-items-center" [formGroup]="registerForm">
+      <hs-form-field class="w-100">
+        <hs-label>Iмя</hs-label>
+        <input iqInput formControlName="name"  type="text"/>
+        <hs-error>Поле обовязкове до заповнення</hs-error>
+      </hs-form-field>
+      <hs-form-field class="w-100">
+        <hs-label>Прізвище</hs-label>
+        <input iqInput formControlName="secondName"  type="text"/>
+        <hs-error>Поле обовязкове до заповнення</hs-error>
+      </hs-form-field>
+      <hs-form-field class="w-100">
+        <hs-label>Номер телефону</hs-label>
+        <input iqInput formControlName="phone"
+
+                />
+        <hs-error>Поле обовязкове до заповнення</hs-error>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>E-mail <span style="color: red" class="pl-12" *ngIf="isEmailExists"> E-mail вже існує </span></hs-label>
+        <input iqInput formControlName="email"  type="email"/>
+        <hs-error>Поле обовязкове до заповнення</hs-error>
+
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-select [dropdownMinWidth]="200" formControlName="role">
+          <hs-select-option   [value]="UserRolesEnum.TRAINER">Тренер</hs-select-option>
+          <hs-select-option   [value]="UserRolesEnum.MANAGER">Адміністратор</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Пароль</hs-label>
+        <input iqInput formControlName="password" type="password" />
+
+        <hs-error>Поле обовязкове і повинне містити 6 символів</hs-error>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Пароль повторно</hs-label>
+        <input iqInput formControlName="confirmPassword" type="password" />
+        <hs-error *ngIf="!registerForm.hasError('passwordMismatch')">Поле обовязкове до заповнення</hs-error>
+        <hs-error *ngIf="registerForm.hasError('passwordMismatch')">Пароль не співпадає </hs-error>
+      </hs-form-field>
+
+      <div class="flex justify-content-center w-100">
+        <div ><hs-button  (click)="register()" text="Зареєструватись"></hs-button> </div>
+      </div>
+
+      <div class="flex justify-content-end w-100 mt-12">
+        <div>  <hs-button [mode]="'text'"  [routerLink]="'/auth/login'"  text="Перейти до логіну"></hs-button></div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>

@@ -1,0 +1,25 @@
+@import 'variables';
+
+hs-label {
+
+  .hs-label-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+
+    .hs-label-content {
+      font-size: 0.875rem;
+      color: $hs-secondary-grey-04;
+      line-height: 1.05rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .hs-label-hint {
+      font-size: 0.875rem;
+      line-height: 1.05rem;
+      color: $hs-secondary-grey-04;
+    }
+  }
+}

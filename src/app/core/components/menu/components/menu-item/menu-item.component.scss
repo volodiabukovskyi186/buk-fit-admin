@@ -1,0 +1,60 @@
+@import "typography";
+@import "variables";
+
+$iq-menu-item-content-hover: $hs-primary;
+$iq-menu-item-content-text-hover: white;
+$iq-menu-item-content-text-default: $hs-black;
+$iq-menu-item-content-active: $hs-neutrals-active;
+
+.iq-menu-item {
+  @extend .hs-text-caption;
+
+  cursor: pointer;
+  color: $iq-menu-item-content-text-default;
+
+  .iq-menu-item-content {
+
+
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding-left: 9px;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    i {
+      font-size: 1.125rem !important;
+      // padding-right: 9px;
+    }
+
+    .icon {
+
+      padding-right: 9px;
+    }
+
+    &:hover:not(:active) {
+      color: $iq-menu-item-content-text-hover;
+      background: $iq-menu-item-content-hover;
+    }
+
+    &:active {
+      color: $iq-menu-item-content-active;
+    }
+  }
+
+  &-color-error {
+    color: iq-error-color(500);
+
+    .iq-menu-item-content {
+      &:hover:not(:active) {
+        color: iq-error-color(500);
+      }
+    }
+  }
+
+  .iq-menu-item-content-selected {
+    color: white;
+    background: $iq-menu-item-content-active;
+  }
+}

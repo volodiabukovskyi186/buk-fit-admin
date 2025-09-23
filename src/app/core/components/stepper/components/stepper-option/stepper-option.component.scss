@@ -1,0 +1,40 @@
+@import "variables";
+
+hs-stepper-option {
+
+  .hs-stepper-option-counter {
+    border: 2px solid $hs-secondary-grey-02;
+    border-radius: 50%;
+    color: $hs-black;
+    height: 24px;
+    width: 24px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+
+  .hs-stepper-option-text {
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  &.hs-stepper-option-counter-active {
+    .hs-stepper-option-counter {
+      border: 2px solid $hs-primary;
+      color: $hs-primary;
+    }
+
+    .hs-stepper-option-text {
+      color: $hs-primary;
+    }
+  }
+
+  .hs-stepper-devider-container {
+    display: none;
+    .hs-stepper-divider {
+      width: 16px;
+      height: 2px;
+      background: $hs-secondary-grey-02;
+    }
+  }
+}

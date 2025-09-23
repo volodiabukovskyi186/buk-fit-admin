@@ -1,0 +1,34 @@
+<div class="hs-text-select-wrapper" (click)="toggle()"
+  [ngClass]="{'hs-text-select-rounded': isRounded, 'hs-text-select-empty': empty}">
+  <div class="hs-text-select-input-wrapper" #selectInputWrapper [ngClass]="{
+    'hs-text-select-arrow-left': iconAlign === iconAlignEnum.left,
+  }" >
+    <div #input class="hs-text-select-input" tabindex="-1" [class.disabled]="disabled" (blur)="onTouched()">
+      <div class="hs-text-select-placeholder" *ngIf="empty">
+        {{placeholder}}
+      </div>
+      <ng-content select="hs-text-select-trigger"></ng-content>
+    
+      <div *ngIf="!selectTrigger" class="select-text-value-ellipsis" [title]="triggerValue">{{ triggerValue }}</div>
+    </div>
+    <!-- icon-chevron-down_2 -->
+    <i class="hs-icons icon-chevron-down_2"  [ngClass]="{
+      'hs-text-select-arrow-rotated': isDropDownOpen,
+    }"
+      (click)="onDropMenuIconClick($event)"></i>
+  </div>
+</div>
+
+<hs-text-dropdown (scrollEvent)="scrollEvent.emit($event)" (openingChange)="dropdownOpeningChange($event)"
+  [reference]="selectInputWrapper" [offsetX]="offsetX" [minWidth]="dropdownMinWidth" [maxHeight]="dropdownMaxHeight">
+
+  <hs-text-select-option *ngIf="enableSearch" class="hs-text-select-search-option" [disabled]="true">
+    <input [formControl]="searchControl" class="hs-input hs-text-select-search-input" type="text" placeholder="Suchen">
+  </hs-text-select-option>
+
+  <div *ngIf="isEmptySearchResult && searchControl.value.length > 0" class="hs-text-select-empty-search-result">
+    <!-- Keine Suchergebnisse -->
+  </div>
+
+  <ng-content></ng-content>
+</hs-text-dropdown>

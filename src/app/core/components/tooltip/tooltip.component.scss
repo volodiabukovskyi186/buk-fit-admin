@@ -1,0 +1,71 @@
+@import 'variables';
+
+$cs-tooltip-bg-color: $hs-secondary-grey-04;
+$arrow-height: 8px;
+$tooltip-text-size: 12px;
+
+.cs-tooltip {
+
+  &.cs-tooltip-triangle-right {
+    .cs-tooltip-wrapper {
+      .cs-tooltip-triangle {
+        transform: rotate(-90deg);
+        left: calc(-1 * (#{$arrow-height} + 4px));
+      }
+    }
+  }
+
+  &.cs-tooltip-triangle-left {
+    .cs-tooltip-wrapper {
+      .cs-tooltip-triangle {
+        transform: rotate(90deg);
+        right: calc(-1 * (#{$arrow-height} + 4px));
+      }
+    }
+  }
+
+  &.cs-tooltip-triangle-top {
+    .cs-tooltip-wrapper {
+      .cs-tooltip-triangle {
+        transform: rotate(180deg);
+        bottom: calc(-#{$arrow-height});
+      }
+    }
+  }
+
+  &.cs-tooltip-triangle-bottom {
+    .cs-tooltip-wrapper {
+      .cs-tooltip-triangle {
+        top: calc(-#{$arrow-height});
+      }
+    }
+  }
+
+  .cs-tooltip-wrapper {
+    display: flex;
+    background-color: $cs-tooltip-bg-color;
+    border-radius: 5px;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    z-index: 1001;
+    color: white;
+    text-align: center;
+    padding: 10px 14px;
+    font-size: $tooltip-text-size;
+
+    .cs-tooltip-triangle {
+      width: 0;
+      height: 0;
+      border-left: $arrow-height solid transparent;
+      border-right: $arrow-height solid transparent;
+      border-bottom: $arrow-height solid $cs-tooltip-bg-color;
+      position: absolute;
+      filter: drop-shadow(0px -2px 1px rgba(32, 33, 36, 0.09));
+      visibility: hidden;
+    }
+
+    span {
+      display: inline-block;
+      word-break: break-word;
+    }
+  }
+}

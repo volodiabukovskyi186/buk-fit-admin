@@ -1,0 +1,104 @@
+<div class="h-100 w-100 p-12 container">
+  <div class="flex  justify-content-between">
+    <h2 class="fc-primary">Видалені Клієнти: {{ totalUsersCount }}</h2>
+  </div>
+
+  <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
+    <hs-table-grid style=" height: 100% !important;" *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
+                   [allowMultiplySorting]="false" [data]="users" (clickOnRow)="moveToMessage($event.id)">
+
+      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
+
+      <div hsTableColumn fieldName="img" caption="Тренер" width="120px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
+        <ng-template #coachTmpl let-data="cellData">
+          <div class="m-2">
+            <span class="fc-success" *ngIf="data?.coachId">YES</span>
+            <span  class="fc-error"  *ngIf="!data?.coachId">NO</span>
+          </div>
+        </ng-template>
+      </div>
+
+
+      <div hsTableColumn fieldName="img" caption="Імя" width="120px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
+        <ng-template #idNumberTmpl let-data="cellData">
+          <div class="m-2">
+            {{ data?.name }}
+          </div>
+        </ng-template>
+      </div>
+
+
+      <div hsTableColumn fieldName="img" caption="Прізвище" width="120px" [cellTemplate]="idNumberChatTmpl"
+           [allowResize]="true">
+        <ng-template #idNumberChatTmpl let-data="cellData">
+          <div class="m-2">
+            {{ data?.secondName }}
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn fieldName="img" caption="E-mail" width="150px" [cellTemplate]="emailChatTmpl"
+           [allowResize]="true">
+        <ng-template #emailChatTmpl let-data="cellData">
+          <div class="m-2">
+            {{ data?.email }}
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn  caption="Telegram" width="120px" [cellTemplate]="tgUserTmpl"
+           [allowResize]="true">
+        <ng-template #tgUserTmpl let-data="cellData">
+          <div class="m-2 fc-primary hs-link" *ngIf="data?.tgUser?.username" (click)="moveToTg(data?.tgUser)">
+            {{ data?.tgUser?.username }}
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn fieldName="status" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
+        <ng-template #statusTmpl let-data="cellData">
+          <hs-status [statusType]="data?.status"></hs-status>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn fieldName="img" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl"
+           [allowResize]="true">
+        <ng-template #createdTmpl let-data="cellData">
+          <div class="m-2">
+            {{ data?.createdAt.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn fieldName="img" caption="Дата Оплати" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="payDateTmpl"
+           [allowResize]="true">
+        <ng-template #payDateTmpl let-data="cellData">
+          <div class="m-2" *ngIf="data?.payDate"  [ngClass]="{
+          'fc-warning': data?.paymentStatus === paymentDateEnum.WARNING,
+          'fc-error': data?.paymentStatus === paymentDateEnum.OVERDUE,
+          'fc-success': data?.paymentStatus === paymentDateEnum.ON_TIME,
+          }">
+            {{ data?.payDate?.seconds * 1000 | date: 'dd.MM.yyyy' }}
+          </div>
+
+          <div *ngIf="!data?.payDate">-</div>
+        </ng-template>
+      </div>
+
+    </hs-table-grid>
+
+
+  </div>
+  <mat-paginator
+    [length]="totalUsersCount"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+
+</div>
+
+
+
+

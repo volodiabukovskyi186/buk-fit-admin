@@ -1,0 +1,16 @@
+<div class="hs-time-range-picker-wrapper">
+  <input
+    class="hs-input"
+    [disabled]="disabled"
+    [dropSpecialCharacters]="false"
+    [leadZeroDateTime]="true"
+    [mask]="mask"
+    [validation]="false"
+    [placeholder]="placeholder"
+    (focusout)="onInputFocusOut()"
+    [(ngModel)]="value"
+    (focus)="onTouch($event)"
+    (ngModelChange)="valueChange($event)">
+  <i class="hs-icon icon-alarm" [ngClass]="{'disabled': disabled}" (click)="setCurrentTimeInterval()"></i>
+  <!-- <div class="hs-icon icon-alarm" [ngClass]="{'disabled': disabled}" (click)="setCurrentTimeInterval()"></div> -->
+</div>

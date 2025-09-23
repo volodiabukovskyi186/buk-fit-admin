@@ -1,0 +1,15 @@
+<div
+  class="hs-chip-wrapper"
+  [class.hs-chip-disabled]="disabled"
+  [class.hs-chip-selected]="selected"
+  (click)="selectChip()"
+>
+  <ng-content select="[icon]"></ng-content>
+  <ng-content select="[label]"></ng-content>
+
+  <i
+    *ngIf="removable"
+    (click)="removeChip()"
+    class="icon-cross fc-secondary-grey-03 ml-2"
+  ></i>
+</div>

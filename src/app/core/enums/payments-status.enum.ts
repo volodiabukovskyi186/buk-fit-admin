@@ -1,0 +1,6 @@
+export enum PAYMENT_STATUS_ENUM {
+  PAYED = 'PAYED',
+  NOT_ACTIVE = 'NOT_ACTIVE',
+  ACTIVE = 'ACTIVE',
+  NEW = 'NEW',
+}

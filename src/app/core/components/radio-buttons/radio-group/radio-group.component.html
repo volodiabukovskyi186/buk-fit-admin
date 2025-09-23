@@ -1,0 +1,7 @@
+<div class="hs-radio-group-wrapper" [ngClass]="{'invalid': invalid}">
+  <div class="radio-items" [ngStyle]="{
+      'flex-direction': alignment === 'column' ? 'column' : 'row'
+    }">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<ng-content select="hs-expansion-panel-header"></ng-content>
+
+<div #body class="hs-expansion-panel-content" role="region" [id]="id" [@bodyExpansion]="_getExpandedState()"
+  (@bodyExpansion.done)="_bodyAnimationDone.next($event)">
+  <div class="hs-expansion-panel-body">
+    <ng-content></ng-content>
+  </div>
+
+  <ng-content select="hs-action-row"></ng-content>
+</div>

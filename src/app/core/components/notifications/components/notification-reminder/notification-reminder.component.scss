@@ -1,0 +1,72 @@
+@import "variables";
+
+hs-notification-reminder {
+  padding-bottom: 16px;
+  display: flex;
+  background: white;
+  width: 100%;
+  min-height: 71px;
+  border-radius: 2px;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1),
+    0px 0px 3px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+  padding: 12px 14px;
+
+  .notification-reminder {
+    word-wrap: break-word
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: $hs-secondary-blue-01;
+
+    .icon-clock {
+      color: $hs-primary;
+    }
+  }
+
+  .avatar-error {
+    background: $hs-error;
+    .icon-clock {
+      color: white;
+    }
+  }
+
+  .expired-reminder {
+    color: $hs-error;
+  }
+
+  .notification-id {
+    color: $hs-secondary-grey-03;
+  }
+
+  .reminder-notification-date {
+    color: $hs-secondary-grey-03;
+    font-weight: 600;
+  }
+
+  .icon-more-horizontal {
+    color: $hs-secondary-grey-03;
+  }
+
+  .reminder-notification-bottom {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .reminder-select-postpone {
+    max-width: 76px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.reminder-btn-padding {
+    button {
+        padding: 12px 0 !important;
+    }
+}
+

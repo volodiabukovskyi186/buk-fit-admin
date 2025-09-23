@@ -1,0 +1,29 @@
+
+
+.hs-expansion-panel-header {
+  display: block;
+  height: 24px;
+
+  align-items: center;
+  display: flex;
+
+  cursor: pointer;
+
+  .hs-content {
+    flex-direction: row;
+    display: flex;
+    flex: 1;
+
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .hs-icon {
+
+    font-size: 18px;
+
+    width: 24px;
+
+    // color: blue;
+  }
+}

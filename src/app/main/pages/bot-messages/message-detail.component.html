@@ -1,0 +1,93 @@
+<div class="container p-12" >
+  <div class="message p-12">
+    <div class="flex justify-content-between align-items-center ">
+      <div></div>
+      <div class="flex justify-content-end mb-24">
+        <hs-button [text]="'Send in test chat'" class="mr-8" [color]="'error'" [isDisabled]="isSending" (click)="sendMessageAction('TEST')"></hs-button>
+        <hs-button [text]="'Send message'" [isDisabled]="isSending" (click)="sendMessageAction('')"></hs-button>
+      </div>
+    </div>
+
+    <div class="images flex flex-wrap justify-content-start">
+      <div class="image  relative" *ngFor="let media of message?.medias">
+        <div class="remove-media-btn" (click)="removeImage(media)">x</div>
+
+        <img *ngIf="
+          media.type === 'image/jpeg' ||
+          media.type === 'image/png'
+          "
+
+             [src]="media.viewUrl" alt="" >
+        <img *ngIf="media.type === 'photo'" [src]="media.url" alt="" >
+
+        <video *ngIf="media.type === 'video'"  controls  [src]="media.url"></video>
+        <video *ngIf="media.type === 'video/mp4'"  controls  [src]="media.viewUrl"></video>
+      </div>
+    </div>
+    <input type="file" class="file-input"
+           (change)="onFileSelected($event)" #uploadJsFiles>
+    <hs-button size="medium"  class="mt-14" [text]="'Add Media'" (click)="addImage(uploadJsFiles)"></hs-button>
+    <div class="hs-splitter my-12"></div>
+    <div class="message-text mt-12" [innerHTML]="message?.text">
+
+    </div>
+
+
+<!--    <div class="mt-24">-->
+<!--      <hs-button size="medium" [color]="'warning'"  class="mt-14 mr-8" [text]="'Copy pattern GPT'" [cdkCopyToClipboard]="copyPaternText(message?.text)"></hs-button>-->
+<!--      <hs-button size="medium"  [color]="'warning'" class="mt-14 mr-8" [text]="'Copy text'" [cdkCopyToClipboard]="message?.text"></hs-button>-->
+<!--    </div>-->
+
+    <div>
+
+
+    </div>
+    <div class="media-text  flex">
+      <textarea [formControl]="messageText"></textarea>
+      <div>
+
+        <p>&lt;tg-spoiler&gt;прихований текст&lt;/tg-spoiler&gt;</p>
+        <p>&lt;b&gt;<b>Жирний текст</b> &lt;/b&gt;</p>
+        <p>&lt;strong&gt; <strong> Жирний текст</strong>&lt;/strong&gt;</p>
+        <p>&lt;i&gt; <i>Курсив</i> &lt;/i&gt;</p>
+        <p>&lt;em&gt; <em>Курсив</em> &lt;/em&gt;</p>
+        <p>&lt;u&gt; <u>Підкреслений текст</u>&lt;/u&gt;</p>
+        <p>&lt;s&gt; <s>Закреслений текст</s>&lt;/s&gt;</p>
+        <p>&lt;code&gt;<code>Моноширинний текст</code>&lt;/code&gt;</p>
+        <p>&lt;pre&gt; Блок моноширинного тексту &lt;/pre&gt;</p>
+        <p>&lt;a href="https://t.me/+8Rvm40tRgxAxYTJi"&gt;[BUK | Львів Новини]&lt;/a&gt;</p>
+      </div>
+    </div>
+    <!-- <hs-button class="mt-14" color="success" [text]="'Add link to text'" (click)="addChannelLink()"></hs-button> -->
+<!--    <hs-button class="mt-14 mr-8" color="warning" [text]="'Add alarm'" (click)="addButton()"></hs-button>-->
+    <hs-button class="mt-14" color="success" [text]="'Додати кнопку'" (click)="addButton()"></hs-button>
+
+    <form [formGroup]="buttonsForm" >
+      <div formArrayName="buttons">
+        <div *ngFor="let button of buttons.controls; let i = index" [formGroupName]="i">
+          <div class="flex bk-two-fields align-items-center">
+            <hs-form-field >
+              <hs-label>Текст кнопки:</hs-label>
+              <input iqInput formControlName="text"/>
+              <hs-error>Поле обовязкове до заповнення</hs-error>
+            </hs-form-field>
+            <hs-form-field >
+              <hs-label>Текст кнопки:</hs-label>
+              <input iqInput formControlName="url"/>
+              <hs-error>Поле обовязкове до заповнення</hs-error>
+            </hs-form-field>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+<!--      <button type="submit" [disabled]="buttonsForm.invalid">Надіслати</button>-->
+    </form>
+
+
+
+  </div>
+</div>

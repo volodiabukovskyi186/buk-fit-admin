@@ -1,0 +1,27 @@
+.iq-menu-wrapper {
+  width: 100%;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+  background-color: white;
+  overflow: auto;
+  border-radius: 2px;
+
+  .iq-menu-item {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  iq-menu-item:last-child {
+    .iq-menu-item {
+      // padding-bottom: 8px;
+    }
+  }
+
+  iq-menu-header:not(:first-child) {
+    .iq-menu-header {
+      margin-top: 6px;
+    }
+   
+  }
+
+}

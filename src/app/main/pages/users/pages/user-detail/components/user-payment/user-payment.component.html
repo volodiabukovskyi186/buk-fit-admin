@@ -1,0 +1,16 @@
+<div hsButtonToggleGroup id="12" [value]="selectedView" (change)="setTabView($event)" class="mt-12" style="max-width: 900px;">
+  <hs-button-toggle-ui [value]="userPaymentTabEmun.PAYMENTS">
+    <span>Список оплат</span>
+  </hs-button-toggle-ui>
+
+  <hs-button-toggle-ui [value]="userPaymentTabEmun.PAYMENT_TEMPLATE" >
+    <span>Шаблон оплати</span>
+  </hs-button-toggle-ui>
+</div>
+
+<ng-container *ngIf="selectedView === userPaymentTabEmun.PAYMENTS">
+  <bk-user-payments></bk-user-payments>
+</ng-container>
+<ng-container *ngIf="selectedView === userPaymentTabEmun.PAYMENT_TEMPLATE">
+  <bk-user-payment-template></bk-user-payment-template>
+</ng-container>

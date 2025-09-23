@@ -1,0 +1,110 @@
+$hs-button-toggle-border-radius: 17.5px;
+
+.hs-button-toggle-group-container {
+  display: flex;
+  flex-direction: row;
+  border-radius: $hs-button-toggle-border-radius;
+  background-color: #F1F3F5;
+  overflow: hidden;
+
+  &.hs-button-toggle-group-disabled {
+    opacity: .7;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.hs-button-toggle-group-inverted {
+    position: relative;
+
+    hs-button-toggle-ui {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 1px;
+        background-color: #d2d7dd;
+        z-index: 0;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: #d2d7dd;
+        z-index: 0;
+      }
+
+      &.hs-button-toggle-item-active,
+      &.hs-button-toggle-item-hovered,
+      &:hover {
+
+        .hs-button-toggle-item {
+          z-index: 2;
+        }
+
+      }
+
+      &.hs-button-toggle-item-previous-active {
+        &.hs-button-toggle-item-hovered {
+          .hs-button-toggle-item {
+            &:after {
+              background-color: #F1F3F5;
+              top: -1px;
+              height: calc(100% + 2px);
+            }
+          }
+        }
+      }
+
+      &.hs-button-toggle-item-active {
+        &.hs-button-toggle-item-previous-hovered {
+          .hs-button-toggle-item {
+            &:after {
+              background-color: #F1F3F5;
+              top: -1px;
+              height: calc(100% + 2px);
+            }
+          }
+        }
+      }
+
+      .hs-button-toggle-item {
+        border-top-color: #d2d7dd;
+        border-bottom-color: #d2d7dd;
+      }
+
+      &.hs-button-toggle-item-first {
+        .hs-button-toggle-item {
+          border-left-color: #d2d7dd;
+        }
+      }
+
+      &.hs-button-toggle-item-last {
+        .hs-button-toggle-item {
+          border-right-color: #d2d7dd;
+        }
+      }
+    }
+  }
+
+  &.hs-button-toggle-group-icons {
+    display: inline-flex;
+
+    hs-button-toggle-ui {
+
+      overflow: visible;
+
+      .hs-button-toggle-item {
+        width: 40px;
+        padding: 8px;
+      }
+    }
+  }
+}

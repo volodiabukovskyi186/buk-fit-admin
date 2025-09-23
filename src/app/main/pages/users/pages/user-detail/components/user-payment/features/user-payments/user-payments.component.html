@@ -1,0 +1,164 @@
+<div class="flex flex-column h-100">
+  <div>
+    <h2>
+      Оплата користувача
+    </h2>
+
+    <div *ngIf="currentPayment()">
+      <div class="flex justify-content-start w-100 ">
+        <div class="flex flex-column bk-card">
+          <div class="flex ">
+            <h4 class="pr-4">Тариф: </h4>
+            <h4>
+              @if (currentPayment().tariff === userPaymentsTariffEnum.BASIC) {
+                Базовий
+              }
+              @if (currentPayment().tariff === userPaymentsTariffEnum.STANDARD) {
+                Стандартний
+              }
+              @if (currentPayment().tariff === userPaymentsTariffEnum.PREMIUM) {
+                Преміум
+              }
+            </h4>
+          </div>
+
+          <div class="flex">
+            <h4 class="pr-4">Вартість: </h4>
+            <h4>
+              {{ currentPayment().price }} грн
+            </h4>
+          </div>
+
+          <div class="flex">
+            <h4 class="pr-4">Період: </h4>
+            <h4>
+              {{ currentPayment().fromDate | dateFirebase }}
+            </h4>
+            -
+            <h4>
+              {{ currentPayment().toDate | dateFirebase }}
+            </h4>
+          </div>
+
+          <div class="flex">
+            <h4 class="pr-4">Коментар: </h4>
+            <h4>
+              {{ currentPayment().comment }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="ml-12">
+          <hs-button (click)="addPayment()" [text]="'Надіслати оплату користувачу'"></hs-button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="flex flex-column" style="height: 100%">
+    <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
+      <hs-table-grid style=" height: 100% !important;" [dataType]="tableGridDataTypeEnum.API"
+                     [allowMultiplySorting]="false" [data]="payments" >
+
+        <div hsTableColumn caption="ID" width="80px" fieldName="id" [allowResize]="true"></div>
+
+        <div hsTableColumn fieldName="name" caption="Оплачено" width="100px" [cellTemplate]="isPayedTmpl"
+             [allowResize]="true">
+          <ng-template #isPayedTmpl let-data="cellData">
+            @if (data?.isPayed) {
+              <span class="fc-success">Так</span>
+            } @else {
+              <span class="fc-error">Ні</span>
+            }
+          </ng-template>
+        </div>
+
+
+        <div hsTableColumn fieldName="name" caption="Тариф" width="100px" [cellTemplate]="tariffTmpl"
+             [allowResize]="true">
+          <ng-template #tariffTmpl let-data="cellData">
+            @if (data.tariff === userPaymentsTariffEnum.BASIC) {
+              Базовий
+            }
+            @if (data.tariff === userPaymentsTariffEnum.STANDARD) {
+              Стандартний
+            }
+            @if (data.tariff === userPaymentsTariffEnum.PREMIUM) {
+              Преміум
+            }
+          </ng-template>
+        </div>
+
+        <div hsTableColumn fieldName="name" caption="Вартість" width="100px" [cellTemplate]="priceTmpl"
+             [allowResize]="true">
+          <ng-template #priceTmpl let-data="cellData">
+            {{ data?.price }}
+          </ng-template>
+        </div>
+
+        <div hsTableColumn fieldName="status" caption="Статус" width="120px" [cellTemplate]="statusTmpl"
+             [allowResize]="true">
+          <ng-template #statusTmpl let-data="cellData">
+            {{data?.status}}
+          </ng-template>
+        </div>
+
+
+        <div hsTableColumn fieldName="name" caption="Дата оплати" width="150px" [cellTemplate]="payedDateTmpl"
+             [allowResize]="true">
+          <ng-template #payedDateTmpl let-data="cellData">
+            @if (data.payedDate) {
+              {{ data?.payedDate | dateFirebase:'DD-MM-YYYY HH:mm'  }}
+            } @else {
+              -
+            }
+
+          </ng-template>
+        </div>
+
+
+        <div hsTableColumn fieldName="name" caption="Період активності" width="200px" [cellTemplate]="fromDateTmpl"
+             [allowResize]="true">
+          <ng-template #fromDateTmpl let-data="cellData">
+            {{ data?.fromDate | dateFirebase }} - {{ data?.toDate | dateFirebase }}
+          </ng-template>
+        </div>
+
+
+        <div hsTableColumn fieldName="comment" caption="Коментар" width="200px" [cellTemplate]="descTmpl"
+             [allowResize]="true">
+          <ng-template #descTmpl let-data="cellData">
+            <div class="m-2">
+              {{ data?.comment }}
+            </div>
+          </ng-template>
+        </div>
+
+        <div hsTableColumn fieldName="comment" caption="Дія" width="150px" [cellTemplate]="actionTmpl"
+             [allowResize]="true">
+          <ng-template #actionTmpl let-data="cellData">
+            <div class="m-2">
+              @if (data?.status !== 'NOT_ACTIVE' && !data.isPayed) {
+                <hs-icon-button (click)="updateUserPaymentStatus(data.id)">
+                  <i class="hs-icon icon-cross"></i>
+                </hs-icon-button>
+              }
+            </div>
+          </ng-template>
+        </div>
+
+      </hs-table-grid>
+    </div>
+
+    <mat-paginator
+      [length]="totalpaymentsCount"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+
+  </div>
+
+</div>

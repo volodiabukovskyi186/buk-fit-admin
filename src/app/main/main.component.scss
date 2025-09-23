@@ -1,0 +1,67 @@
+@import 'variables';
+
+bk-main {
+  display: flex;
+  height: 100vh;
+  position: relative;
+
+  // background: $hs-background;
+  background:white;
+
+  .panel-wrapper {
+    width: 100%;
+    
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow:hidden ;
+
+    //@media (max-width: 768px) {
+    //  height: calc(100% - 50px) !important;
+    //}
+  }
+
+  .panel-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    min-height: 0;
+  }
+
+  .menu-list-side-bar {
+    border-right: 1px solid $hs-secondary-grey-01;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-content {
+    
+    // width: 100%;
+    // height: 100%;
+    overflow: hidden;
+    @media (max-width: 768px) {
+      //padding-bottom: 40px;
+    }
+   
+
+  }
+
+  .mobile-header {
+    border-bottom: 1px solid $hs-secondary-grey-01;
+  }
+
+  .mobile-menu-triggrs {
+   color: gray;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu-triggrs {
+      display: none;
+    }
+
+    .mobile-header {
+      display: none;
+    }
+  }
+
+}

@@ -1,0 +1,44 @@
+<div class="bk-create-coach">
+   <div class="flex flex" *ngIf="user">
+      <div class="mr-12"> Iмя : {{user.name}}</div>
+      <div class="mr-8">  Прізвище : {{user.secondName}}</div>
+
+   </div>
+
+<!--   <div hsButtonToggleGroup [value]="selectedView" (change)="setTabView($event)" class="mt-12" style="max-width: 900px;">-->
+<!--      <hs-button-toggle-ui [value]="userInfoTabsEnum.INFO">-->
+<!--          <span>Тренер</span>-->
+<!--      </hs-button-toggle-ui>-->
+<!--      <hs-button-toggle-ui [value]="userInfoTabsEnum.CLIENTS">-->
+<!--          <span>Клієнти</span>-->
+<!--      </hs-button-toggle-ui>-->
+<!--&lt;!&ndash;       <hs-button-toggle-ui [value]="userInfoTabsEnum.MEAL_TEXT">&ndash;&gt;-->
+<!--&lt;!&ndash;           <span>Харчування текст</span>&ndash;&gt;-->
+<!--&lt;!&ndash;       </hs-button-toggle-ui>&ndash;&gt;-->
+<!--  </div>-->
+
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.INFO">
+   <bk-manager-info></bk-manager-info>
+  </ng-container>
+
+<!--  <ng-container *ngIf="selectedView === userInfoTabsEnum.CLIENTS">-->
+<!--   <bk-coach-clients></bk-coach-clients>-->
+<!--  </ng-container>-->
+
+
+<!--  <ng-container *ngIf="selectedView === userInfoTabsEnum.EXESISES">-->
+<!--   <bk-exesises></bk-exesises>-->
+<!--  </ng-container>-->
+<!--  <ng-container *ngIf="selectedView === userInfoTabsEnum.MEAL">-->
+<!--   <bk-user-meals></bk-user-meals>-->
+<!--  </ng-container>-->
+<!--  <ng-container *ngIf="selectedView === userInfoTabsEnum.CALORIES">-->
+<!--   <bk-user-calories></bk-user-calories>-->
+<!--  </ng-container>-->
+
+<!--    <ng-container *ngIf="selectedView === userInfoTabsEnum.MEAL_TEXT">-->
+<!--<bk-user-meals-text></bk-user-meals-text>-->
+<!--  </ng-container>-->
+
+ </div>

@@ -1,0 +1,37 @@
+<label
+  class="iq-checkbox-label"
+  [ngClass]="{ 'iq-checkbox-disabled': disabled }"
+>
+  <input
+    #checkbox
+    type="checkbox"
+    [checked]="checked"
+    (change)="changeValue($event)"
+    [disabled]="disabled"
+    [indeterminate]="indeterminate"
+  />
+
+  <div class="iq-checkbox-wrapper">
+    <div class="checkmark">
+      <div class="indeterminate-line"></div>
+      <span class="iq-checkbox-custom-checkmark" #customCheckmark>
+        <ng-content select="[csCheckboxCheckmark]"></ng-content>
+      </span>
+      <ng-container
+        *ngIf="!customCheckmark?.children?.length"
+        [ngTemplateOutlet]="checkmark"
+      ></ng-container>
+    </div>
+    <span class="iq-checkbox-text">
+      <ng-content></ng-content>
+    </span>
+  </div>
+</label>
+
+<ng-template #checkmark>
+  <!-- <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.16251 9.49995L0.887512 5.22495L1.95626 4.1562L5.16251 7.36245L12.0438 0.481201L13.1125 1.54995L5.16251 9.49995Z"/>
+  </svg> -->
+  
+  <i class="icon-check"></i>
+</ng-template>

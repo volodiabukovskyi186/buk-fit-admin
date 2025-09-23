@@ -1,0 +1,155 @@
+@import "variables";
+
+hs-status {
+  display: flex;
+  align-items: center;
+
+  &.status-low {
+    p {
+      color: $hs-success;
+    }
+    .status-dot {
+      background: $hs-success;
+    }
+  }
+
+  &.status-medium {
+    p {
+      color: $hs-warning;
+    }
+    .status-dot {
+      background: $hs-warning;
+    }
+  }
+
+  &.status-high {
+    p {
+      color: $hs-error;
+    }
+    .status-dot {
+      background: $hs-error;
+    }
+  }
+
+  &.status-urgent {
+    p {
+      color: $hs-purple;
+    }
+    .status-dot {
+      background: $hs-purple;
+    }
+  }
+
+  &.status-new {
+    p {
+      color: $hs-error;
+    }
+    .status-dot {
+      background: $hs-error;
+    }
+  }
+
+  &.status-on-hold {
+    p {
+      color: $hs-warning;
+    }
+
+    .status-dot {
+      background: $hs-warning;
+    }
+  }
+
+  &.status-add-to-queuq {
+    p {
+      color: $hs-warning;
+    }
+
+    .status-dot {
+      background: $hs-warning;
+    }
+  }
+
+  &.status-in-progress {
+    p {
+      color: $hs-primary;
+    }
+    .status-dot {
+      background: $hs-primary;;
+    }
+  }
+
+  &.status-answered {
+    p {
+      color: $hs-success;
+    }
+    .status-dot {
+      background: $hs-success;
+    }
+  }
+
+  &.status-client-replay {
+    p {
+      color: $hs-error;
+    }
+    .status-dot {
+      background: $hs-error;
+    }
+  }
+
+  &.status-closed {
+    p {
+      color: $hs-secondary-grey-03;
+    }
+    .status-dot {
+      background: $hs-secondary-grey-03;
+    }
+  }
+
+
+
+
+
+
+  &.status-active {
+    p {
+      color: #4aa785;
+    }
+    .status-dot {
+      background: #4aa785;
+    }
+  }
+
+  &.status-not-active {
+    p {
+      color: #8a8cd9;
+    }
+    .status-dot {
+      background: #8a8cd9;
+    }
+  }
+
+  &.status-blocked {
+    p {
+      color: #00000066;
+    }
+    .status-dot {
+      background: #00000066;
+    }
+  }
+
+
+  &.status-deleted {
+    p {
+      color: rgb(208, 43, 43);
+    }
+    .status-dot {
+      background: rgb(208, 43, 43);
+    }
+  }
+
+  .status-dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+  }
+}
