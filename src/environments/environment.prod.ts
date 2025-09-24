@@ -9,8 +9,8 @@ export const environment = {
     appId: "1:479742325628:web:395cb9fcc11896040ceaf9",
     measurementId: "G-LG246H4RLE"
   },
-  botToken: '8033627783:AAFoa_Pzye9EcwK5_JbaCAuAbZbfGG8021U',
+  botToken: '8290103069:AAGfjD9BvZ2-SIO5xHrqgB9ogG_ZMv71fek',
   miniAppLink: 'https://buk-fit-client-8b56ce9cc329.herokuapp.com/',
   botNewRegister: '8111781384:AAF5--svXCOVJwor5gaWDTtPx8F3Oxi4vtI',
-  welcomeMessageChannelID: -1002658415091,
+  welcomeMessageChannelID: -1003045965696,
 };
