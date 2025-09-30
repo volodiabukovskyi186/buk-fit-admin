@@ -9,7 +9,7 @@ import {environment} from '../../../../environments/environment';
 })
 export class TelegramService {
 
-  private readonly botToken = environment.botToken;
+  private readonly botToken = environment.clientBUKBotToken;
   private readonly channelId = environment.welcomeMessageChannelID;
 
   constructor(private http: HttpClient) {}

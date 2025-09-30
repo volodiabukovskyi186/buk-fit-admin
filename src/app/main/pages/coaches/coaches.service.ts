@@ -9,7 +9,7 @@ import {collection, getDocs, query, where} from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class CoachesService {
-  private botToken = environment.botToken;
+  private botToken = environment.clientBUKBotToken;
 
 
   constructor(private http: HttpClient) {

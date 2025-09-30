@@ -57,7 +57,7 @@ export class BotMessagesComponent implements OnInit {
   addButton(): void {
     const buttonGroup = this.fb.group({
       text: ['', Validators.required],
-      url: ['https://t.me/KhomytskyiPro_bot', [Validators.required]]
+      url: ['https://t.me/bukfitbot', [Validators.required]]
     });
 
     this.buttons.push(buttonGroup);
@@ -108,7 +108,7 @@ export class BotMessagesComponent implements OnInit {
 
 
 
-  private botToken = environment.botNewRegister;
+  private botToken = environment.adminBUKBotToken;
   isSending = false;
 
   sendMessageAction(type: any): void {

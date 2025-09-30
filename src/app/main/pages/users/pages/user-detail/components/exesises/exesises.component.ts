@@ -284,7 +284,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     });
   }
 
-  private botToken = environment.botToken;
+  private botToken = environment.clientBUKBotToken;
 
   sendMessage(): any {
     const chatId = this.user.tgUser.id;

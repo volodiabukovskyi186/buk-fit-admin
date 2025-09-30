@@ -10,7 +10,7 @@ import {UserInterface} from '../../../core/interfaces/user.interface';
   providedIn: 'root'
 })
 export class DeletedUsersService {
-  private botToken = environment.botToken;
+  private botToken = environment.clientBUKBotToken;
 
   private userUpdatedSubject = new BehaviorSubject<boolean>(null);
   userUpdatedState$: Observable<boolean>;

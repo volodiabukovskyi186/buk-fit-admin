@@ -60,7 +60,7 @@ export class UserPaymentsComponent implements OnInit {
   id: string;
   user: ClientInterface;
   currentPayment: WritableSignal<UserPaymentTemplate> = signal(null)
-  private botToken = environment.botToken;
+  private botToken = environment.clientBUKBotToken;
   payments = [];
   totalpaymentsCount = 0;
   pageSize = 10; // Початковий розмір сторінки

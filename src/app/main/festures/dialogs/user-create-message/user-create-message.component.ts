@@ -80,7 +80,7 @@ export class UserCreateMessageComponent implements OnInit {
     return redactor;
   }
 
-  private botToken = environment.botToken;
+  private botToken = environment.clientBUKBotToken;
   isSending = false;
 
   sendMessageAction(type: any): void {
