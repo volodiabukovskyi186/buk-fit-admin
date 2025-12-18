@@ -3,8 +3,12 @@
     <span>Список оплат</span>
   </hs-button-toggle-ui>
 
-  <hs-button-toggle-ui [value]="userPaymentTabEmun.PAYMENT_TEMPLATE" >
-    <span>Шаблон оплати</span>
+<!--  <hs-button-toggle-ui [value]="userPaymentTabEmun.PAYMENT_TEMPLATE" >-->
+<!--    <span>Шаблон оплати</span>-->
+<!--  </hs-button-toggle-ui>-->
+
+  <hs-button-toggle-ui [value]="userPaymentTabEmun.PAYMENT_CUSTOM" >
+    <span>Ручна оплата</span>
   </hs-button-toggle-ui>
 </div>
 
@@ -13,4 +17,7 @@
 </ng-container>
 <ng-container *ngIf="selectedView === userPaymentTabEmun.PAYMENT_TEMPLATE">
   <bk-user-payment-template></bk-user-payment-template>
+</ng-container>
+<ng-container *ngIf="selectedView === userPaymentTabEmun.PAYMENT_CUSTOM">
+  <bk-user-payment-custom></bk-user-payment-custom>
 </ng-container>

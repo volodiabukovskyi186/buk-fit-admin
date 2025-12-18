@@ -14,7 +14,7 @@
 
             <div hsTableColumn caption="ID" width="40px" fieldName="id"  [allowResize]="true"></div>
 
-            <div hsTableColumn fieldName="img" caption="Назва"  width="120px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
+            <div hsTableColumn fieldName="img" caption="Назва"  width="200px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
                 <ng-template #idNumberTmpl let-data="cellData">
                     <div class="m-2">
                         {{data?.name}}
@@ -30,13 +30,29 @@
             </ng-template>
           </div>
 
-          <div hsTableColumn fieldName="img" caption="Коментар"  width="120px" [cellTemplate]="descTmpl" [allowResize]="true">
+          <div hsTableColumn fieldName="videoURL" caption="Дата створеня"  width="150px" [cellTemplate]="creatAtTmpl" [allowResize]="true">
+            <ng-template #creatAtTmpl let-data="cellData">
+              <div class="m-2">
+                {{ data?.createdAt?.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}
+              </div>
+            </ng-template>
+          </div>
+
+          <div hsTableColumn fieldName="img" caption="Коментар"  width="320px" [cellTemplate]="descTmpl" [allowResize]="true">
             <ng-template #descTmpl let-data="cellData">
               <div class="m-2">
                 {{data?.comment}}
               </div>
             </ng-template>
           </div>
+
+<!--          <div hsTableColumn fieldName="img" caption="ddeleteExerciseTmpl"  width="120px" [cellTemplate]="ddeleteExerciseTmpl" [allowResize]="true">-->
+<!--            <ng-template #ddeleteExerciseTmpl let-data="cellData">-->
+<!--              <div class="m-2" (click)="deleteExercise(data)">-->
+<!--                Видалити-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </div>-->
 
         </hs-table-grid>
     </div>

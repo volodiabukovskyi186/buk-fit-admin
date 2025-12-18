@@ -1,5 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {
+  UserPaymentCustomComponent
+} from 'src/app/main/pages/users/pages/user-detail/components/user-payment/features/user-payment-custome/user-payment-custom.component';
+
+import {
+  UserPaymentTemplateComponent
+} from 'src/app/main/pages/users/pages/user-detail/components/user-payment/features/user-payment-template/user-payment-template.component';
 import {HSFormFieldModule} from '../../../../../../../core/components/form-field';
 import {HSSelectModule} from '../../../../../../../core/components/select/select.module';
 import {IQCheckboxModule} from '../../../../../../../core/components/checkbox';
@@ -8,12 +15,13 @@ import {HSIconButtonModule} from '../../../../../../../core/components/icon-butt
 import {HSInputModule} from '../../../../../../../core/components/input';
 import {ButtonToggleModule} from '../../../../../../../core/components/button-toggle/button-toggle.module';
 import {NgIf} from '@angular/common';
-import {UserPaymentTemplateComponent} from './features/user-payment-template/user-payment-template.component';
+
 import {UserPaymentsComponent} from './features/user-payments/user-payments.component';
 
 export enum USER_PAYMENT_TAB_ENUM {
   PAYMENTS = 'PAYMENTS',
   PAYMENT_TEMPLATE = 'PAYMENT_TEMPLATE',
+  PAYMENT_CUSTOM = 'PAYMENT_CUSTOM',
 
 }
 
@@ -34,6 +42,10 @@ export enum USER_PAYMENT_TAB_ENUM {
     NgIf,
     UserPaymentTemplateComponent,
     UserPaymentsComponent,
+    UserPaymentCustomComponent,
+    UserPaymentTemplateComponent,
+    UserPaymentCustomComponent,
+    UserPaymentTemplateComponent,
   ],
   encapsulation: ViewEncapsulation.None
 })

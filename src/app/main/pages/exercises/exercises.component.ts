@@ -1,3 +1,4 @@
+import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableGridDataTypeEnum } from "../../../core/components/table-grid";
 import { MatDialog } from "@angular/material/dialog";
@@ -48,6 +49,7 @@ export class ExercisesComponent implements OnInit {
     let exercisesCollection = collection(this.firestore, 'exercise-names');
     let q = query(
       exercisesCollection,
+      orderBy('createdAt', 'desc'),
       limit(this.pageSize)
     );
 
@@ -61,6 +63,7 @@ export class ExercisesComponent implements OnInit {
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
         this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log('this.users---', this.users)
       }
     }).catch(error => console.error("Помилка отримання вправ: ", error));
   }

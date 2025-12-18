@@ -133,7 +133,6 @@ export class UserPaymentsComponent implements OnInit {
     });
   }
 
-
   async sendToClientPayment(): Promise<void> {
     const payload = this.preparePayload();
     const isCanAdd = this.payments.findIndex((payment) => payment.status === PAYMENT_STATUS_ENUM.ACTIVE);
@@ -193,7 +192,7 @@ export class UserPaymentsComponent implements OnInit {
 
   getpayments(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
     this.pageSize = newPageSize; // ✅ Оновлюємо `pageSize`
-
+    console.log(11111,  this.id)
     const filters = [];
     filters.push(where('userId', '==', this.id));
 

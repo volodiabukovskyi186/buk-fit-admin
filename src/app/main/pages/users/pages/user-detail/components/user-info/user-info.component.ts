@@ -149,21 +149,10 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   async updateUser(): Promise<void> {
     const payload = {
       ...this.formGroup.getRawValue(),
       updatedAt: Timestamp.now(),
-      // tgUser:{
-      //   "language_code": "uk",
-      //   "last_name": "",
-      //   "username": "volodia186",
-      //   "id": 454082717,
-      //   "photo_url": "https://t.me/i/userpic/320/9TdziQ5rTHkJbYblLNROl-onmjhJNcgxxU_uVzHWyr0.svg",
-      //   "allows_write_to_pm": true,
-      //   "first_name": "Volodia"
-      // }
     };
 
     if (!this.formGroup.valid) {
