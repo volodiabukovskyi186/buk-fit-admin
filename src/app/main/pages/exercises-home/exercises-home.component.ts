@@ -51,6 +51,13 @@ export class ExercisesHomeComponent implements OnInit {
       limit(this.pageSize)
     );
 
+    // let q = query(
+    //   exercisesCollection,
+    //   orderBy('createdAt', 'desc'),
+    //   limit(this.pageSize)
+    // );
+
+
     if (this.lastVisible && pageIndex > 0) {
       q = query(q, startAfter(this.lastVisible)); // Завантажуємо наступну сторінку
     } else {
@@ -92,5 +99,9 @@ export class ExercisesHomeComponent implements OnInit {
 
   moveToExegesis(id) {
     this.router.navigate([`/exercises-home/edit-exercise`, id]);
+  }
+
+  moveToTGExegesis(link: string) {
+    window.open(link);
   }
 }

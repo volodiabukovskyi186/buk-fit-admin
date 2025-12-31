@@ -61,14 +61,14 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="img" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl"
-           [allowResize]="true">
-        <ng-template #createdTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.createdAt.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}
-          </div>
-        </ng-template>
-      </div>
+<!--      <div hsTableColumn fieldName="img" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl"-->
+<!--           [allowResize]="true">-->
+<!--        <ng-template #createdTmpl let-data="cellData">-->
+<!--          <div class="m-2">-->
+<!--            {{ data?.createdAt.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </div>-->
 
       <div hsTableColumn fieldName="img" caption="Дата Оплати" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="payDateTmpl"
            [allowResize]="true">

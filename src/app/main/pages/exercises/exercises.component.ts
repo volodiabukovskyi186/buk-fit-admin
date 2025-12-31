@@ -49,7 +49,7 @@ export class ExercisesComponent implements OnInit {
     let exercisesCollection = collection(this.firestore, 'exercise-names');
     let q = query(
       exercisesCollection,
-      orderBy('createdAt', 'desc'),
+      // orderBy('createdAt', 'desc'),
       limit(this.pageSize)
     );
 
@@ -94,5 +94,9 @@ export class ExercisesComponent implements OnInit {
 
   moveToExegesis(id) {
     this.router.navigate([`/exercises/edit-exercise`, id]);
+  }
+
+  moveToTGExegesis(link: string) {
+    window.open(link);
   }
 }

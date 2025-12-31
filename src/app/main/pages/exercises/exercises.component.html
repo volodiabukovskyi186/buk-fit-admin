@@ -24,19 +24,19 @@
 
           <div hsTableColumn fieldName="videoURL" caption="URL video"  width="150px" [cellTemplate]="videoURLTmpl" [allowResize]="true">
             <ng-template #videoURLTmpl let-data="cellData">
-              <div class="m-2">
-                {{data?.videoURL}}
+              <div class="m-2 bk-link" (click)="moveToTGExegesis(data?.videoURL); $event.stopPropagation();">
+                {{ data?.videoURL }}
               </div>
             </ng-template>
           </div>
 
-          <div hsTableColumn fieldName="videoURL" caption="Дата створеня"  width="150px" [cellTemplate]="creatAtTmpl" [allowResize]="true">
-            <ng-template #creatAtTmpl let-data="cellData">
-              <div class="m-2">
-                {{ data?.createdAt?.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}
-              </div>
-            </ng-template>
-          </div>
+<!--          <div hsTableColumn fieldName="videoURL" caption="Дата створеня"  width="150px" [cellTemplate]="creatAtTmpl" [allowResize]="true">-->
+<!--            <ng-template #creatAtTmpl let-data="cellData">-->
+<!--              <div class="m-2">-->
+<!--                {{ data?.createdAt?.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </div>-->
 
           <div hsTableColumn fieldName="img" caption="Коментар"  width="320px" [cellTemplate]="descTmpl" [allowResize]="true">
             <ng-template #descTmpl let-data="cellData">

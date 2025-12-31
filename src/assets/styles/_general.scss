@@ -13,7 +13,15 @@
 .no-outline {
   outline: none;
 }
+.bk-link {
+  color: $hs-primary !important;
 
+
+  &:hover{
+    color: $hs-primary-dark!important;
+    text-decoration: underline !important;
+  }
+}
 .d-none {
   display: none !important;
 }
