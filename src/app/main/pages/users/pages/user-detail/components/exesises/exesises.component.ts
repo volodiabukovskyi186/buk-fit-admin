@@ -318,4 +318,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   }
 
 
+  moveToTG(videoURL: string) {
+    window.open(videoURL)
+  }
 }
