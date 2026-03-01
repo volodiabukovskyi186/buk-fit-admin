@@ -43,6 +43,21 @@
 
       <div
         hsTableColumn
+        fieldName="url"
+        caption="video"
+        width="150px"
+        [cellTemplate]="urlTmpl"
+        [allowResize]="true"
+      >
+        <ng-template #urlTmpl let-data="cellData">
+          <div class="m-2 bk-link" (click)="moveToTGExegesis(data?.url); $event.stopPropagation();">
+            {{ data?.url }}
+          </div>
+        </ng-template>
+      </div>
+
+      <div
+        hsTableColumn
         fieldName="videoURL"
         caption="URL video"
         width="150px"

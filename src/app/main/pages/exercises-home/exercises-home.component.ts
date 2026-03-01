@@ -19,7 +19,7 @@ export class ExercisesHomeComponent implements OnInit {
 
   users = [];
   totalUsersCount = 0;
-  pageSize = 10; // Початковий розмір сторінки
+  pageSize = 100; // Початковий розмір сторінки
   lastVisible: DocumentSnapshot | null = null; // Для пагінації
 
   constructor(

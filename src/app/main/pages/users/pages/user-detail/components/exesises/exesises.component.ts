@@ -92,6 +92,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
       comment: ['', Validators.required],
       restTime: ['', Validators.required],
       videoURL: ['', Validators.required],
+      url: [''],
     });
 
     (this.days.at(dayIndex).get('exercises') as FormArray).push(exerciseGroup);
@@ -127,6 +128,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
               comment: [exercise.comment, Validators.required],
               restTime: [exercise.restTime, Validators.required],
               videoURL: [exercise.videoURL, Validators.required],
+              url: [exercise?.url  ? exercise?.url : null, Validators.required],
             });
 
             (dayGroup.get('exercises') as FormArray).push(exerciseGroup);
@@ -203,6 +205,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     console.log('📌 Вибір вправи:', data, control);
     control.get('comment').setValue(data.comment);
     control.get('videoURL').setValue(data.videoURL);
+    control.get('url').setValue(data?.url);
   }
 
   selectExesiseRestTime(data: any, control) {
