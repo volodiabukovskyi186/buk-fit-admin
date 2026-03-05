@@ -65,8 +65,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.getCoachesState();
     this.getIsUserUpdateState();
 
-    this.getExercisesState();
-    this.getExercisesHomeState();
+    // this.getExercisesState();
+    // this.getExercisesHomeState();
     this.getAdminState();
   }
 
@@ -87,25 +87,25 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.selectedView = data;
   }
 
-  private getExercisesState(): void {
-    const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
-      if (!exercises.length) {
-        this.getExercises();
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
-
-  private getExercisesHomeState(): void {
-    const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
-      if (!exercises.length) {
-        this.getExercisesHome();
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
+  // private getExercisesState(): void {
+  //   const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
+  //     if (!exercises.length) {
+  //       this.getExercises();
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
+  //
+  // private getExercisesHomeState(): void {
+  //   const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
+  //     if (!exercises.length) {
+  //       this.getExercisesHome();
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
 
   private getIsUserUpdateState(): void {
     const stream$ = this.usersService.userUpdatedState$.subscribe(() => {
@@ -115,25 +115,25 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.subscription.add(stream$);
   }
 
-  private getExercises() {
-    const stream$ = this.vtExercisesService.getExerciseNames().subscribe(exercises => {
-      if (exercises.length) {
-        this.vtExercisesService.setExercises(exercises);
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
-
-  private getExercisesHome() {
-    const stream$ = this.vtExercisesService.getExerciseHomeNames().subscribe(exercises => {
-      if (exercises.length) {
-        this.vtExercisesService.setExercisesHome(exercises);
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
+  // private getExercises() {
+  //   const stream$ = this.vtExercisesService.getExerciseNames().subscribe(exercises => {
+  //     if (exercises.length) {
+  //       this.vtExercisesService.setExercises(exercises);
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
+  //
+  // private getExercisesHome() {
+  //   const stream$ = this.vtExercisesService.getExerciseHomeNames().subscribe(exercises => {
+  //     if (exercises.length) {
+  //       this.vtExercisesService.setExercisesHome(exercises);
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
 
   private getCoachesState(): void {
     const stream$ = this.vtCoachesService.userCoachesListState$.subscribe((coaches: any[]) => {

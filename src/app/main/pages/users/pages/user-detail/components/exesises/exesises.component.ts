@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {collection, doc, Firestore, getDocs, query, setDoc, updateDoc, where} from '@angular/fire/firestore';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {forkJoin} from 'rxjs';
 import {VTExercisesService} from '../../../../../../../core/services/exercises/exercises.service';
 import {filter, Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
@@ -53,8 +54,9 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getExercisesRestTimes();
-    this.getExercisesState();
-    this.getExercisesHomeState();
+    // this.getExercisesState();
+    // this.getExercisesHomeState();
+
     this.id = this.route.snapshot.params['id'];
     this.getUserById(this.id);
 
@@ -102,7 +104,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     (this.days.at(dayIndex).get('exercises') as FormArray).removeAt(exerciseIndex);
   }
 
-  async getExercises(): Promise<void> {
+  async getUserExercises(): Promise<void> {
     try {
       const collectionRef = collection(this.firestore, 'exercises');
       const q = query(collectionRef, where('id', '==', this.user.id));
@@ -186,13 +188,10 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
       if (!snapshot.empty) {
         this.user = (snapshot.docs[0].data() as any);
-        if(this.user.trainingType === TRAINING_TYPE_ENUM.HOME) {
-          this.exersiceNames = this.homeExercises;
-        } else {
-          this.exersiceNames = this.gymExercises;
-        }
 
-        await this.getExercises();
+
+        this.getExercises();
+        await this.getUserExercises();
       } else {
         console.warn("⚠️ Користувач не знайдений.");
       }
@@ -236,27 +235,27 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private getExercisesState(): void {
-    const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
-
-      if (exercises.length) {
-        this.gymExercises = [...exercises];
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
-
-  private getExercisesHomeState(): void {
-    const stream$ = this.vtExercisesService.userExerciseHomeListState$.subscribe((exercises: any[]) => {
-
-      if (exercises.length) {
-        this.homeExercises = [...exercises];
-      }
-    });
-
-    this.subscription.add(stream$);
-  }
+  // private getExercisesState(): void {
+  //   const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
+  //
+  //     if (exercises.length) {
+  //       this.gymExercises = [...exercises];
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
+  //
+  // private getExercisesHomeState(): void {
+  //   const stream$ = this.vtExercisesService.userExerciseHomeListState$.subscribe((exercises: any[]) => {
+  //
+  //     if (exercises.length) {
+  //       this.homeExercises = [...exercises];
+  //     }
+  //   });
+  //
+  //   this.subscription.add(stream$);
+  // }
 
 
   botUpdateExesice() {
@@ -324,4 +323,24 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   moveToTG(videoURL: string) {
     window.open(videoURL)
   }
+
+  private getExercises() {
+      const gymExercise$ = this.vtExercisesService.getExerciseNames();
+      const homeExercise$ = this.vtExercisesService.getExerciseHomeNames();
+
+
+    const stream$ = forkJoin({gymExercise: gymExercise$, homeExercise: homeExercise$}).subscribe(data => {
+        if (this.user.trainingType === TRAINING_TYPE_ENUM.HOME) {
+          this.exersiceNames = [...data.homeExercise, ...data.gymExercise];
+        } else {
+          this.exersiceNames = [...data.gymExercise, ...data.homeExercise];
+        }
+
+    })
+
+    this.subscription.add(stream$);
+
+  }
+
+
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {BehaviorSubject, catchError, from, map, Observable, of, tap} from 'rxjs';
+import {BehaviorSubject, catchError, from, map, Observable, of, shareReplay, tap} from 'rxjs';
 import {collection, Firestore, getDocs, orderBy, query, startAfter} from '@angular/fire/firestore';
 import {HttpClient} from '@angular/common/http';
 
@@ -13,6 +13,9 @@ export class VTExercisesService {
 
   private userExerciseHomeListSubject = new BehaviorSubject<any[]| null>([]);
   private userExerciseListSubject = new BehaviorSubject<any[]| null>([]);
+
+  private exerciseNamesCache$: Observable<any[]> | null = null;
+  private exerciseHomeNamesCache$: Observable<any[]> | null = null;
 
   constructor(
     private http: HttpClient,
@@ -31,51 +34,60 @@ export class VTExercisesService {
   }
 
   getExerciseNames(): Observable<any[]> {
-    const collectionRef = collection(this.firestore, 'exercise-names');
-    let queryName = query(collectionRef, orderBy('name'));
+    if (this.exerciseNamesCache$) {
+      return this.exerciseNamesCache$;
+    }
 
-    return from(getDocs(queryName)).pipe(
-      // tap(() => console.log('📌 Запит на отримання вправ...')),
+    const collectionRef = collection(this.firestore, 'exercise-names');
+    const queryName = query(collectionRef, orderBy('name'));
+
+    this.exerciseNamesCache$ = from(getDocs(queryName)).pipe(
       map(snapshot => {
         if (snapshot.empty) {
-
           return [];
         }
-
-        const exercises = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-
-        return exercises;
+        return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
       }),
       catchError(error => {
         console.error("❌ Помилка отримання вправ:", error);
-
-        return of([]); // У разі помилки повертаємо порожній масив
-      })
+        this.exerciseNamesCache$ = null;
+        return of([]);
+      }),
+      shareReplay(1)
     );
+
+    return this.exerciseNamesCache$;
   }
 
   getExerciseHomeNames(): Observable<any[]> {
-    const collectionRef = collection(this.firestore, 'exercise-names-home');
-    let queryName = query(collectionRef, orderBy('name'));
+    if (this.exerciseHomeNamesCache$) {
+      return this.exerciseHomeNamesCache$;
+    }
 
-    return from(getDocs(queryName)).pipe(
-      tap(() => console.log('📌 Запит на отримання вправ...')),
+    const collectionRef = collection(this.firestore, 'exercise-names-home');
+    const queryName = query(collectionRef, orderBy('name'));
+
+    this.exerciseHomeNamesCache$ = from(getDocs(queryName)).pipe(
       map(snapshot => {
         if (snapshot.empty) {
-          console.log('⚠️ Вправи не знайдено.');
           return [];
         }
-
-        const exercises = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-        // console.log('✅ Довантажені вправи:', exercises);
-        return exercises;
+        return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
       }),
       catchError(error => {
         console.error("❌ Помилка отримання вправ:", error);
-
-        return of([]); // У разі помилки повертаємо порожній масив
-      })
+        this.exerciseHomeNamesCache$ = null;
+        return of([]);
+      }),
+      shareReplay(1)
     );
+
+    return this.exerciseHomeNamesCache$;
+  }
+
+  clearExerciseCache() {
+    this.exerciseNamesCache$ = null;
+    this.exerciseHomeNamesCache$ = null;
   }
 
 }
