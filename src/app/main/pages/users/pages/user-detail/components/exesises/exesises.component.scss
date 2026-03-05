@@ -1,31 +1,254 @@
 @import 'variables';
-.bk-exesises {
-    // border: 1px solid $hs-primary;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
-    border-radius: 4px;
-    padding: 8px;
+
+// ─── Header ────────────────────────────────────────────────────────────────────
+.bk-ex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 }
 
-.bk-input-after-select {
-  position: absolute;
-  right: 10px;
-  top: 10px;
+.bk-ex-days-badge {
+  padding: 3px 10px;
+  background: $hs-secondary-blue-01;
+  border-radius: 20px;
+  color: $hs-primary;
+  font-weight: 600;
 }
 
-.hs-button-container {
-  @media (max-width: 720px) {
+// ─── Tab count badge ───────────────────────────────────────────────────────────
+.bk-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: $hs-primary;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 4px;
+
+  .hs-tab-switcher-item-active & {
+    background: #e6e6e6;
+    color: $hs-primary;
+  }
+}
+
+// ─── Days tabs ─────────────────────────────────────────────────────────────────
+.bk-days-tabs-row {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 4px;
+
+  > [hsButtonToggleSwitcher] {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.bk-add-day-tab {
+  flex-shrink: 0;
+  width: 36px;
+  height: 45px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid $hs-secondary-grey-01;
+  color: $hs-primary;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $hs-secondary-blue-00;
+  }
+}
+
+.bk-days-tabs {
+  margin-bottom: 4px;
+
+  hs-tab-switcher {
+    flex: 0 0 120px;
+
+    .hs-tab-switcher-item {
+      padding: 14px 0;
+      font-size: 0.9375rem;
+    }
+  }
+}
+
+// ─── Day toolbar ───────────────────────────────────────────────────────────────
+.bk-day-hidden {
+  display: none;
+}
+
+.bk-day-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// ─── Exercise card ─────────────────────────────────────────────────────────────
+.bk-exercise-card {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid $hs-secondary-grey-01;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: $hs-secondary-blue-02;
+    box-shadow: 0 2px 8px rgba(63, 161, 251, 0.12);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    background: $hs-secondary-blue-00;
+    border-bottom: 1px solid $hs-secondary-grey-01;
+
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &__body {
+    padding: 12px;
+    display: flex;
     flex-direction: column;
-    //.hs-button  {
-    //  width: 100%;
-    //}
-    //
-    //.hs-button-size-medium>button  {
-    //  width: 100% !important;
-    //}
-    //
-    //button {
-    //  max-width: unset;
-    //  width: 100%;
-    //}
+    gap: 10px;
+  }
+}
+
+.bk-exercise-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: $hs-secondary-blue-01;
+  color: $hs-primary;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+// ─── Field rows ────────────────────────────────────────────────────────────────
+.bk-ex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bk-field-wide {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.bk-field-short {
+  flex: 1 1 150px;
+  min-width: 130px;
+}
+
+// ─── Comment ───────────────────────────────────────────────────────────────────
+.bk-ex-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px 10px;
+    border: 1px solid $hs-secondary-grey-02;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    color: $hs-black;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+
+    &::placeholder {
+      color: $hs-secondary-grey-03;
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $hs-primary;
+      outline: none;
+    }
+  }
+}
+
+// ─── Add exercise / Add day ────────────────────────────────────────────────────
+.bk-add-exercise {
+  margin-top: 8px;
+}
+
+.bk-add-day {
+  padding: 16px 0 24px;
+}
+
+// ─── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 720px) {
+  .bk-ex-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bk-ex-header__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .bk-exercise-card__body {
+    padding: 10px;
+  }
+
+  .bk-ex-row {
+    flex-direction: column;
+  }
+
+  .bk-field-wide,
+  .bk-field-short {
+    flex: 1 1 100%;
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {HSTabSwitcherModule} from "src/app/core/components/tab-switcher/tab-switcher.module";
 import { UsersComponent } from './users.component';
 import { UsersRoutingModule } from './users-routing.module';
 // import { TableGridModule } from 'src/app/core/components/table-grid';
@@ -51,37 +52,38 @@ import {UserPaymentComponent} from "./pages/user-detail/components/user-payment/
     UserInfoComponent,
     UserMealsTextComponent
   ],
-    imports: [
-        MatNativeDateModule,
-        MatDatepickerModule,
-        UserCreateMessageModule,
-        HSSelectModule,
-        ReactiveFormsModule,
-        FormsModule,
-        ButtonToggleModule,
-        MatDialogModule,
-        HSInputModule,
-        HSFormFieldModule,
-        HSTimeToUtcModule,
-        ClipboardModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HSButtonModule,
-        TableGridModule,
-        CommonModule,
-        CommonModule,
-        UsersRoutingModule,
-        HSIconButtonModule,
-        HSFormFieldModule,
-        HSInputModule,
-        MatPaginator,
-        HSStatusModule,
-        MatDatepicker,
-        MatDatepickerInput,
-        UserSurveyComponent,
-        IQMenuModule,
-        UserPaymentComponent,
+  imports: [
+    MatNativeDateModule,
+    MatDatepickerModule,
+    UserCreateMessageModule,
+    HSSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ButtonToggleModule,
+    MatDialogModule,
+    HSInputModule,
+    HSFormFieldModule,
+    HSTimeToUtcModule,
+    ClipboardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HSButtonModule,
+    TableGridModule,
+    CommonModule,
+    CommonModule,
+    UsersRoutingModule,
+    HSIconButtonModule,
+    HSFormFieldModule,
+    HSInputModule,
+    MatPaginator,
+    HSStatusModule,
+    MatDatepicker,
+    MatDatepickerInput,
+    UserSurveyComponent,
+    IQMenuModule,
+    UserPaymentComponent,
+    HSTabSwitcherModule,
 
-    ]
+  ]
 })
 export class UsersModule { }

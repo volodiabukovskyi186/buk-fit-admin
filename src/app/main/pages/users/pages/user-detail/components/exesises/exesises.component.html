@@ -1,124 +1,174 @@
-<div class="flex justify-content-end hs-button-container">
+<div class="bk-ex-header">
+  <div class="bk-ex-header__left">
+    <h2 class="fc-primary">Програма тренувань</h2>
+    <span class="bk-ex-days-badge hs-text-caption" *ngIf="days.length > 0">
+      {{ days.length }} {{ days.length === 1 ? 'день' : days.length < 5 ? 'дні' : 'днів' }}
+    </span>
+  </div>
+  <div class="bk-ex-header__actions">
+    <hs-button
+      *ngIf="user?.tgUser?.id"
+      size="medium"
+      [mode]="'outlined'"
+      (click)="botUpdateExesice()"
+      [text]="'Надіслати в бот'"
+    ></hs-button>
+    <hs-button
+      size="medium"
+      (click)="updateExercise()"
+      [text]="'Зберегти програму'"
+    ></hs-button>
+  </div>
+</div>
 
-    <div>
-      <hs-button  size="medium"  *ngIf="user?.tgUser?.id"  class="mt-14 mr-8" [mode]="'outlined'" (click)="botUpdateExesice()" [text]="'Надіслати повідомлення в бот'"></hs-button>
-    </div>
-    <div>
-      <hs-button size="medium" class="mt-14" (click)="updateExercise()"  [text]="'Оновити користувача'"></hs-button>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+  <!-- Таб-бар днів -->
+  <div class="bk-days-tabs" *ngIf="days.length > 0">
+    <div class="bk-days-tabs-row">
+      <div hsButtonToggleSwitcher [value]="activeDay" (change)="activeDay = $event">
+        <hs-tab-switcher *ngFor="let day of days.controls; let i = index" [value]="i">
+          День {{ i + 1 }}
+          <span class="bk-tab-count" *ngIf="day.get('exercises').controls.length > 0">
+            {{ day.get('exercises').controls.length }}
+          </span>
+        </hs-tab-switcher>
+        <button class="bk-add-day-tab" (click)="addDay()" type="button">+</button>
+        <div class="switcher-empty-space"></div>
+      </div>
+
     </div>
   </div>
 
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="mt-12">
-
-    <div formArrayName="days">
-      <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
-       <div class="flex justify-content-between">
-         <h1 class="fc-primary pb-12">День {{i + 1}}</h1>
-
-        <div>
-          <hs-button *ngIf="i == 0"  size="medium"  [mode]="'outlined-accend'" [color]="'error'"  (click)="clearAllExercises()" [text]="'Очистити всі дні'"></hs-button>
+  <!-- Контент активного дня -->
+  <div formArrayName="days">
+    <div
+      *ngFor="let day of days.controls; let i = index"
+      [formGroupName]="i"
+      [class.bk-day-hidden]="activeDay !== i"
+    >
+      <div class="bk-day-toolbar">
+        <span class="hs-text-small fc-secondary-grey-03">
+          {{ day.get('exercises').controls.length }}
+          {{ day.get('exercises').controls.length === 1 ? 'вправа' : day.get('exercises').controls.length < 5 ? 'вправи' : 'вправ' }}
+        </span>
+        <div class="bk-day-toolbar__actions">
+          <hs-button
+            *ngIf="i === 0"
+            size="small"
+            [mode]="'outlined-accend'"
+            [color]="'error'"
+            (click)="clearAllExercises()"
+            [text]="'Очистити всі дні'"
+          ></hs-button>
+          <hs-button size="small" color="error" (click)="removeDay(i)" [text]="'Видалити день'"></hs-button>
         </div>
-       </div>
-        <div  formArrayName="exercises">
-          <div class="bk-exesises mb-12" *ngFor="let exercise of day.get('exercises').controls; let j = index" [formGroupName]="j">
-            <h4 class="pb-8">Вправа {{j + 1}}</h4>
-            <div class="flex bk-two-fields">
-              <hs-form-field class="w-100">
+      </div>
+
+      <div formArrayName="exercises">
+        <div
+          class="bk-exercise-card"
+          *ngFor="let exercise of day.get('exercises').controls; let j = index"
+          [formGroupName]="j"
+        >
+          <div class="bk-exercise-card__header">
+            <div class="bk-exercise-card__header-left">
+              <span class="bk-exercise-badge">{{ j + 1 }}</span>
+              <h4>Вправа {{ j + 1 }}</h4>
+            </div>
+            <hs-button size="small" color="error" (click)="removeExercise(i, j)" [text]="'Видалити'"></hs-button>
+          </div>
+
+          <div class="bk-exercise-card__body">
+
+            <!-- Рядок 1: Назва + Video URL -->
+            <div class="bk-ex-row">
+              <hs-form-field class="bk-field-wide">
                 <hs-label>Назва вправи</hs-label>
-                <hs-select [enableSearch]="true"  [dropdownMinWidth]="200" formControlName="exerciseName">
-                  <hs-select-option (click)="selectExesise(p, exercise)" (keydown.enter)="selectExesise(p, exercise)"  *ngFor="let p of exersiceNames"
-                                    [value]="p.name">{{p.name}}</hs-select-option>
+                <hs-select [enableSearch]="true" [dropdownMinWidth]="200" formControlName="exerciseName">
+                  <hs-select-option
+                    (click)="selectExesise(p, exercise)"
+                    (keydown.enter)="selectExesise(p, exercise)"
+                    *ngFor="let p of exersiceNames"
+                    [value]="p.name"
+                  >{{ p.name }}</hs-select-option>
                 </hs-select>
               </hs-form-field>
 
-              <hs-form-field class="w-100">
-                <hs-label>Video Url</hs-label>
-                <input iqInput formControlName="videoURL" />
+              <hs-form-field class="bk-field-wide">
+                <hs-label>Video URL</hs-label>
+                <input iqInput formControlName="videoURL" placeholder="https://..." />
                 <i class="hs-icon icon-link hs-pointer" iqSuffix (click)="moveToTG(exercise?.value?.videoURL)"></i>
               </hs-form-field>
+            </div>
 
-
-              <hs-form-field class="w-100">
-                <hs-label>Підходи і повторення</hs-label>
-                <input iqInput formControlName="setsAndReps" />
-
-                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menuRepeat">
+            <!-- Рядок 2: Підходи + Вага + Відпочинок + URL -->
+            <div class="bk-ex-row">
+              <hs-form-field class="bk-field-short">
+                <hs-label>Підходи і повт.</hs-label>
+                <input iqInput formControlName="setsAndReps" placeholder="3 x 12" />
+                <div iqSuffix class="pointer" [iqMenuTriggerFor]="menuRepeat">
                   <i class="icon-plus fs-18"></i>
                 </div>
                 <iq-menu #menuRepeat positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
                   <iq-menu-item *ngFor="let repeat of repeatCountsOptions" (click)="selectRepeat(repeat?.text, exercise)">
-                    {{repeat?.text}}
+                    {{ repeat?.text }}
                   </iq-menu-item>
-
                 </iq-menu>
               </hs-form-field>
 
-            </div>
-
-            <div class="flex bk-two-fields">
-              <hs-form-field class="w-100">
+              <hs-form-field class="bk-field-short">
                 <hs-label>Вага</hs-label>
-                <input iqInput formControlName="weight" />
-                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menuWeight">
+                <input iqInput formControlName="weight" placeholder="кг" />
+                <div iqSuffix class="pointer" [iqMenuTriggerFor]="menuWeight">
                   <i class="icon-plus fs-18"></i>
                 </div>
-                <iq-menu #menuWeight positionX="after" positionY="above"  [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
+                <iq-menu #menuWeight positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
                   <iq-menu-item *ngFor="let weight of weightOptions" (click)="selectWeightTime(weight?.text, exercise)">
-                    {{weight?.text}}
+                    {{ weight?.text }}
                   </iq-menu-item>
-
                 </iq-menu>
-
-
-
               </hs-form-field>
-              <hs-form-field class="w-100">
+
+              <hs-form-field class="bk-field-short">
                 <hs-label>Відпочинок</hs-label>
-                <input iqInput formControlName="restTime" />
-                <div iqSuffix class="pointer"  [iqMenuTriggerFor]="menu">
-                   <i class="icon-plus fs-18"></i>
+                <input iqInput formControlName="restTime" placeholder="сек" />
+                <div iqSuffix class="pointer" [iqMenuTriggerFor]="menuRest">
+                  <i class="icon-plus fs-18"></i>
                 </div>
-                <iq-menu #menu positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
+                <iq-menu #menuRest positionX="after" positionY="above" [dropdownMenuHeight]="300" [dropdownMenuWidth]="270" [offsetX]="-250" [offsetY]="20">
                   <iq-menu-item *ngFor="let time of restsTimeOptions" (click)="selectExesiseRestTime(time?.text, exercise)">
-                   {{time?.text}}
+                    {{ time?.text }}
                   </iq-menu-item>
-
                 </iq-menu>
               </hs-form-field>
 
-              <hs-form-field class="w-100">
-                <hs-label>url</hs-label>
-                <input iqInput formControlName="url" />
+              <hs-form-field class="bk-field-short">
+                <hs-label>URL</hs-label>
+                <input iqInput formControlName="url" placeholder="https://..." />
                 <i class="hs-icon icon-link hs-pointer" iqSuffix (click)="moveToTG(exercise?.value?.url)"></i>
               </hs-form-field>
             </div>
 
-            <div class="bk-text-area">
-                <hs-label>Коментар</hs-label>
-                <textarea formControlName="comment">
-
-                </textarea>
+            <!-- Рядок 3: Коментар -->
+            <div class="bk-ex-comment">
+              <hs-label>Коментар</hs-label>
+              <textarea formControlName="comment" placeholder="Техніка виконання, нотатки..."></textarea>
             </div>
 
-           <div class="w-100 flex justify-content-end">
-              <hs-button size="medium" class="mt-14"  color="error" (click)="removeExercise(i, j)" [text]="'Видалити вправу'"></hs-button>
-           </div>
           </div>
-
-          <hs-button size="medium" class="mt-14" (click)="addExercise(i)" [text]="'Додати вправу'"></hs-button>
-
         </div>
 
-        <div class="w-100 flex justify-content-end">
-        <hs-button size="medium" color="error" class="mt-14" (click)="removeDay(i)" [text]="'Видалити день'"></hs-button>
+        <div class="bk-add-exercise">
+          <hs-button size="medium" (click)="addExercise(i)" [text]="'+ Додати вправу'"></hs-button>
         </div>
-
-         <div class="hs-splitter w-100  mt-32 mb-32 "></div>
-
-
       </div>
+
     </div>
-    <hs-button size="medium"  color="success" class="mt-14" (click)="addDay()" [text]="'Додати день'"></hs-button>
+  </div>
 
+  <div class="bk-add-day">
+    <hs-button size="medium" color="success" (click)="addDay()" [text]="'+ Додати день'"></hs-button>
+  </div>
 
-  </form>
+</form>

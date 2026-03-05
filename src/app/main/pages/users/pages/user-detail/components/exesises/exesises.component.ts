@@ -17,7 +17,7 @@ import {MealsNamesDialogComponent} from '../user-meals-text/dialogs/meals-names-
 import {BKExercisesHelperService} from '../../../../../../../core/services/exercises/exercises-helper.service';
 
 @Component({
-  selector: 'bk-exesises',
+  selector: 'bk-exercises-main',
   templateUrl: './exesises.component.html',
   styleUrls: ['./exesises.component.scss']
 })
@@ -27,13 +27,14 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   exersiceNames = [];
   post: any;
-  lastVisible: any = null; // Запа
-  isLoading = false; // Запобігає повторним запитам
+  lastVisible: any = null;
+  isLoading = false;
   homeExercises = [];
   gymExercises = [];
   restsTimeOptions = [];
   weightOptions = [];
   repeatCountsOptions = [];
+  activeDay: number = 0;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -80,10 +81,12 @@ export class ExesisesComponent implements OnInit, OnDestroy {
       exercises: this.fb.array([])
     });
     this.days.push(dayGroup);
+    this.activeDay = this.days.length - 1;
   }
 
   removeDay(index: number) {
     this.days.removeAt(index);
+    this.activeDay = Math.min(this.activeDay, this.days.length - 1);
   }
 
   addExercise(dayIndex: number) {
