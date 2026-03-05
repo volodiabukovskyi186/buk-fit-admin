@@ -1,0 +1,5 @@
+export enum GOAL_ENUM {
+  LOSE_WEIGHT = 'LOSE_WEIGHT',
+  GAIN_WEIGHT = 'GAIN_WEIGHT',
+  TONE_BODY = 'TONE_BODY',
+}

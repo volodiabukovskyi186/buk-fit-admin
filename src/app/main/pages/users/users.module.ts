@@ -38,6 +38,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {UserSurveyComponent} from "./pages/user-detail/components/user-info/features/user-survey/user-survey.component";
 import {IQMenuModule} from "../../../core/components/menu";
 import {UserPaymentComponent} from "./pages/user-detail/components/user-payment/user-payment.component";
+import {UserBodyMetricsComponent} from './pages/user-detail/components/user-body-metrics/user-body-metrics.component';
 
 
 
@@ -82,6 +83,7 @@ import {UserPaymentComponent} from "./pages/user-detail/components/user-payment/
     UserSurveyComponent,
     IQMenuModule,
     UserPaymentComponent,
+    UserBodyMetricsComponent,
     HSTabSwitcherModule,
 
   ]

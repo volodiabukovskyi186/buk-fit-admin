@@ -23,6 +23,7 @@ import {
   where
 } from '@angular/fire/firestore';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {GOAL_ENUM} from 'src/app/core/enums/goal.enum';
 import {HSFormFieldModule} from '../../../../../../../../../core/components/form-field';
 import {HSSelectModule} from '../../../../../../../../../core/components/select/select.module';
 import {HSInputModule} from '../../../../../../../../../core/components/input';
@@ -58,6 +59,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
   ]
 })
 export class UserSurveyComponent implements OnInit, OnDestroy {
+  goalEnum = GOAL_ENUM;
   @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   currentUserId: string;
   formGroup: FormGroup;

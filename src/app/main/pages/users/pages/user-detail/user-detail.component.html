@@ -17,6 +17,10 @@
       <span>Харчування текст</span>
     </hs-button-toggle-ui>
 
+    <hs-button-toggle-ui [value]="userInfoTabsEnum.BODY_METRICS" [disabled]="user?.status === userStatusEnum.NEW">
+      <span>Метрики тіла</span>
+    </hs-button-toggle-ui>
+
     <hs-button-toggle-ui [value]="userInfoTabsEnum.PAYMENT"  *ngIf="admin?.role == userRoleEnum.MANAGER || admin?.role == userRoleEnum.SUPER_ADMIN">
       <span>Оплата</span>
     </hs-button-toggle-ui>
@@ -45,6 +49,10 @@
 
   <ng-container *ngIf="selectedView === userInfoTabsEnum.PAYMENT">
     <bk-user-payment></bk-user-payment>
+  </ng-container>
+
+  <ng-container *ngIf="selectedView === userInfoTabsEnum.BODY_METRICS">
+    <bk-user-body-metrics></bk-user-body-metrics>
   </ng-container>
 
 </div>

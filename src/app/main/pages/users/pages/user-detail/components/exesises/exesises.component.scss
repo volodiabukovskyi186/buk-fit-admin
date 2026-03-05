@@ -40,15 +40,16 @@
   height: 18px;
   padding: 0 5px;
   border-radius: 10px;
-  background: $hs-primary;
-  color: #fff;
+  background: #e6e6e6;
+  color: black;
   font-size: 11px;
   font-weight: 700;
   margin-left: 4px;
 
   .hs-tab-switcher-item-active & {
-    background: #e6e6e6;
-    color: $hs-primary;
+
+    background: $hs-primary;
+    color: #fff;
   }
 }
 
