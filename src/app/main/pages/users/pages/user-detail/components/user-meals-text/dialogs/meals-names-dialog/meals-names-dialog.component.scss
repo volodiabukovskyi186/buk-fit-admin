@@ -1,15 +1,285 @@
-
 bk-meals-names-dialog {
   display: flex !important;
   height: 100%;
-
-  .bk-dialog-body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-  }
-
-
 }
 
+/* ─── Dialog Shell ───────────────────────────────── */
+.mnd-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────── */
+.mnd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid #0000001a;
+  flex-shrink: 0;
+}
+
+.mnd-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #252525;
+}
+
+.mnd-header-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  color: #25252561;
+  padding: 0 4px;
+  transition: color 0.15s;
+
+  &:hover { color: #E95032; }
+}
+
+/* ─── Search ─────────────────────────────────────── */
+.mnd-search {
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 1px solid #0000001a;
+  flex-shrink: 0;
+}
+
+.mnd-search-wrap {
+  display: flex;
+  align-items: center;
+  background: #F5F5F5;
+  border: 1px solid #0000001a;
+  border-radius: 10px;
+  padding: 0 12px;
+  gap: 8px;
+  transition: border-color 0.15s;
+
+  &:focus-within {
+    border-color: #3FA1FB;
+    background: #fff;
+  }
+}
+
+.mnd-search-icon {
+  font-size: 15px;
+  color: #25252561;
+  flex-shrink: 0;
+}
+
+.mnd-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  color: #252525;
+  outline: none;
+
+  &::placeholder { color: #25252561; }
+}
+
+.mnd-search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #25252561;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+
+  &:hover { color: #E95032; }
+}
+
+/* ─── Body (scrollable cards) ────────────────────── */
+.mnd-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mnd-empty {
+  text-align: center;
+  color: #25252561;
+  font-size: 14px;
+  padding: 40px 0;
+}
+
+/* ─── Card ───────────────────────────────────────── */
+.mnd-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #0000001a;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.1s;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 176px;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(63, 161, 251, 0.15);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 6px rgba(63, 161, 251, 0.2);
+  }
+}
+
+.mnd-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 8px;
+  gap: 8px;
+}
+
+.mnd-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #252525;
+  flex: 1;
+}
+
+.mnd-card-total {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #FC611F;
+  padding: 2px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Meal Rows ──────────────────────────────────── */
+.mnd-meals {
+  padding: 0 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mnd-meal-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  background: #FAFAFA;
+  border-radius: 8px;
+  border-left: 3px solid #3FA1FB;
+  flex-wrap: wrap;
+}
+
+.mnd-meal-emoji {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mnd-meal-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #252525;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  min-width: 68px;
+  flex-shrink: 0;
+}
+
+.mnd-meal-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.mnd-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 20px;
+
+  &.mnd-badge-cal { background: #FFF3E0; color: #E65100; }
+  &.mnd-badge-p   { background: #E8F5E9; color: #1B5E20; }
+  &.mnd-badge-f   { background: #FFF8E1; color: #F57F17; }
+  &.mnd-badge-c   { background: #E3F2FD; color: #0D47A1; }
+}
+
+/* ─── Legacy comment ─────────────────────────────── */
+.mnd-comment {
+  padding: 6px 14px 10px;
+  font-size: 12px;
+  color: #25252561;
+  line-height: 1.5;
+}
+
+/* ─── Card Footer ────────────────────────────────── */
+.mnd-card-footer {
+  padding: 6px 14px 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mnd-select-hint {
+  font-size: 11px;
+  color: #3FA1FB;
+  font-weight: 600;
+}
+
+/* ─── Dialog Footer ──────────────────────────────── */
+.mnd-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 12px;
+  background: #fff;
+  border-top: 1px solid #0000001a;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ─── Mobile ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .mnd-header {
+    padding: 14px 16px;
+  }
+
+  .mnd-header-title {
+    font-size: 15px;
+  }
+
+  .mnd-body {
+    padding: 10px 12px;
+  }
+
+  .mnd-meal-row {
+    padding: 5px 8px;
+  }
+
+  .mnd-meal-label {
+    min-width: 60px;
+  }
+
+  .mnd-card-header {
+    padding: 10px 12px 6px;
+  }
+
+  .mnd-footer {
+    padding: 8px 12px 16px;
+  }
+}

@@ -1,19 +1,97 @@
 <div class="bk-create-user" [formGroup]="formGroup">
-  <div class="flex justify-content-end ">
+
+  <div class="flex justify-content-end">
     <hs-button size="medium" class="mt-14" (click)="createUser()" [text]="'Створити харчування'"></hs-button>
   </div>
 
-  <div class="flex bk-two-fields ">
+  <div class="flex bk-two-fields">
     <hs-form-field class="w-100">
       <hs-label>Назва харчування</hs-label>
-      <input iqInput formControlName="name"/>
+      <input iqInput formControlName="name" />
     </hs-form-field>
   </div>
 
-  <div class="bk-text-area">
-    <hs-label>Коментар</hs-label>
-    <textarea formControlName="comment"> </textarea>
+  <!-- Structured meals section -->
+  <div class="bk-meals-section">
+    <div class="bk-meals-section-header">
+      <span class="bk-meals-title">Прийоми їжі</span>
+    </div>
+
+    <div formArrayName="meals">
+      <div class="bk-meal-block" *ngFor="let meal of mealsArray.controls; let i = index">
+        <div [formGroupName]="i">
+
+          <div class="bk-meal-block-header"
+               [style.border-left-color]="getMealColor(meal.get('type').value)"
+               (click)="toggleBlock(i)">
+            <div class="bk-meal-block-header-left">
+              <span class="bk-meal-emoji">{{ getMealEmoji(meal.get('type').value) }}</span>
+              <span class="bk-meal-type-label">{{ getMealLabel(meal.get('type').value) || 'Новий прийом' }}</span>
+              <div class="bk-meal-macros" *ngIf="meal.get('calories').value">
+                <span class="bk-macro-badge bk-macro-cal">{{ meal.get('calories').value }} ккал</span>
+                <span class="bk-macro-badge bk-macro-p">Б {{ meal.get('protein').value }}г</span>
+                <span class="bk-macro-badge bk-macro-f">Ж {{ meal.get('fat').value }}г</span>
+                <span class="bk-macro-badge bk-macro-c">В {{ meal.get('carbs').value }}г</span>
+              </div>
+            </div>
+            <div class="bk-meal-block-header-right">
+              <span class="bk-meal-toggle">{{ expandedBlocks[i] ? '▲' : '▼' }}</span>
+              <button class="bk-meal-delete" (click)="removeMealBlock(i, $event)" title="Видалити прийом">×</button>
+            </div>
+          </div>
+
+          <div class="bk-meal-block-body" *ngIf="expandedBlocks[i]">
+            <div class="bk-meal-fields-row">
+              <div class="bk-meal-type-field">
+                <hs-form-field class="w-100">
+                  <hs-label>Назва прийому</hs-label>
+                  <hs-select formControlName="type" [dropdownMinWidth]="160">
+                    <hs-select-option *ngFor="let opt of MEAL_OPTIONS" [value]="opt.value">
+                      {{ opt.label }}
+                    </hs-select-option>
+                  </hs-select>
+                </hs-form-field>
+              </div>
+              <div class="bk-meal-macro-field">
+                <label class="bk-field-label">Ккал</label>
+                <input class="bk-field-input" formControlName="calories" type="number" placeholder="400" />
+              </div>
+              <div class="bk-meal-macro-field">
+                <label class="bk-field-label">Б (г)</label>
+                <input class="bk-field-input" formControlName="protein" type="number" placeholder="27" />
+              </div>
+              <div class="bk-meal-macro-field">
+                <label class="bk-field-label">Ж (г)</label>
+                <input class="bk-field-input" formControlName="fat" type="number" placeholder="10" />
+              </div>
+              <div class="bk-meal-macro-field">
+                <label class="bk-field-label">В (г)</label>
+                <input class="bk-field-input" formControlName="carbs" type="number" placeholder="50" />
+              </div>
+            </div>
+            <div class="bk-meal-content-field">
+              <label class="bk-field-label">Склад прийому їжі</label>
+              <textarea class="bk-meal-textarea" formControlName="content" rows="8"
+                placeholder="Вуглеводи (обери 1):&#10;* гречка 50 г&#10;* вівсянка 55 г&#10;&#10;Білок (обери 1–2):&#10;* яйця 2 шт&#10;* сир 5% 130 г"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <button class="bk-add-meal-btn" (click)="addMealBlock()">+ Додати прийом їжі</button>
   </div>
 
+  <!-- Legacy comment field -->
+  <div class="bk-legacy-section">
+    <div class="bk-legacy-header">
+      <span class="bk-legacy-title">Загальний коментар</span>
+      <span class="bk-legacy-badge">старий формат</span>
+    </div>
+    <div class="bk-text-area">
+      <textarea formControlName="comment"></textarea>
+    </div>
+  </div>
 
 </div>

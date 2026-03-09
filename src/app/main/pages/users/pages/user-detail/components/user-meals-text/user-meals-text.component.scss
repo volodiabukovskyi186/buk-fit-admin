@@ -1,7 +1,248 @@
 .bk-create-user {
-    padding: 12px;
+  padding: 12px;
+}
 
-    //.bk-text-area {
-    //    height: 800px;
-    //}
+/* ─── Top Bar ────────────────────────────────────── */
+.bk-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ─── Meals Section ─────────────────────────────── */
+.bk-meals-section {
+  margin-bottom: 24px;
+}
+
+.bk-meals-section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bk-meals-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #252525;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Meal Block ─────────────────────────────────── */
+.bk-meal-block {
+  border: 1px solid #0000001a;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.meals-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .bk-meal-block {
+
+    min-width: 33%;
+
+  }
+}
+
+/* ─── Compact Header ─────────────────────────────── */
+.bk-meal-compact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #fafafa;
+  border-left: 4px solid #3FA1FB;
+  border-bottom: 1px solid #0000001a;
+  flex-wrap: wrap;
+}
+
+.bk-meal-emoji {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.bk-meal-type-select {
+  min-width: 120px;
+  flex-shrink: 0;
+
+  hs-form-field {
+    width: 100%;
+  }
+}
+
+/* ─── Compact Macros ─────────────────────────────── */
+.bk-compact-macros {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.bk-compact-macro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.bk-compact-macro-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #25252561;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.bk-compact-input {
+  width: 42px;
+  border: 1px solid #0000001a;
+  border-radius: 6px;
+  padding: 4px 2px;
+  font-size: 11px;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #3FA1FB;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
+
+.bk-meal-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  color: #E95032;
+  padding: 0 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+/* ─── Content Body ───────────────────────────────── */
+.bk-meal-content-body {
+  padding: 10px 12px 12px;
+}
+
+.bk-meal-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  resize: vertical;
+  outline: none;
+  line-height: 1.8;
+  box-sizing: border-box;
+  color: #252525;
+  background: transparent;
+
+  &::placeholder {
+    color: #25252529;
+  }
+}
+
+/* ─── Add Meal Button ────────────────────────────── */
+.bk-add-meal-btn {
+  width: 100%;
+  border: 2px dashed #3FA1FB;
+  background: #3FA1FB0A;
+  color: #3FA1FB;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.15s;
+  margin-top: 4px;
+
+  &:hover {
+    background: #3FA1FB1A;
+  }
+}
+
+/* ─── Legacy Section ─────────────────────────────── */
+.bk-legacy-section {
+  border: 1px solid #0000001a;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.bk-legacy-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid #0000001a;
+}
+
+.bk-legacy-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #25252561;
+}
+
+.bk-legacy-badge {
+  font-size: 10px;
+  font-weight: 600;
+  background: #2525250A;
+  color: #25252561;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.bk-text-area {
+  padding: 12px;
+
+  textarea {
+    width: 100%;
+    min-height: 160px;
+    border: 1px solid #0000001a;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    resize: vertical;
+    outline: none;
+    line-height: 1.7;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+
+    &:focus {
+      border-color: #3FA1FB;
+    }
+  }
 }

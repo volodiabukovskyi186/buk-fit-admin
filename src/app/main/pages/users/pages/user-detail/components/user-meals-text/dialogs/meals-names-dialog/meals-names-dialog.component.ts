@@ -1,48 +1,35 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {HSStatusModule} from '../../../../../../../../../core/components/status/status.module';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {TableGridDataTypeEnum, TableGridModule} from '../../../../../../../../../core/components/table-grid';
-import {ClientInterface, UserInterface} from '../../../../../../../../../core/interfaces/user.interface';
-import {
-  collection,
-  DocumentSnapshot,
-  Firestore,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  startAfter,
-  where
-} from '@angular/fire/firestore';
-import {PAYMENT_DATE_ENUM} from '../../../../../../../../../core/enums/payment-date/payment-date.enum';
-import {USER_ROLES_ENUM} from '../../../../../../../../../core/enums/users-roles.enum';
-import {Subscription} from 'rxjs';
-import {BKCheckPaymentDateService} from '../../../../../../../../../core/services/date/check-payment-date.service';
-import {AuthService} from '../../../../../../../../../core/services/auth/auth.service';
-import {Router} from '@angular/router';
-import {HSButtonModule} from '../../../../../../../../../core/components/button';
-import {HSTooltipModule} from '../../../../../../../../../core/components/tooltip';
+import { Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { collection, DocumentSnapshot, Firestore, getDocs, limit, query, startAfter, where } from '@angular/fire/firestore';
+import { USER_ROLES_ENUM } from '../../../../../../../../../core/enums/users-roles.enum';
+import { Subscription } from 'rxjs';
+import { BKCheckPaymentDateService } from '../../../../../../../../../core/services/date/check-payment-date.service';
+import { AuthService } from '../../../../../../../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { HSButtonModule } from '../../../../../../../../../core/components/button';
+import { UserInterface } from '../../../../../../../../../core/interfaces/user.interface';
+import { MealTypeEnum } from '../../../../../../../../../main/pages/meals-names/enums/meal-type.enum';
 
 @Component({
   selector: 'bk-meals-names-dialog',
   standalone: true,
-  imports: [CommonModule, HSStatusModule, MatPaginator, TableGridModule, HSButtonModule, HSTooltipModule],
+  imports: [CommonModule, FormsModule, MatPaginator, HSButtonModule],
   templateUrl: './meals-names-dialog.component.html',
   styleUrl: './meals-names-dialog.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class MealsNamesDialogComponent implements OnInit, OnDestroy {
-  tableGridDataTypeEnum = TableGridDataTypeEnum;
-  @ViewChild(MatPaginator) paginator: MatPaginator; // Додаємо пагінатор
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  users: ClientInterface[] | any[] = [];
+  users: any[] = [];
   totalUsersCount = 0;
-  pageSize = 10; // Початковий розмір сторінки
-  lastVisible: DocumentSnapshot | null = null; // Для пагінації
-  user:UserInterface;
-  paymentDateEnum = PAYMENT_DATE_ENUM;
+  pageSize = 10;
+  lastVisible: DocumentSnapshot | null = null;
+  user: UserInterface;
+  searchQuery = '';
   userRoleEnum = USER_ROLES_ENUM;
   private subscription: Subscription = new Subscription();
 
@@ -53,82 +40,117 @@ export class MealsNamesDialogComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dialog: MatDialog,
     private firestore: Firestore,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getUserState();
   }
 
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  get filteredUsers(): any[] {
+    if (!this.searchQuery.trim()) return this.users;
+    const q = this.searchQuery.toLowerCase();
+    return this.users.filter(u => u.name?.toLowerCase().includes(q));
   }
 
   close(): void {
     this.dialogRef.close(null);
   }
 
-  selectMeal(data): void{
-    this.dialogRef.close(data);
+  selectMeal(item: any): void {
+    this.dialogRef.close(item);
   }
 
+  getMealEmoji(type: string): string {
+    const map: { [key: string]: string } = {
+      [MealTypeEnum.BREAKFAST]: '🌅',
+      [MealTypeEnum.LUNCH]:     '☀️',
+      [MealTypeEnum.DINNER]:    '🌙',
+      [MealTypeEnum.SNACK]:     '🍎',
+      'СНІДАНОК': '🌅',
+      'ОБІД':     '☀️',
+      'ВЕЧЕРЯ':   '🌙',
+      'ПЕРЕКУС':  '🍎',
+    };
+    return map[type] || '🍽️';
+  }
+
+  getMealLabel(type: string): string {
+    const map: { [key: string]: string } = {
+      [MealTypeEnum.BREAKFAST]: 'Сніданок',
+      [MealTypeEnum.LUNCH]:     'Обід',
+      [MealTypeEnum.DINNER]:    'Вечеря',
+      [MealTypeEnum.SNACK]:     'Перекус',
+      'СНІДАНОК': 'Сніданок',
+      'ОБІД':     'Обід',
+      'ВЕЧЕРЯ':   'Вечеря',
+      'ПЕРЕКУС':  'Перекус',
+    };
+    return map[type] || type;
+  }
+
+  getMealColor(type: string): string {
+    const map: { [key: string]: string } = {
+      [MealTypeEnum.BREAKFAST]: '#F2AF4A',
+      [MealTypeEnum.LUNCH]:     '#27AE60',
+      [MealTypeEnum.DINNER]:    '#9B51E0',
+      [MealTypeEnum.SNACK]:     '#3FA1FB',
+      'СНІДАНОК': '#F2AF4A',
+      'ОБІД':     '#27AE60',
+      'ВЕЧЕРЯ':   '#9B51E0',
+      'ПЕРЕКУС':  '#3FA1FB',
+    };
+    return map[type] || '#3FA1FB';
+  }
+
+  getTotalCalories(meals: any[]): number {
+    if (!meals?.length) return 0;
+    return meals.reduce((sum, m) => sum + (Number(m.calories) || 0), 0);
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.getUsers(event.pageIndex, event.pageSize);
+  }
 
   private getUserState(): void {
-    const  stream$  = this.authService.userState$.subscribe((user: UserInterface) => {
+    const stream$ = this.authService.userState$.subscribe((user: UserInterface) => {
       this.user = user;
       this.getTotalUsersCount();
       this.getUsers();
     });
-
     this.subscription.add(stream$);
   }
 
-  getTotalUsersCount() {
+  getTotalUsersCount(): void {
     const clientsCollection = collection(this.firestore, 'meals-names');
-    const filterWere = this.user.role === USER_ROLES_ENUM.TRAINER ?  where('coachId', '==', this.user.id) : null;
-    const q = query(clientsCollection, filterWere);
-
+    const filterWhere = this.user.role === USER_ROLES_ENUM.TRAINER
+      ? where('coachId', '==', this.user.id) : null;
+    const q = filterWhere ? query(clientsCollection, filterWhere) : query(clientsCollection);
     getDocs(q).then(snapshot => {
       this.totalUsersCount = snapshot.size;
-    }).catch(error => console.error("Помилка отримання кількості користувачів: ", error));
+    }).catch(error => console.error('Помилка отримання кількості:', error));
   }
 
   getUsers(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
-    this.pageSize = newPageSize; // ✅ Оновлюємо `pageSize`
-
-    let clientsCollection = collection(this.firestore, 'meals-names');
-    let q = query(
-      clientsCollection,
-      limit(this.pageSize)
-    );
+    this.pageSize = newPageSize;
+    const clientsCollection = collection(this.firestore, 'meals-names');
+    let q = query(clientsCollection, limit(this.pageSize));
 
     if (this.lastVisible && pageIndex > 0) {
-      q = query(q, startAfter(this.lastVisible)); // Завантажуємо наступну сторінку
+      q = query(q, startAfter(this.lastVisible));
     } else {
-      this.lastVisible = null; // ✅ Скидаємо `lastVisible`, якщо змінюється `pageSize`
+      this.lastVisible = null;
     }
 
     getDocs(q).then(snapshot => {
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-        this.users = (snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any);
-        this.users =  this.users.map((user: any) => {
-          (user.paymentStatus as any) = this.bkCheckPaymentDateService.checkPaymentDate(user.payDate);
-
-          return user;
-        })
+        this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       }
-    }).catch(error => console.error("Помилка отримання користувачів: ", error));
+    }).catch(error => console.error('Помилка отримання:', error));
   }
-
-
-  onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
-
-    // ✅ Передаємо новий `pageSize`, якщо він змінюється
-    this.getUsers(event.pageIndex, event.pageSize);
-  }
-
-
 }
