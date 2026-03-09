@@ -1,0 +1,42 @@
+<div class="ji-dialog">
+
+  <div class="ji-header">
+    <span class="ji-title">Завантажити прийоми їжі з JSON</span>
+    <button class="ji-close-btn" (click)="close()">×</button>
+  </div>
+
+  <div class="ji-body">
+
+    <!-- Format example -->
+    <div class="ji-format-section">
+      <div class="ji-format-header">
+        <span class="ji-format-label">Очікуваний формат JSON</span>
+        <button class="ji-copy-btn" (click)="copyExample()">
+          <span *ngIf="!copied">Копіювати приклад</span>
+          <span *ngIf="copied" class="ji-copied">Скопійовано!</span>
+        </button>
+      </div>
+      <pre class="ji-code">{{ exampleJson }}</pre>
+    </div>
+
+    <!-- Paste area -->
+    <div class="ji-paste-section">
+      <label class="ji-paste-label">Вставте ваш JSON</label>
+      <textarea
+        class="ji-textarea"
+        [(ngModel)]="jsonText"
+        placeholder='[{ "type": "СНІДАНОК", "calories": 400, ... }]'
+        rows="8"
+        spellcheck="false"
+      ></textarea>
+      <div class="ji-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </div>
+
+  </div>
+
+  <div class="ji-footer">
+    <hs-button color="error" text="Скасувати" (click)="close()"></hs-button>
+    <hs-button text="Застосувати" (click)="apply()"></hs-button>
+  </div>
+
+</div>
