@@ -5,16 +5,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {collection, doc, Firestore, getDocs, query, setDoc, updateDoc, where} from '@angular/fire/firestore';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {forkJoin} from 'rxjs';
-import {VTExercisesService} from '../../../../../../../core/services/exercises/exercises.service';
+import {VTExercisesService} from 'src/app/core/services/exercises/exercises.service';
 import {filter, Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {UsersService} from '../../../../users.service';
-import {environment} from '../../../../../../../../environments/environment';
-import {ConfirmDialogComponent} from '../../../../../../../core/dialogs/confirm-dialog/confirm-dialog.component';
-import {ClientInterface} from '../../../../../../../core/interfaces/user.interface';
-import {TRAINING_TYPE_ENUM} from '../../../../../../../core/enums/training-type.enum';
-import {MealsNamesDialogComponent} from '../user-meals-text/dialogs/meals-names-dialog/meals-names-dialog.component';
-import {BKExercisesHelperService} from '../../../../../../../core/services/exercises/exercises-helper.service';
+import {environment} from 'src/environments/environment';
+import {ConfirmDialogComponent} from 'src/app/core/dialogs/confirm-dialog/confirm-dialog.component';
+import {ClientInterface} from 'src/app/core/interfaces/user.interface';
+import {TRAINING_TYPE_ENUM} from 'src/app/core/enums/training-type.enum';
+import {BKExercisesHelperService} from 'src/app/core/services/exercises/exercises-helper.service';
 
 @Component({
   selector: 'bk-exercises-main',
@@ -26,11 +25,8 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   id: string;
   formGroup: FormGroup;
   exersiceNames = [];
-  post: any;
+
   lastVisible: any = null;
-  isLoading = false;
-  homeExercises = [];
-  gymExercises = [];
   restsTimeOptions = [];
   weightOptions = [];
   repeatCountsOptions = [];
@@ -178,8 +174,25 @@ export class ExesisesComponent implements OnInit, OnDestroy {
         await updateDoc(docRef, payload);
         this.snackBar.open('✅ Дані оновлено', 'Закрити', {duration: 2000});
       }
+
+      await this.updateClientProgramUpdatedAt();
     } catch (error) {
       console.error("❌ Помилка оновлення:", error);
+    }
+  }
+
+  private async updateClientProgramUpdatedAt(): Promise<void> {
+    try {
+      const clientsCollection = collection(this.firestore, 'clients');
+      const q = query(clientsCollection, where('id', '==', this.user.id));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        const clientDocRef = snapshot.docs[0].ref;
+        await updateDoc(clientDocRef, {programUpdatedAt: new Date().toISOString()});
+      }
+    } catch (error) {
+      console.error("❌ Помилка оновлення поля programUpdatedAt:", error);
     }
   }
 

@@ -1,19 +1,30 @@
-<div class="h-100 w-100 p-12 container">
+<div class="h-100 w-100 p-12 flex flex-column" style="display: flex; flex-direction: column;">
   <div class="flex  justify-content-between">
     <h2 class="fc-primary">Користувачів: {{ totalUsersCount }}</h2>
   </div>
 
-  <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
-    <hs-table-grid style=" height: 100% !important;" *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
+  <div class="w-100 h-100 table-wrapper">
+    <hs-table-grid *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
                    [allowMultiplySorting]="false" [data]="users" (clickOnRow)="moveToMessage($event.id)">
 
-      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
+<!--      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>-->
 
-      <div hsTableColumn fieldName="img" caption="Тренер" width="120px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="img" caption="Тренер" width="100px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
         <ng-template #coachTmpl let-data="cellData">
           <div class="m-2">
             <span class="fc-success" *ngIf="data?.coachId">YES</span>
             <span  class="fc-error"  *ngIf="!data?.coachId">NO</span>
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn caption="Оновлення програми" width="140px" [cellTemplate]="programUpdatedTmpl" [allowResize]="true">
+        <ng-template #programUpdatedTmpl let-data="cellData">
+          <div class="m-2" [ngClass]="{
+            'fc-warning': data?.programUpdateStatus === 'WARNING',
+            'fc-error': data?.programUpdateStatus === 'DANGER'
+          }">
+            {{ data?.programUpdatedAt ? (data?.programUpdatedAt | date: 'dd.MM.yyyy') : '—' }}
           </div>
         </ng-template>
       </div>
@@ -37,14 +48,6 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="img" caption="E-mail" width="150px" [cellTemplate]="emailChatTmpl"
-           [allowResize]="true">
-        <ng-template #emailChatTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.email }}
-          </div>
-        </ng-template>
-      </div>
 
       <div hsTableColumn  caption="Telegram" width="120px" [cellTemplate]="tgUserTmpl"
            [allowResize]="true">
@@ -61,14 +64,6 @@
         </ng-template>
       </div>
 
-<!--      <div hsTableColumn fieldName="img" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl"-->
-<!--           [allowResize]="true">-->
-<!--        <ng-template #createdTmpl let-data="cellData">-->
-<!--          <div class="m-2">-->
-<!--            {{ data?.createdAt.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--      </div>-->
 
       <div hsTableColumn fieldName="img" caption="Дата Оплати" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="payDateTmpl"
            [allowResize]="true">
@@ -84,6 +79,8 @@
           <div *ngIf="!data?.payDate">-</div>
         </ng-template>
       </div>
+
+
 
     </hs-table-grid>
 

@@ -22,7 +22,7 @@ import {PAYMENT_DATE_ENUM} from '../../../core/enums/payment-date/payment-date.e
 import {BKCheckPaymentDateService} from '../../../core/services/date/check-payment-date.service';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-users-deleted',
   templateUrl: './deleted-users.component.html',
   styleUrls: ['./deleted-users.component.scss'],
 })

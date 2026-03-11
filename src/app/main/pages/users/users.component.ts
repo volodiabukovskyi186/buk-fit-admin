@@ -114,7 +114,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.users = (snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any);
         this.users =  this.users.map((user: any) => {
           (user.paymentStatus as any) = this.bkCheckPaymentDateService.checkPaymentDate(user.payDate);
-          console.log('32', user)
+          user.programUpdateStatus = this.getProgramUpdateStatus(user.programUpdatedAt);
           return user;
         });
 
@@ -137,5 +137,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   moveToTg(tgUser: any) {
     window.open(`https://t.me/${tgUser.username}`);
+  }
+
+  private getProgramUpdateStatus(programUpdatedAt?: string): 'NORMAL' | 'WARNING' | 'DANGER' {
+    if (!programUpdatedAt) return 'DANGER';
+    const diffDays = Math.floor((Date.now() - new Date(programUpdatedAt).getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays >= 8) return 'DANGER';
+    if (diffDays === 7) return 'WARNING';
+    return 'NORMAL';
   }
 }

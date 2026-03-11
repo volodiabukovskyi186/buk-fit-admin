@@ -29,4 +29,5 @@ export interface ClientInterface {
   secondName: string;
   tgUser:any;
   tgChatId:any;
+  programUpdatedAt?: string;
 }
