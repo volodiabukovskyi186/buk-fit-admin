@@ -1,0 +1,221 @@
+<div class="stats-page">
+
+  <!-- Header -->
+  <div class="stats-header">
+    <div class="stats-header__bg-dots"></div>
+    <div class="stats-header__bg-circle"></div>
+
+    <div class="stats-header__top">
+      <div class="stats-header__icon-wrap">
+        <i class="hs-icon icon-wallet fs-20"></i>
+      </div>
+      <div class="stats-header__texts">
+        <div class="stats-header__title">Статистика оплат</div>
+        <div class="stats-header__subtitle">Аналіз платежів за обраний період</div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="stats-filter" [formGroup]="formGroup">
+      <hs-form-field >
+        <hs-label>З</hs-label>
+        <div class="flex">
+          <input formControlName="fromDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerFrom" readonly/>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+          <hs-icon-button (click)="pickerFrom.open()">
+            <i class="hs-icon icon-calendar fs-24"></i>
+          </hs-icon-button>
+        </div>
+      </hs-form-field>
+
+      <hs-form-field >
+        <hs-label>По</hs-label>
+        <div class="flex">
+          <input formControlName="toDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerTo" readonly/>
+          <mat-datepicker #pickerTo></mat-datepicker>
+          <hs-icon-button (click)="pickerTo.open()">
+            <i class="hs-icon icon-calendar fs-24"></i>
+          </hs-icon-button>
+        </div>
+      </hs-form-field>
+
+      <button class="stats-filter__btn" (click)="loadStats()" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Показати</span>
+        <span *ngIf="isLoading" class="stats-filter__loading">
+          <span class="spinner"></span> Завантаження...
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-content" *ngIf="hasData">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid mb-12">
+      <div class="kpi-card kpi-card--blue">
+        <div class="kpi-card__icon"><i class="hs-icon icon-wallet fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ totalCount }}</div>
+          <div class="kpi-card__label">Всього оплат</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--orange">
+        <div class="kpi-card__icon"><i class="hs-icon icon-person fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ newCount }}</div>
+          <div class="kpi-card__label">Нові клієнти</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--green">
+        <div class="kpi-card__icon"><i class="hs-icon icon-arrow-up fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ renewalCount }}</div>
+          <div class="kpi-card__label">Продовження</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--purple">
+        <div class="kpi-card__icon"><i class="hs-icon icon-money fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ totalRevenue | number }} ₴</div>
+          <div class="kpi-card__label">Загальна сума</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-card mb-12">
+      <div class="chart-card__header">
+        <span class="chart-card__title">Динаміка оплат</span>
+        <div class="chart-legend">
+          <span class="legend-dot legend-dot--blue"></span><span>Нові</span>
+          <span class="legend-dot legend-dot--green"></span><span>Продовження</span>
+        </div>
+      </div>
+      <div class="chart-card__body">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </div>
+
+    <!-- Payments list -->
+    <div class="payments-card">
+      <div class="payments-card__header">
+        <span class="payments-card__title">Список оплат</span>
+        <span class="payments-count">{{ payments.length }} записів</span>
+      </div>
+
+      <!-- ─── Desktop table ─── -->
+      <div class="payments-table-wrapper desktop-only">
+        <table class="payments-table">
+          <thead>
+            <tr>
+              <th>Дата оплати</th>
+              <th>Клієнт ID</th>
+              <th>Тариф</th>
+              <th>Сума</th>
+              <th>Тип</th>
+              <th>Період з</th>
+              <th>Період до</th>
+              <th>ID тренера</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of payments" class="payments-table__row">
+              <td class="td-date">{{ getPaymentDate(p) }}</td>
+              <td class="td-id">{{ p.userId || '—' }}</td>
+              <td>
+                <span class="tariff-badge"
+                  [class.tariff-badge--basic]="p.tariff === 'BASIC'"
+                  [class.tariff-badge--standard]="p.tariff === 'STANDARD'"
+                  [class.tariff-badge--premium]="p.tariff === 'PREMIUM'">
+                  {{ getTariffLabel(p.tariff) }}
+                </span>
+              </td>
+              <td class="td-price">{{ p.price | number }} ₴</td>
+              <td>
+                <span class="type-badge" [class.type-badge--renewal]="p.isRenewal" [class.type-badge--new]="!p.isRenewal">
+                  {{ p.isRenewal ? 'Продовження' : 'Новий' }}
+                </span>
+              </td>
+              <td class="td-date">{{ getTimestampDate(p.fromDate) }}</td>
+              <td class="td-date">{{ getTimestampDate(p.toDate) }}</td>
+              <td class="td-coach">{{ p.coachId || '—' }}</td>
+              <td class="td-action">
+                <button class="action-btn action-btn--edit" (click)="openEdit(p)" title="Редагувати">
+                  <i class="hs-icon icon-pencil fs-13"></i>
+                </button>
+                <button class="action-btn action-btn--delete" (click)="deletePayment(p)" title="Видалити">
+                  <i class="hs-icon icon-trash fs-13"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ─── Mobile cards ─── -->
+      <div class="mobile-only payment-cards-list">
+        <div class="payment-mobile-card" *ngFor="let p of payments">
+          <div class="pmc-top">
+            <div class="pmc-top__left">
+              <span class="tariff-badge"
+                [class.tariff-badge--basic]="p.tariff === 'BASIC'"
+                [class.tariff-badge--standard]="p.tariff === 'STANDARD'"
+                [class.tariff-badge--premium]="p.tariff === 'PREMIUM'">
+                {{ getTariffLabel(p.tariff) }}
+              </span>
+              <span class="type-badge" [class.type-badge--renewal]="p.isRenewal" [class.type-badge--new]="!p.isRenewal">
+                {{ p.isRenewal ? 'Продовження' : 'Новий' }}
+              </span>
+            </div>
+            <div class="pmc-top__price">{{ p.price | number }} ₴</div>
+          </div>
+
+          <div class="pmc-rows">
+            <div class="pmc-row">
+              <span class="pmc-row__label">Дата оплати</span>
+              <span class="pmc-row__value">{{ getPaymentDate(p) }}</span>
+            </div>
+            <div class="pmc-row">
+              <span class="pmc-row__label">Період</span>
+              <span class="pmc-row__value">{{ getTimestampDate(p.fromDate) }} — {{ getTimestampDate(p.toDate) }}</span>
+            </div>
+            <div class="pmc-row">
+              <span class="pmc-row__label">Клієнт ID</span>
+              <span class="pmc-row__value pmc-row__value--mono">{{ p.userId || '—' }}</span>
+            </div>
+            <div class="pmc-row" *ngIf="p.coachId">
+              <span class="pmc-row__label">ID тренера</span>
+              <span class="pmc-row__value pmc-row__value--mono">{{ p.coachId }}</span>
+            </div>
+          </div>
+
+          <div class="pmc-actions">
+            <button class="pmc-btn pmc-btn--edit" (click)="openEdit(p)">
+              <i class="hs-icon icon-pencil fs-13"></i> Редагувати
+            </button>
+            <button class="pmc-btn pmc-btn--delete" (click)="deletePayment(p)">
+              <i class="hs-icon icon-trash fs-13"></i> Видалити
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="stats-empty" *ngIf="!hasData && !isLoading">
+    <div class="stats-empty__icon">📊</div>
+    <div class="stats-empty__title">Оберіть період та натисніть "Показати"</div>
+    <div class="stats-empty__sub">Статистика за обраний діапазон дат з'явиться тут</div>
+  </div>
+
+</div>

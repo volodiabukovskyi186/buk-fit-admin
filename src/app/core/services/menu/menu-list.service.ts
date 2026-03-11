@@ -85,6 +85,13 @@ export class MenuListService {
           role:[USER_ROLES_ENUM.SUPER_ADMIN]
         },
         {
+          title: 'Статистика',
+          icon: '',
+          isOpen: false,
+          url: 'statistics',
+          role:[USER_ROLES_ENUM.SUPER_ADMIN, USER_ROLES_ENUM.MANAGER]
+        },
+        {
           title: 'Привітальне повідомлення',
           icon: '',
           isOpen: false,

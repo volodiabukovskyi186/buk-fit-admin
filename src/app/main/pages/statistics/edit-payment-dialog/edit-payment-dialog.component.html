@@ -1,0 +1,128 @@
+<div class="dialog-shell" [formGroup]="formGroup">
+
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="dialog-header__left">
+      <div class="dialog-header__icon">
+        <i class="hs-icon icon-wallet fs-18"></i>
+      </div>
+      <div>
+        <div class="dialog-header__title">Редагування оплати</div>
+        <div class="dialog-header__sub">ID клієнта: {{ data.payment.userId || '—' }}</div>
+      </div>
+    </div>
+    <button class="dialog-close" (click)="close()">
+      <i class="hs-icon icon-cross fs-16"></i>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="dialog-body">
+
+    <!-- Row 1: tariff + price -->
+    <div class="dialog-row">
+      <hs-form-field class="w-100">
+        <hs-label>Тариф</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="tariff">
+          <hs-select-option [value]="tariffEnum.BASIC">Базовий</hs-select-option>
+          <hs-select-option [value]="tariffEnum.STANDARD">Стандартний</hs-select-option>
+          <hs-select-option [value]="tariffEnum.PREMIUM">Преміум</hs-select-option>
+        </hs-select>
+        <hs-error>Обовʼязкове поле</hs-error>
+      </hs-form-field>
+
+
+      <hs-form-field class="w-100">
+        <hs-label>Сума (₴)</hs-label>
+        <input iqInput formControlName="price" type="number"/>
+        <hs-error>Обовʼязкове поле</hs-error>
+      </hs-form-field>
+    </div>
+
+    <!-- Row 2: fromDate + toDate -->
+    <div class="dialog-row">
+      <hs-form-field class="w-100">
+        <hs-label>Період з</hs-label>
+        <div class="flex">
+          <input formControlName="fromDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerFrom" readonly/>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+          <hs-icon-button (click)="pickerFrom.open()">
+            <i class="hs-icon icon-calendar fs-22"></i>
+          </hs-icon-button>
+        </div>
+        <hs-error>Обовʼязкове поле</hs-error>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Період до</hs-label>
+        <div class="flex">
+          <input formControlName="toDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerTo" readonly/>
+          <mat-datepicker #pickerTo></mat-datepicker>
+          <hs-icon-button (click)="pickerTo.open()">
+            <i class="hs-icon icon-calendar fs-22"></i>
+          </hs-icon-button>
+        </div>
+        <hs-error>Обовʼязкове поле</hs-error>
+      </hs-form-field>
+    </div>
+
+    <!-- Row 2b: createdAt -->
+    <div class="dialog-row">
+      <hs-form-field class="w-100">
+        <hs-label>Дата оплати</hs-label>
+        <div class="flex">
+          <input formControlName="createdAt" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerCreated" readonly/>
+          <mat-datepicker #pickerCreated></mat-datepicker>
+          <hs-icon-button (click)="pickerCreated.open()">
+            <i class="hs-icon icon-calendar fs-22"></i>
+          </hs-icon-button>
+        </div>
+      </hs-form-field>
+    </div>
+
+    <!-- Row 3: isRenewal + status -->
+    <div class="dialog-row">
+      <hs-form-field class="w-100">
+        <hs-label>Тип оплати</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="isRenewal">
+          <hs-select-option [value]="false">Перша оплата</hs-select-option>
+          <hs-select-option [value]="true">Продовження</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>Статус</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="status">
+          <hs-select-option [value]="statusEnum.PAYED">Оплачено</hs-select-option>
+          <hs-select-option [value]="statusEnum.NEW">Нова</hs-select-option>
+          <hs-select-option [value]="statusEnum.ACTIVE">Активна</hs-select-option>
+          <hs-select-option [value]="statusEnum.NOT_ACTIVE">Неактивна</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+    </div>
+
+    <!-- Row 4: coachId -->
+    <div class="dialog-row">
+      <hs-form-field class="w-100">
+        <hs-label>ID тренера</hs-label>
+        <input iqInput formControlName="coachId"/>
+      </hs-form-field>
+    </div>
+
+    <!-- Row 5: comment -->
+    <div class="dialog-row">
+      <div class="w-100">
+        <div class="dialog-field-label">Коментар</div>
+        <textarea class="dialog-textarea" formControlName="comment" rows="3"></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="dialog-footer">
+    <button class="btn-cancel" (click)="close()">Скасувати</button>
+    <hs-button size="medium" (click)="save()" [text]="isSaving ? 'Збереження...' : 'Зберегти'"></hs-button>
+  </div>
+
+</div>

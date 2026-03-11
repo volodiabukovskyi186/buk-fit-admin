@@ -81,7 +81,9 @@ export class UserPaymentTemplateComponent implements OnInit {
       id: [this.generateUUID()],
       userId: [this.id],
       status: [PAYMENT_STATUS_ENUM.NEW],
-      isPayed: [false]
+      isPayed: [false],
+      isRenewal: [false],
+      coachId: [null],
     });
   }
 
@@ -115,6 +117,7 @@ export class UserPaymentTemplateComponent implements OnInit {
   private async loadData(): Promise<void> {
     await this.getUserById(this.id);
     await this.getPaymentsId(this.id);
+    await this.detectIsRenewal(this.id);
   }
 
   async updateUser(): Promise<void> {
@@ -175,7 +178,7 @@ export class UserPaymentTemplateComponent implements OnInit {
       if (!snapshot.empty) {
         const data = snapshot.docs[0].data();
         const convertedData = this.convertDates(data);
-        this.formGroup.setValue(convertedData);
+        this.formGroup.patchValue(convertedData);
       }
     } catch (error) {
       console.error('❌ Помилка отримання даних:', error);
@@ -190,11 +193,23 @@ export class UserPaymentTemplateComponent implements OnInit {
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
         this.user = snapshot.docs[0].data() as ClientInterface;
+        this.formGroup.get('coachId')?.setValue(this.user.coachId || null);
       } else {
         console.warn('⚠️ Користувач не знайдений.');
       }
     } catch (error) {
       console.error('❌ Помилка отримання користувача:', error);
+    }
+  }
+
+  private async detectIsRenewal(userId: string): Promise<void> {
+    try {
+      const col = collection(this.firestore, 'users-payments');
+      const q = query(col, where('userId', '==', userId));
+      const snapshot = await getDocs(q);
+      this.formGroup.get('isRenewal')?.setValue(!snapshot.empty);
+    } catch (error) {
+      console.error('❌ Помилка перевірки оплат:', error);
     }
   }
 

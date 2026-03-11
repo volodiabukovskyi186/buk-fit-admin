@@ -11,6 +11,7 @@ import {
   ExpiringPaymentDetailComponent
 } from './pages/expiring-payments/pages/expiring-payment-detail/expiring-payment-detail.component';
 import {DeletedUsersRoutingModule} from './pages/deleted-users/deleted-users-routing.module';
+import {StatisticsComponent} from './pages/statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -81,6 +82,10 @@ const routes: Routes = [
       {
         path: 'users-payments',
         component: ExpiringPaymentsComponent,
+      },
+      {
+        path: 'statistics',
+        component: StatisticsComponent,
       },
       {
         path: 'users-payments/user/:id',

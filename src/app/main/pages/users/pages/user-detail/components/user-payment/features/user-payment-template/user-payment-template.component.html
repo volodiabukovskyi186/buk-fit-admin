@@ -35,7 +35,21 @@
         <input iqInput formControlName="price" readonly />
         <hs-error >Поле обовязкове до заповннення</hs-error>
       </hs-form-field>
+    </div>
 
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Тип оплати</hs-label>
+        <hs-select [dropdownMinWidth]="200" formControlName="isRenewal">
+          <hs-select-option [value]="false">Перша оплата</hs-select-option>
+          <hs-select-option [value]="true">Продовження</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
+      <hs-form-field class="w-100">
+        <hs-label>ID тренера</hs-label>
+        <input iqInput formControlName="coachId" readonly />
+      </hs-form-field>
     </div>
 
     <div class="bk-two-fields">

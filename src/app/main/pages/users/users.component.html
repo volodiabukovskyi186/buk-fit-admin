@@ -7,7 +7,7 @@
     <hs-table-grid *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
                    [allowMultiplySorting]="false" [data]="users" (clickOnRow)="moveToMessage($event.id)">
 
-<!--      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>-->
+      <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
 
       <div hsTableColumn fieldName="img" caption="Тренер" width="100px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
         <ng-template #coachTmpl let-data="cellData">

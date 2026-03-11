@@ -1,0 +1,165 @@
+:host {
+  display: block;
+}
+
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 560px;
+  max-width: 100%;
+  max-height: 90vh;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+}
+
+// ─── Header ───────────────────────────────────────────────
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #002E76 0%, #3FA1FB 100%);
+  flex-shrink: 0;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.65);
+    margin-top: 2px;
+    font-family: monospace;
+  }
+}
+
+.dialog-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+
+  &:hover { background: rgba(255,255,255,0.28); }
+}
+
+// ─── Body ─────────────────────────────────────────────────
+.dialog-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.dialog-row {
+  display: flex;
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .w-100 { flex: 1; }
+}
+
+.dialog-field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #25252561;
+  margin-bottom: 6px;
+}
+
+.dialog-textarea {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  color: #252525;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus { border-color: #3FA1FB; }
+}
+
+// ─── Footer ───────────────────────────────────────────────
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  background: #fafafa;
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    hs-button { width: 100%; }
+  }
+}
+
+.btn-cancel {
+  padding: 0 20px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: #25252561;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+
+  &:hover {
+    border-color: #3FA1FB;
+    color: #3FA1FB;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}
