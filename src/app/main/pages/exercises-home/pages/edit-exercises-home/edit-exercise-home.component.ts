@@ -8,7 +8,7 @@ import { CdnVideoService } from '../../../../../core/services/cdn/cdn-video.serv
 
 
 @Component({
-  selector: 'app-edit-exercise',
+  selector: 'app-edit-exercise-home',
   templateUrl: './edit-exercise-home.component.html',
   styleUrls: ['./edit-exercise-home.component.scss']
 })

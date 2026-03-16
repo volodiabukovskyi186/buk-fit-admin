@@ -1,6 +1,17 @@
 <div class="bk-create-user" [formGroup]="formGroup">
   <div class="flex justify-content-end ">
-    <hs-button size="medium" class="mt-14" (click)="createUser()" [text]="'Створити вправу'"></hs-button>
+    <hs-button size="medium" class="mt-14" (click)="createUser()" [isDisabled]="isSaving" [text]="isSaving ? 'Збереження...' : 'Створити вправу'"></hs-button>
+  </div>
+
+  <div class="bk-upload-actions">
+    <label class="bk-file-picker">
+      <input type="file" (change)="onFileSelected($event)" />
+      <span>Обрати файл</span>
+    </label>
+  </div>
+
+  <div class="bk-file-name" *ngIf="selectedFile">
+    Вибрано: {{ selectedFile.name }}
   </div>
 
   <div class="flex bk-two-fields ">
@@ -20,4 +31,18 @@
     <input iqInput formControlName="videoURL"/>
   </hs-form-field>
 
+  <hs-form-field class="w-100">
+    <hs-label>URL завантаженого відео</hs-label>
+    <input iqInput formControlName="url"/>
+  </hs-form-field>
+
+  @if (url.value) {
+    <video
+      loop
+      playsinline
+      controls
+      style="width:200px; height:400px; object-fit:cover;"
+      [src]="url.value">
+    </video>
+  }
 </div>
