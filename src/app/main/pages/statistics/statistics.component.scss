@@ -102,6 +102,47 @@
   }
 }
 
+.stats-filter-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stats-quick-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.stats-quick-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s;
+
+  &:hover {
+    background: rgba(255,255,255,0.28);
+  }
+
+  &--active {
+    background: #fff;
+    color: #002E76;
+    border-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  }
+}
+
 .stats-filter {
   display: flex;
   align-items: center;
@@ -125,6 +166,9 @@
 
   &__btn {
     height: 38px;
+    width: 130px;
+    display: flex;
+    justify-content: center;
     padding: 0 22px;
     border-radius: 10px;
     border: none;
@@ -136,7 +180,6 @@
     cursor: pointer;
     white-space: nowrap;
     transition: background 0.2s, box-shadow 0.2s;
-    display: flex;
     align-items: center;
     gap: 8px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
@@ -376,6 +419,7 @@
 
   .td-date { color: #25252561; font-size: 0.8rem; }
   .td-id { font-family: monospace; font-size: 0.75rem; color: #3FA1FB; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+  .td-id--link { cursor: pointer; text-decoration: underline; &:hover { color: #002E76; } }
   .td-price { font-weight: 600; color: #002E76; }
   .td-coach { font-family: monospace; font-size: 0.75rem; color: #25252561; max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
   .td-action { width: 72px; text-align: right; white-space: nowrap; }

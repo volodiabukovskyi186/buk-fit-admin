@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {Chart, registerables} from 'chart.js';
 import moment from 'moment';
+import {HSSelectModule} from 'src/app/core/components/select/select.module';
 import {CUSTOM_DATE_FORMATS} from '../../../app.config';
 import {MatDialogModule} from '@angular/material/dialog';
 import {HSButtonModule} from '../../../core/components/button';
@@ -17,7 +18,9 @@ import {HSIconButtonModule} from '../../../core/components/icon-button';
 import {HSInputModule} from '../../../core/components/input';
 import {EditPaymentDialogComponent} from './edit-payment-dialog/edit-payment-dialog.component';
 import {ConfirmDialogComponent} from '../../../core/dialogs/confirm-dialog/confirm-dialog.component';
-import {filter} from 'rxjs';
+import {filter, Subscription} from 'rxjs';
+import {VTCoachesService} from '../../../core/services/coaches/coaches.service';
+import {Router} from '@angular/router';
 
 Chart.register(...registerables);
 
@@ -34,6 +37,7 @@ Chart.register(...registerables);
     HSFormFieldModule,
     HSIconButtonModule,
     HSInputModule,
+    HSSelectModule,
   ],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.scss',
@@ -55,6 +59,11 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   totalRevenue = 0;
 
   payments: any[] = [];
+  coaches: any[] = [];
+  activeQuickFilter: 'today' | 'yesterday' | 'week' | 'month' | null = null;
+
+  private allPayments: any[] = [];
+  private subscription = new Subscription();
 
   private chart: Chart | null = null;
 
@@ -64,14 +73,40 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
+    private vtCoachesService: VTCoachesService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
       fromDate: [moment().startOf('month')],
       toDate: [moment().endOf('month')],
+      coachId: [null],
     });
 
+    const dateChange$ = this.formGroup.get('fromDate').valueChanges.subscribe(() => {
+      this.activeQuickFilter = null;
+    });
+    this.subscription.add(dateChange$);
+
+    const coaches$ = this.vtCoachesService.getCoaches().subscribe((coaches: any[]) => {
+      if (coaches?.length) this.coaches = coaches;
+      console.log('coaches--', coaches)
+    });
+    this.subscription.add(coaches$);
+
+    this.loadStats();
+  }
+
+  setQuickFilter(range: 'today' | 'yesterday' | 'week' | 'month'): void {
+    const ranges = {
+      today:     [moment().startOf('day'), moment().endOf('day')],
+      yesterday: [moment().subtract(1, 'day').startOf('day'), moment().subtract(1, 'day').endOf('day')],
+      week:      [moment().subtract(6, 'days').startOf('day'), moment().endOf('day')],
+      month:     [moment().startOf('month'), moment().endOf('month')],
+    };
+    this.formGroup.patchValue({fromDate: ranges[range][0], toDate: ranges[range][1]});
+    this.activeQuickFilter = range;
     this.loadStats();
   }
 
@@ -91,12 +126,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
       const q = query(col, where('createdAt', '>=', from), where('createdAt', '<=', to), orderBy('createdAt', 'desc'));
       const snapshot = await getDocs(q);
 
-      this.payments = snapshot.docs.map(d => ({...d.data() as any, _docId: d.id}));
-
-      this.totalCount = this.payments.length;
-      this.renewalCount = this.payments.filter(p => p.isRenewal === true).length;
-      this.newCount = this.payments.filter(p => !p.isRenewal).length;
-      this.totalRevenue = this.payments.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
+      this.allPayments = snapshot.docs.map(d => ({...d.data() as any, _docId: d.id}));
+      this.applyFilters();
 
       this.hasData = true;
       this.cdr.detectChanges(); // ensure *ngIf renders canvas before chart init
@@ -106,6 +137,23 @@ export class StatisticsComponent implements OnInit, OnDestroy {
       this.snackBar.open('Помилка завантаження даних', 'Закрити', {duration: 2000});
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  applyFilters(): void {
+    const coachId = this.formGroup.get('coachId').value || null;
+    this.payments = coachId
+      ? this.allPayments.filter(p => p.coachId === coachId)
+      : [...this.allPayments];
+
+    this.totalCount = this.payments.length;
+    this.renewalCount = this.payments.filter(p => p.isRenewal === true).length;
+    this.newCount = this.payments.filter(p => !p.isRenewal).length;
+    this.totalRevenue = this.payments.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
+
+    if (this.hasData) {
+      this.cdr.detectChanges();
+      this.buildChart([...this.payments].reverse());
     }
   }
 
@@ -130,12 +178,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         const snapshot = await getDocs(q);
         if (!snapshot.empty) await deleteDoc(snapshot.docs[0].ref);
 
-        this.payments = this.payments.filter(p => p.id !== payment.id);
-        this.totalCount = this.payments.length;
-        this.renewalCount = this.payments.filter(p => p.isRenewal === true).length;
-        this.newCount = this.payments.filter(p => !p.isRenewal).length;
-        this.totalRevenue = this.payments.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
-        this.buildChart([...this.payments].reverse());
+        this.allPayments = this.allPayments.filter(p => p.id !== payment.id);
+        this.applyFilters();
         this.snackBar.open('Оплату видалено', 'Закрити', {duration: 2000});
       } catch (e) {
         console.error(e);
@@ -157,6 +201,10 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (idx !== -1) this.payments[idx] = {...updated, _docId: payment._docId};
       }
     });
+  }
+
+  goToUser(userId: string): void {
+    if (userId) this.router.navigate(['/users/user', userId]);
   }
 
   getTimestampDate(value: any): string {
@@ -251,5 +299,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.chart) this.chart.destroy();
+    this.subscription.unsubscribe();
   }
 }

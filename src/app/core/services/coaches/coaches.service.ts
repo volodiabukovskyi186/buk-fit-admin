@@ -24,12 +24,11 @@ export class VTCoachesService {
   }
 
   getCoaches(): Observable<any[]> {
-    console.log(22222555)
+
     const collectionRef = collection(this.firestore, 'admins');
     let queryName = query(collectionRef, orderBy('name'), where('role','==', USER_ROLES_ENUM.TRAINER));
 
     return from(getDocs(queryName)).pipe(
-      // tap(() => console.log('📌 Запит на отримання вправ...')),
       map(snapshot => {
         if (snapshot.empty) {
           return [];

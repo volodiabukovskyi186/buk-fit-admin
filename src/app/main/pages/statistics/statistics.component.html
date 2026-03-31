@@ -15,9 +15,18 @@
       </div>
     </div>
 
-    <!-- Filter -->
-    <div class="stats-filter" [formGroup]="formGroup">
-      <hs-form-field >
+    <div class="stats-filter-wrap">
+      <!-- Quick filters -->
+      <div class="stats-quick-filters">
+        <button class="stats-quick-btn" [class.stats-quick-btn--active]="activeQuickFilter === 'today'" (click)="setQuickFilter('today')">Сьогодні</button>
+        <button class="stats-quick-btn" [class.stats-quick-btn--active]="activeQuickFilter === 'yesterday'" (click)="setQuickFilter('yesterday')">Вчора</button>
+        <button class="stats-quick-btn" [class.stats-quick-btn--active]="activeQuickFilter === 'week'" (click)="setQuickFilter('week')">Тиждень</button>
+        <button class="stats-quick-btn" [class.stats-quick-btn--active]="activeQuickFilter === 'month'" (click)="setQuickFilter('month')">Місяць</button>
+      </div>
+
+      <!-- Filter -->
+      <div class="stats-filter" [formGroup]="formGroup">
+      <hs-form-field>
         <hs-label>З</hs-label>
         <div class="flex">
           <input formControlName="fromDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerFrom" readonly/>
@@ -28,7 +37,7 @@
         </div>
       </hs-form-field>
 
-      <hs-form-field >
+      <hs-form-field>
         <hs-label>По</hs-label>
         <div class="flex">
           <input formControlName="toDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerTo" readonly/>
@@ -39,12 +48,21 @@
         </div>
       </hs-form-field>
 
+      <hs-form-field *ngIf="coaches.length" style="width: 200px">
+        <hs-label>Тренер</hs-label>
+        <hs-select formControlName="coachId" [dropdownMinWidth]="180" (selectionChange)="applyFilters()">
+          <hs-select-option value="">Всі</hs-select-option>
+          <hs-select-option *ngFor="let coach of coaches" [value]="coach.id">{{ coach.name }}</hs-select-option>
+        </hs-select>
+      </hs-form-field>
+
       <button class="stats-filter__btn" (click)="loadStats()" [disabled]="isLoading">
         <span *ngIf="!isLoading">Показати</span>
         <span *ngIf="isLoading" class="stats-filter__loading">
-          <span class="spinner"></span> Завантаження...
+          <span class="spinner"></span>
         </span>
       </button>
+    </div>
     </div>
   </div>
 
@@ -129,7 +147,7 @@
           <tbody>
             <tr *ngFor="let p of payments" class="payments-table__row">
               <td class="td-date">{{ getPaymentDate(p) }}</td>
-              <td class="td-id">{{ p.userId || '—' }}</td>
+              <td class="td-id td-id--link" (click)="goToUser(p.userId)">{{ p.userId || '—' }}</td>
               <td>
                 <span class="tariff-badge"
                   [class.tariff-badge--basic]="p.tariff === 'BASIC'"
@@ -187,9 +205,9 @@
               <span class="pmc-row__label">Період</span>
               <span class="pmc-row__value">{{ getTimestampDate(p.fromDate) }} — {{ getTimestampDate(p.toDate) }}</span>
             </div>
-            <div class="pmc-row">
+            <div class="pmc-row" (click)="goToUser(p.userId)" style="cursor:pointer">
               <span class="pmc-row__label">Клієнт ID</span>
-              <span class="pmc-row__value pmc-row__value--mono">{{ p.userId || '—' }}</span>
+              <span class="pmc-row__value pmc-row__value--mono fc-primary">{{ p.userId || '—' }}</span>
             </div>
             <div class="pmc-row" *ngIf="p.coachId">
               <span class="pmc-row__label">ID тренера</span>
@@ -217,5 +235,4 @@
     <div class="stats-empty__title">Оберіть період та натисніть "Показати"</div>
     <div class="stats-empty__sub">Статистика за обраний діапазон дат з'явиться тут</div>
   </div>
-
 </div>
