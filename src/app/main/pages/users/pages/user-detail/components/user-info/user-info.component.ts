@@ -12,9 +12,14 @@ import {
   where
 } from '@angular/fire/firestore';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter} from '@angular/material/core';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {CUSTOM_DATE_FORMATS} from 'src/app/app.config';
 import {USER_ROLES_ENUM} from '../../../../../../../core/enums/users-roles.enum';
 import {USER_STATUS_ENUM} from '../../../../../../../core/enums/users-status.enum';
 import {VTExercisesService} from '../../../../../../../core/services/exercises/exercises.service';
@@ -29,7 +34,18 @@ import {TRAINING_TYPE_ENUM} from '../../../../../../../core/enums/training-type.
 @Component({
   selector: 'bk-user-info',
   templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.scss']
+  styleUrls: ['./user-info.component.scss'],
+  providers: [
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: CUSTOM_DATE_FORMATS,
+    },
+    {
+      deps: [MAT_DATE_LOCALE],
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+    }
+  ]
 })
 export class UserInfoComponent implements OnInit, OnDestroy {
   userStatusEnum = USER_STATUS_ENUM;
@@ -72,6 +88,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
       createdAt: this.fb.control(null, Validators.required),
       payDate: this.fb.control(null),
       updatedAt: this.fb.control(null),
+      startDayFrom: this.fb.control(null),
       coachId: this.fb.control(null),
       id: this.fb.control(null, Validators.required),
       weight: this.fb.control(null),
@@ -137,7 +154,11 @@ export class UserInfoComponent implements OnInit, OnDestroy {
 
           const payDate = new Date(this.user.payDate.seconds * 1000);
           this.formGroup.get('payDate').setValue(payDate);
+        }
 
+        if (this.user?.startDayFrom?.seconds) {
+          const startDayFrom = new Date(this.user.startDayFrom.seconds * 1000);
+          this.formGroup.get('startDayFrom').setValue(startDayFrom);
         }
 
         this.cdr.detectChanges(); // ✅ Оновлюємо UI
@@ -150,9 +171,15 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   }
 
   async updateUser(): Promise<void> {
+    const startDayFromValue = this.formGroup.get('startDayFrom').value;
+    const startDayFrom = startDayFromValue
+      ? Timestamp.fromDate(new Date(startDayFromValue))
+      : null;
+
     const payload = {
       ...this.formGroup.getRawValue(),
       updatedAt: Timestamp.now(),
+      startDayFrom,
     };
 
     if (!this.formGroup.valid) {

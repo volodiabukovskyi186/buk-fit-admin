@@ -137,6 +137,15 @@ hs-status {
     }
   }
 
+  &.status-warning {
+    p {
+      color: $hs-warning;
+    }
+    .status-dot {
+      background: $hs-warning;
+    }
+  }
+
 
   &.status-deleted {
     p {

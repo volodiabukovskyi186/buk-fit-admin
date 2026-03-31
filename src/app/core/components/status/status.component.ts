@@ -36,7 +36,6 @@ export class StatusComponent implements OnInit {
       case USER_STATUS_ENUM.NEW:
         this.title = USER_STATUS_ENUM.NEW;
         this.styleClass = 'in-progress';
-        console.log(22222, this.statusType)
         return;
 
       case USER_STATUS_ENUM.ACTIVE:
@@ -52,6 +51,11 @@ export class StatusComponent implements OnInit {
       case USER_STATUS_ENUM.DELETED:
         this.title = USER_STATUS_ENUM.DELETED;
         this.styleClass = 'deleted';
+        return;
+
+        case USER_STATUS_ENUM.DELAY_START:
+        this.title = USER_STATUS_ENUM.DELAY_START;
+        this.styleClass = 'warning';
         return;
 
 

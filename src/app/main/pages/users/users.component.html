@@ -64,6 +64,16 @@
         </ng-template>
       </div>
 
+      <div hsTableColumn fieldName="startDayFrom" caption="Початок роботи" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="startDayTmpl"
+           [allowResize]="true">
+        <ng-template #startDayTmpl let-data="cellData">
+          <div class="m-2" *ngIf="data?.startDayFrom" [ngClass]="getStartDayClass(data?.startDayFrom)">
+            {{ data?.startDayFrom?.seconds * 1000 | date: 'dd.MM.yyyy' }}
+          </div>
+          <div *ngIf="!data?.startDayFrom">-</div>
+        </ng-template>
+      </div>
+
 
       <div hsTableColumn fieldName="img" caption="Дата Оплати" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="payDateTmpl"
            [allowResize]="true">

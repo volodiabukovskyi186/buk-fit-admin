@@ -74,7 +74,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       filters.push(where('coachId', '==', this.user.id));
     }
 
-    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED']));
+    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED', 'DELAY_START']));
 
     const q = query(clientsCollection, ...filters);
 
@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       filters.push(where('coachId', '==', this.user.id));
     }
 
-    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED']));
+    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED', 'DELAY_START']));
 
     let clientsCollection = collection(this.firestore, 'clients');
     let q = query(
@@ -118,6 +118,8 @@ export class UsersComponent implements OnInit, OnDestroy {
           return user;
         });
 
+        console.log('USERS______---->', this.users)
+
 
       }
     }).catch(error => console.error("Помилка отримання користувачів: ", error));
@@ -137,6 +139,19 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   moveToTg(tgUser: any) {
     window.open(`https://t.me/${tgUser.username}`);
+  }
+
+  getStartDayClass(startDayFrom: any): string {
+    if (!startDayFrom?.seconds) return '';
+    const ms = startDayFrom.seconds * 1000;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const target = new Date(ms);
+    target.setHours(0, 0, 0, 0);
+    const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays <= 0) return 'fc-error';
+    if (diffDays <= 3) return 'fc-warning';
+    return 'fc-success';
   }
 
   private getProgramUpdateStatus(programUpdatedAt?: string): 'NORMAL' | 'WARNING' | 'DANGER' {

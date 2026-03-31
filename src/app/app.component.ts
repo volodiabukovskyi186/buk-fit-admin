@@ -1,25 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import { Router, RouterOutlet} from '@angular/router';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import {AngularFireStorageModule} from '@angular/fire/compat/storage';
-import { HttpClientModule } from '@angular/common/http';
-import {BrowserModule} from '@angular/platform-browser';
-import {CommonModule, NgIf} from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {filter, Subscription} from 'rxjs';
+
+import { Subscription} from 'rxjs';
 import {AuthService} from './core/services/auth/auth.service';
 import {USER_STATUS_ENUM} from './core/enums/users-status.enum';
 import {UserInterface} from './core/interfaces/user.interface';
 
-// BrowserAnimationsModule,
-//   BrowserModule,
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
     MatSnackBarModule,
-
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -46,7 +46,31 @@
         <hs-select-option [value]="userStatusEnum.BLOCKED"><span>BLOCKED</span></hs-select-option>
         <hs-select-option [value]="userStatusEnum.ACTIVE"><span class="fc-success">ACTIVE</span></hs-select-option>
         <hs-select-option [value]="userStatusEnum.NEW"><span class="fc-primary-dark">NEW</span></hs-select-option>
+        <hs-select-option [value]="userStatusEnum.DELAY_START"><span class="fc-primary-dark">DELAY START</span></hs-select-option>
       </hs-select>
+    </hs-form-field>
+
+    <hs-form-field class="date-till" *ngIf="user?.status === userStatusEnum.DELAY_START">
+      <hs-label>Розпочати тренування з</hs-label>
+      <div class="flex">
+        <input formControlName="startDayFrom"
+               [placeholder]="'DD-MM-YYYY'"
+               iqInput iqAutofocus
+               [matDatepicker]="picker"
+               readonly />
+        <mat-datepicker #picker></mat-datepicker>
+        <div>
+          <hs-icon-button *ngIf="!formGroup.get('startDayFrom').value" class="date-till-add" (click)="picker.open()">
+            <i class="hs-icon icon-calendar fs-18"></i>
+          </hs-icon-button>
+
+          <hs-icon-button *ngIf="formGroup.get('startDayFrom').value" (click)="formGroup.get('startDayFrom').setValue(null)">
+            <i class="hs-icon icon-trash-can fs-18"></i>
+          </hs-icon-button>
+        </div>
+
+      </div>
+      <hs-error>Поле обовязкове до заповннення</hs-error>
     </hs-form-field>
 
     <hs-form-field class="w-100">
@@ -74,7 +98,28 @@
       </hs-select>
       <hs-error>Поле обовязкове до заповнення</hs-error>
     </hs-form-field>
+
+    <hs-form-field class="date-till" *ngIf="user?.status === userStatusEnum.DELAY_START">
+      <hs-label>Оплата до</hs-label>
+      <div class="flex">
+        <input formControlName="payDate"
+               [placeholder]="'DD-MM-YYYY'"
+               iqInput iqAutofocus
+               [matDatepicker]="picker"
+               readonly />
+        <mat-datepicker #picker></mat-datepicker>
+        <div>
+          <hs-icon-button  class="date-till-add" (click)="picker.open()">
+            <i class="hs-icon icon-calendar fs-18"></i>
+          </hs-icon-button>
+        </div>
+
+      </div>
+      <hs-error>Поле обовязкове до заповннення</hs-error>
+    </hs-form-field>
   </div>
+
+
 
   <ng-container *ngIf="admin?.role === UserRolesEnum.SUPER_ADMIN || admin?.role === UserRolesEnum.MANAGER">
     <div class="flex">

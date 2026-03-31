@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MealTypeEnum } from '../../enums/meal-type.enum';
 
 @Component({
-  selector: 'app-create-exercise',
+  selector: 'app-create-meals',
   templateUrl: './create-meals-names.component.html',
   styleUrls: ['./create-meals-names.component.scss']
 })

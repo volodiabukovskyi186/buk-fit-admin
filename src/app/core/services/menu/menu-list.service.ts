@@ -77,13 +77,13 @@ export class MenuListService {
           url: 'managers',
           role:[USER_ROLES_ENUM.SUPER_ADMIN]
         },
-        {
-          title: 'Оплати',
-          icon: '',
-          isOpen: false,
-          url: 'users-payments',
-          role:[USER_ROLES_ENUM.SUPER_ADMIN]
-        },
+        // {
+        //   title: 'Оплати',
+        //   icon: '',
+        //   isOpen: false,
+        //   url: 'users-payments',
+        //   role:[USER_ROLES_ENUM.SUPER_ADMIN]
+        // },
         {
           title: 'Статистика',
           icon: '',

@@ -30,4 +30,5 @@ export interface ClientInterface {
   tgUser:any;
   tgChatId:any;
   programUpdatedAt?: string;
+  startDayFrom?: Timestamp | null;
 }
