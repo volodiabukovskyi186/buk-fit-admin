@@ -138,6 +138,7 @@ export class EditMealsNameComponent implements OnInit {
     getDocs(q).then(snapshot => {
       if (!snapshot.empty) {
         this.exercise = snapshot.docs[0].data();
+        console.log('MEALS===>', this.exercise )
         const { meals, ...rest } = this.exercise;
         this.formGroup.patchValue(rest);
 

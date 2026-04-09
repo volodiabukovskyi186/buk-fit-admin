@@ -176,10 +176,16 @@ export class UserInfoComponent implements OnInit, OnDestroy {
       ? Timestamp.fromDate(new Date(startDayFromValue))
       : null;
 
+    const payDateValue = this.formGroup.get('payDate').value;
+    const payDate = payDateValue
+      ? Timestamp.fromDate(new Date(payDateValue))
+      : null;
+
     const payload = {
       ...this.formGroup.getRawValue(),
       updatedAt: Timestamp.now(),
       startDayFrom,
+      payDate,
     };
 
     if (!this.formGroup.valid) {

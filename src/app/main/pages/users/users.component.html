@@ -58,9 +58,9 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="status" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="statusUser" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
         <ng-template #statusTmpl let-data="cellData">
-          <hs-status [statusType]="data?.status"></hs-status>
+          <hs-status [type]="data?.status"></hs-status>
         </ng-template>
       </div>
 
@@ -75,7 +75,7 @@
       </div>
 
 
-      <div hsTableColumn fieldName="img" caption="Дата Оплати" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="payDateTmpl"
+      <div hsTableColumn fieldName="statusPay" caption="Дата Оплати" width="150px" [cellTemplate]="payDateTmpl"
            [allowResize]="true">
         <ng-template #payDateTmpl let-data="cellData">
           <div class="m-2" *ngIf="data?.payDate"  [ngClass]="{
@@ -99,7 +99,7 @@
   <mat-paginator
     [length]="totalUsersCount"
     [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
     (page)="onPageChange($event)"
   >
   </mat-paginator>
