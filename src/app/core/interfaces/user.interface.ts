@@ -2,6 +2,7 @@ import {USER_ROLES_ENUM} from "../enums/users-roles.enum";
 import {USER_STATUS_ENUM} from "../enums/users-status.enum";
 import {Timestamp} from "@angular/fire/firestore";
 import {TRAINING_TYPE_ENUM} from '../enums/training-type.enum';
+import {PAYMENT_DATE_ENUM} from '../enums/payment-date/payment-date.enum';
 
 export interface UserInterface {
   createdAt: Timestamp;
@@ -14,6 +15,10 @@ export interface UserInterface {
   secondName: string;
 }
 
+export interface TgUser {
+  username: string;
+  id?: number | string;
+}
 
 export interface ClientInterface {
   createdAt: Timestamp;
@@ -27,8 +32,13 @@ export interface ClientInterface {
   phone: string;
   name: string;
   secondName: string;
-  tgUser:any;
-  tgChatId:any;
+  tgUser: TgUser | null;
+  tgChatId: string | number | null;
   programUpdatedAt?: string;
   startDayFrom?: Timestamp | null;
+}
+
+export interface EnrichedClientInterface extends ClientInterface {
+  paymentStatus: PAYMENT_DATE_ENUM;
+  programUpdateStatus: 'NORMAL' | 'WARNING' | 'DANGER';
 }

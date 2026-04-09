@@ -9,7 +9,7 @@
 
       <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
 
-      <div hsTableColumn fieldName="img" caption="Тренер" width="100px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="coachId" caption="Тренер" width="100px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="coachTmpl" [allowResize]="true">
         <ng-template #coachTmpl let-data="cellData">
           <div class="m-2">
             <span class="fc-success" *ngIf="data?.coachId">YES</span>
@@ -18,7 +18,7 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn caption="Оновлення програми" width="140px" [cellTemplate]="programUpdatedTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="programUpdatedAt" caption="Оновлення програми" width="140px" [cellTemplate]="programUpdatedTmpl" [allowResize]="true">
         <ng-template #programUpdatedTmpl let-data="cellData">
           <div class="m-2" [ngClass]="{
             'fc-warning': data?.programUpdateStatus === 'WARNING',
@@ -29,28 +29,23 @@
         </ng-template>
       </div>
 
-
-      <div hsTableColumn fieldName="img" caption="Імя" width="120px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
-        <ng-template #idNumberTmpl let-data="cellData">
+      <div hsTableColumn fieldName="name" caption="Імя" width="120px" [cellTemplate]="nameTmpl" [allowResize]="true">
+        <ng-template #nameTmpl let-data="cellData">
           <div class="m-2">
             {{ data?.name }}
           </div>
         </ng-template>
       </div>
 
-
-      <div hsTableColumn fieldName="img" caption="Прізвище" width="120px" [cellTemplate]="idNumberChatTmpl"
-           [allowResize]="true">
-        <ng-template #idNumberChatTmpl let-data="cellData">
+      <div hsTableColumn fieldName="secondName" caption="Прізвище" width="120px" [cellTemplate]="secondNameTmpl" [allowResize]="true">
+        <ng-template #secondNameTmpl let-data="cellData">
           <div class="m-2">
             {{ data?.secondName }}
           </div>
         </ng-template>
       </div>
 
-
-      <div hsTableColumn  caption="Telegram" width="120px" [cellTemplate]="tgUserTmpl"
-           [allowResize]="true">
+      <div hsTableColumn fieldName="tgUser" caption="Telegram" width="120px" [cellTemplate]="tgUserTmpl" [allowResize]="true">
         <ng-template #tgUserTmpl let-data="cellData">
           <div class="m-2 fc-primary hs-link" *ngIf="data?.tgUser?.username" (click)="moveToTg(data?.tgUser)">
             {{ data?.tgUser?.username }}
@@ -58,14 +53,13 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="statusUser" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="status" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
         <ng-template #statusTmpl let-data="cellData">
           <hs-status [type]="data?.status"></hs-status>
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="startDayFrom" caption="Початок роботи" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="startDayTmpl"
-           [allowResize]="true">
+      <div hsTableColumn fieldName="startDayFrom" caption="Початок роботи" width="150px" *ngIf="user.role !== userRoleEnum.TRAINER" [cellTemplate]="startDayTmpl" [allowResize]="true">
         <ng-template #startDayTmpl let-data="cellData">
           <div class="m-2" *ngIf="data?.startDayFrom" [ngClass]="getStartDayClass(data?.startDayFrom)">
             {{ data?.startDayFrom?.seconds * 1000 | date: 'dd.MM.yyyy' }}
@@ -74,9 +68,7 @@
         </ng-template>
       </div>
 
-
-      <div hsTableColumn fieldName="statusPay" caption="Дата Оплати" width="150px" [cellTemplate]="payDateTmpl"
-           [allowResize]="true">
+      <div hsTableColumn fieldName="payDate" caption="Дата Оплати" width="150px" [cellTemplate]="payDateTmpl" [allowResize]="true">
         <ng-template #payDateTmpl let-data="cellData">
           <div class="m-2" *ngIf="data?.payDate"  [ngClass]="{
           'fc-warning': data?.paymentStatus === paymentDateEnum.WARNING,
@@ -90,12 +82,9 @@
         </ng-template>
       </div>
 
-
-
     </hs-table-grid>
-
-
   </div>
+
   <mat-paginator
     [length]="totalUsersCount"
     [pageSize]="pageSize"
@@ -105,7 +94,3 @@
   </mat-paginator>
 
 </div>
-
-
-
-

@@ -1,25 +1,16 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  collection,
-  DocumentSnapshot,
-  Firestore,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  startAfter,
-  where
-} from '@angular/fire/firestore';
+import {DocumentSnapshot} from '@angular/fire/firestore';
 import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {TableGridDataTypeEnum} from '../../../core/components/table-grid';
-import {ClientInterface, UserInterface} from '../../../core/interfaces/user.interface';
+import {ClientInterface, EnrichedClientInterface, TgUser, UserInterface} from '../../../core/interfaces/user.interface';
 import {AuthService} from '../../../core/services/auth/auth.service';
 import {Subscription} from 'rxjs';
 import {USER_ROLES_ENUM} from '../../../core/enums/users-roles.enum';
 import {PAYMENT_DATE_ENUM} from '../../../core/enums/payment-date/payment-date.enum';
 import {BKCheckPaymentDateService} from '../../../core/services/date/check-payment-date.service';
+import {UsersService} from './users.service';
+import {Timestamp} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-users',
@@ -27,131 +18,103 @@ import {BKCheckPaymentDateService} from '../../../core/services/date/check-payme
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  tableGridDataTypeEnum = TableGridDataTypeEnum;
-  @ViewChild(MatPaginator) paginator: MatPaginator; // Додаємо пагінатор
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  users: ClientInterface[] | any[] = [];
+  users: EnrichedClientInterface[] = [];
   totalUsersCount = 0;
-  pageSize = 10; // Початковий розмір сторінки
-  lastVisible: DocumentSnapshot | null = null; // Для пагінації
-  user:UserInterface;
-  paymentDateEnum = PAYMENT_DATE_ENUM;
-  userRoleEnum = USER_ROLES_ENUM;
+  pageSize = 10;
+  user: UserInterface;
+
+  readonly tableGridDataTypeEnum = TableGridDataTypeEnum;
+  readonly paymentDateEnum = PAYMENT_DATE_ENUM;
+  readonly userRoleEnum = USER_ROLES_ENUM;
+
+  private lastVisible: DocumentSnapshot | null = null;
   private subscription: Subscription = new Subscription();
+
   constructor(
     private bkCheckPaymentDateService: BKCheckPaymentDateService,
     private authService: AuthService,
-    private dialog: MatDialog,
-    private firestore: Firestore,
+    private usersService: UsersService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getUserState();
-
+    this.subscribeToUserState();
   }
-
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private getUserState(): void {
-    const  stream$  = this.authService.userState$.subscribe((user: UserInterface) => {
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.loadUsers(event.pageIndex, event.pageSize);
+  }
+
+  moveToMessage(id: string): void {
+    this.router.navigate([`/users/user/`, id]);
+  }
+
+  moveToTg(tgUser: TgUser): void {
+    window.open(`https://t.me/${tgUser.username}`);
+  }
+
+  getStartDayClass(startDayFrom: Timestamp | null | undefined): string {
+    if (!startDayFrom?.seconds) return '';
+
+    const target = new Date(startDayFrom.seconds * 1000);
+    target.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= 0) return 'fc-error';
+    if (diffDays <= 3) return 'fc-warning';
+    return 'fc-success';
+  }
+
+  private subscribeToUserState(): void {
+    const stream$ = this.authService.userState$.subscribe((user: UserInterface) => {
       this.user = user;
-      this.getTotalUsersCount();
-      this.getUsers();
+      this.loadTotalCount();
+      this.loadUsers();
     });
 
     this.subscription.add(stream$);
   }
 
-  getTotalUsersCount() {
-    const clientsCollection = collection(this.firestore, 'clients');
-    const filters = [];
-
-    if (this.user.role === USER_ROLES_ENUM.TRAINER) {
-      filters.push(where('coachId', '==', this.user.id));
-    }
-
-    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED', 'DELAY_START']));
-
-    const q = query(clientsCollection, ...filters);
-
-    getDocs(q)
-      .then(snapshot => {
-        this.totalUsersCount = snapshot.size;
-      })
-      .catch(error => console.error("Помилка отримання кількості користувачів: ", error));
+  private loadTotalCount(): void {
+    this.usersService
+      .getClientsCount(this.user.role, this.user.id)
+      .then(count => {
+        this.totalUsersCount = count;
+      });
   }
 
-  getUsers(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
+  private loadUsers(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
     this.pageSize = newPageSize;
-    const filters = [];
-    if (this.user.role === USER_ROLES_ENUM.TRAINER) {
-      filters.push(where('coachId', '==', this.user.id));
+
+    if (pageIndex === 0) {
+      this.lastVisible = null;
     }
 
-    filters.push(where('status', 'in', ['ACTIVE', 'NEW', 'BLOCKED', 'DELAY_START']));
-
-    let clientsCollection = collection(this.firestore, 'clients');
-    let q = query(
-      clientsCollection,
-      ...filters,
-      orderBy('createdAt', 'desc'),
-      limit(this.pageSize)
-    );
-
-    if (this.lastVisible && pageIndex > 0) {
-      q = query(q, startAfter(this.lastVisible)); // Завантажуємо наступну сторінку
-    } else {
-      this.lastVisible = null; // ✅ Скидаємо `lastVisible`, якщо змінюється `pageSize`
-    }
-
-    getDocs(q).then(snapshot => {
-      if (!snapshot.empty) {
-        this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-        this.users = (snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any);
-        this.users =  this.users.map((user: any) => {
-          (user.paymentStatus as any) = this.bkCheckPaymentDateService.checkPaymentDate(user.payDate);
-          user.programUpdateStatus = this.getProgramUpdateStatus(user.programUpdatedAt);
-          return user;
-        });
-
-        console.log('USERS______---->', this.users)
-
-
-      }
-    }).catch(error => console.error("Помилка отримання користувачів: ", error));
+    this.usersService
+      .getClientsPage(this.user.role, this.user.id, this.pageSize, pageIndex, this.lastVisible)
+      .then(({ clients, lastVisible }) => {
+        this.lastVisible = lastVisible;
+        this.users = clients.map(user => this.enrichUserData(user));
+      });
   }
 
-
-  onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
-
-    // ✅ Передаємо новий `pageSize`, якщо він змінюється
-    this.getUsers(event.pageIndex, event.pageSize);
-  }
-
-  moveToMessage(id): void {
-    this.router.navigate([`/users/user/`, id]);
-  }
-
-  moveToTg(tgUser: any) {
-    window.open(`https://t.me/${tgUser.username}`);
-  }
-
-  getStartDayClass(startDayFrom: any): string {
-    if (!startDayFrom?.seconds) return '';
-    const ms = startDayFrom.seconds * 1000;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const target = new Date(ms);
-    target.setHours(0, 0, 0, 0);
-    const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    if (diffDays <= 0) return 'fc-error';
-    if (diffDays <= 3) return 'fc-warning';
-    return 'fc-success';
+  private enrichUserData(user: ClientInterface): EnrichedClientInterface {
+    return {
+      ...user,
+      paymentStatus: this.bkCheckPaymentDateService.checkPaymentDate(user.payDate),
+      programUpdateStatus: this.getProgramUpdateStatus(user.programUpdatedAt),
+    };
   }
 
   private getProgramUpdateStatus(programUpdatedAt?: string): 'NORMAL' | 'WARNING' | 'DANGER' {

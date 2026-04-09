@@ -3,7 +3,8 @@
     "allow": [
       "Bash(grep -r \"statistic\\\\|analytics\\\\|statistics\" /Users/volodiabukovskyi/BUK/buk-fit-admin/src/app/main/pages --include=\"*.ts\" --include=\"*.html\" 2>/dev/null | head -20)",
       "Bash(npm install:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(ng build:*)"
     ]
   }
 }
