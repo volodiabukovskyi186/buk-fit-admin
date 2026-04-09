@@ -10,11 +10,13 @@ import {
   limit,
   orderBy,
   query,
+  QueryConstraint,
   startAfter,
   where
 } from '@angular/fire/firestore';
 import {ClientInterface} from '../../../core/interfaces/user.interface';
 import {USER_ROLES_ENUM} from '../../../core/enums/users-roles.enum';
+import {UsersFiltersInterface} from './interfaces/users-filters.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,16 +40,13 @@ export class UsersService {
     this.userUpdatedSubject.next(true);
   }
 
-  getClientsCount(userRole: USER_ROLES_ENUM, coachId: string): Promise<number> {
-    const filters = [];
-
-    if (userRole === USER_ROLES_ENUM.TRAINER) {
-      filters.push(where('coachId', '==', coachId));
-    }
-
-    filters.push(where('status', 'in', this.activeStatuses));
-
-    const q = query(collection(this.firestore, 'clients'), ...filters);
+  getClientsCount(
+    userRole: USER_ROLES_ENUM,
+    coachId: string,
+    filters?: UsersFiltersInterface | null,
+  ): Promise<number> {
+    const constraints = this.buildQueryConstraints(userRole, coachId, filters);
+    const q = query(collection(this.firestore, 'clients'), ...constraints);
 
     return getDocs(q)
       .then(snapshot => snapshot.size)
@@ -62,21 +61,16 @@ export class UsersService {
     coachId: string,
     pageSize: number,
     pageIndex: number,
-    lastVisible: DocumentSnapshot | null
+    lastVisible: DocumentSnapshot | null,
+    filters?: UsersFiltersInterface | null,
   ): Promise<{ clients: ClientInterface[]; lastVisible: DocumentSnapshot | null }> {
-    const filters = [];
-
-    if (userRole === USER_ROLES_ENUM.TRAINER) {
-      filters.push(where('coachId', '==', coachId));
-    }
-
-    filters.push(where('status', 'in', this.activeStatuses));
+    const constraints = this.buildQueryConstraints(userRole, coachId, filters);
 
     let q = query(
       collection(this.firestore, 'clients'),
-      ...filters,
+      ...constraints,
       orderBy('createdAt', 'desc'),
-      limit(pageSize)
+      limit(pageSize),
     );
 
     if (lastVisible && pageIndex > 0) {
@@ -98,6 +92,32 @@ export class UsersService {
         console.error('Помилка отримання користувачів: ', error);
         return { clients: [], lastVisible: null };
       });
+  }
+
+  private buildQueryConstraints(
+    userRole: USER_ROLES_ENUM,
+    coachId: string,
+    filters?: UsersFiltersInterface | null,
+  ): QueryConstraint[] {
+    const constraints: QueryConstraint[] = [];
+
+    if (userRole === USER_ROLES_ENUM.TRAINER) {
+      constraints.push(where('coachId', '==', coachId));
+    } else if (filters?.coachId) {
+      constraints.push(where('coachId', '==', filters.coachId));
+    }
+
+    if (filters?.status) {
+      constraints.push(where('status', '==', filters.status));
+    } else {
+      constraints.push(where('status', 'in', this.activeStatuses));
+    }
+
+    if (filters?.trainingType) {
+      constraints.push(where('trainingType', '==', filters.trainingType));
+    }
+
+    return constraints;
   }
 
   getUpdates(offset: number): Observable<any> {

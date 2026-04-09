@@ -1,0 +1,54 @@
+<div class="users-filters" [formGroup]="form">
+
+  <!-- Пошук -->
+  <hs-form-field class="users-filters__field users-filters__field--search">
+    <hs-label>Пошук</hs-label>
+    <input iqInput formControlName="search" placeholder="Ім'я або прізвище..." />
+  </hs-form-field>
+
+  <!-- Статус -->
+  <hs-form-field class="users-filters__field">
+    <hs-label>Статус</hs-label>
+    <hs-select formControlName="status" [dropdownMinWidth]="160">
+      <hs-select-option value="">Всі статуси</hs-select-option>
+      <hs-select-option [value]="userStatusEnum.ACTIVE">Активний</hs-select-option>
+      <hs-select-option [value]="userStatusEnum.NEW">Новий</hs-select-option>
+      <hs-select-option [value]="userStatusEnum.BLOCKED">Заблокований</hs-select-option>
+      <hs-select-option [value]="userStatusEnum.DELAY_START">Відкладений старт</hs-select-option>
+    </hs-select>
+  </hs-form-field>
+
+  <!-- Тип тренувань -->
+  <hs-form-field class="users-filters__field">
+    <hs-label>Тип тренувань</hs-label>
+    <hs-select formControlName="trainingType" [dropdownMinWidth]="160">
+      <hs-select-option value="">Всі типи</hs-select-option>
+      <hs-select-option [value]="trainingTypeEnum.GYM">Зал</hs-select-option>
+      <hs-select-option [value]="trainingTypeEnum.HOME">Дома</hs-select-option>
+    </hs-select>
+  </hs-form-field>
+
+  <!-- Тренер (тільки для SUPER_ADMIN і MANAGER) -->
+  <hs-form-field
+    class="users-filters__field"
+    *ngIf="currentUser?.role !== userRoleEnum.TRAINER && coaches.length">
+    <hs-label>Тренер</hs-label>
+    <hs-select formControlName="coachId" [dropdownMinWidth]="180" [enableSearch]="true">
+      <hs-select-option value="">Всі тренери</hs-select-option>
+      <hs-select-option *ngFor="let coach of coaches" [value]="coach.id">
+        {{ coach.name }}
+      </hs-select-option>
+    </hs-select>
+  </hs-form-field>
+
+  <!-- Скидання фільтрів -->
+  <button
+    class="users-filters__reset-btn"
+    *ngIf="hasActiveFilters"
+    (click)="onReset()"
+    type="button">
+    <i class="hs-icon icon-close fs-14"></i>
+    Скинути
+  </button>
+
+</div>

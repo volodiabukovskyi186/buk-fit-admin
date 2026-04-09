@@ -1,81 +1,72 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Firestore, collection, query, where, orderBy, limit, startAfter, getDocs, DocumentSnapshot } from '@angular/fire/firestore';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import {TableGridDataTypeEnum} from '../../../core/components/table-grid';
-import {USER_ROLES_ENUM} from '../../../core/enums/users-roles.enum';
+import { DocumentSnapshot } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
+import { TableGridDataTypeEnum } from '../../../core/components/table-grid';
+import { UserInterface } from '../../../core/interfaces/user.interface';
+import { VTCoachesService } from '../../../core/services/coaches/coaches.service';
 
 @Component({
   selector: 'app-coach',
   templateUrl: './coaches.component.html',
   styleUrls: ['./coaches.component.scss'],
 })
-export class CoachesComponent implements OnInit {
-  tableGridDataTypeEnum = TableGridDataTypeEnum;
-  @ViewChild(MatPaginator) paginator: MatPaginator; // Додаємо пагінатор
+export class CoachesComponent implements OnInit, OnDestroy {
 
-  users = [];
-  totalUsersCount = 0;
-  pageSize = 10; // Початковий розмір сторінки
-  lastVisible: DocumentSnapshot | null = null; // Для пагінації
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  tableGridDataTypeEnum = TableGridDataTypeEnum;
+
+  coaches: UserInterface[] = [];
+  totalCoachesCount = 0;
+  pageSize = 10;
+
+  private lastVisible: DocumentSnapshot | null = null;
+  private subscription = new Subscription();
 
   constructor(
-    private dialog: MatDialog,
-    private firestore: Firestore,
-    private router: Router
-  ) { }
+    private router: Router,
+    private coachesService: VTCoachesService
+  ) {}
 
   ngOnInit(): void {
-    this.getTotalUsersCount();
-    this.getUsers();
+    this.loadTotalCount();
+    this.loadCoaches();
   }
 
-
-  getTotalUsersCount() {
-    const clientsCollection = collection(this.firestore, 'admins');
-    const q = query(clientsCollection, where('role', '==', USER_ROLES_ENUM.TRAINER));
-
-    getDocs(q).then(snapshot => {
-      this.totalUsersCount = snapshot.size;
-    }).catch(error => console.error("Помилка отримання кількості користувачів: ", error));
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  getUsers(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
-    this.pageSize = newPageSize; // ✅ Оновлюємо `pageSize`
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
 
-    let clientsCollection = collection(this.firestore, 'admins');
-    let q = query(
-      clientsCollection,
-      orderBy('createdAt', 'desc'),
-      limit(this.pageSize),
-      where('role', '==', USER_ROLES_ENUM.TRAINER)
-    );
-
-    if (this.lastVisible && pageIndex > 0) {
-      q = query(q, startAfter(this.lastVisible)); // Завантажуємо наступну сторінку
-    } else {
-      this.lastVisible = null; // ✅ Скидаємо `lastVisible`, якщо змінюється `pageSize`
+    if (event.pageIndex === 0) {
+      this.lastVisible = null;
     }
 
-    getDocs(q).then(snapshot => {
-      if (!snapshot.empty) {
-        this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-
-        this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log(999, this.users)
-      }
-    }).catch(error => console.error("Помилка отримання користувачів: ", error));
+    this.loadCoaches(event.pageIndex);
   }
 
-  onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
-
-    // ✅ Передаємо новий `pageSize`, якщо він змінюється
-    this.getUsers(event.pageIndex, event.pageSize);
+  moveToCoach(id: string): void {
+    this.router.navigate(['/coaches/coach/', id]);
   }
 
-  moveToMessage(id): void {
-    this.router.navigate([`/coaches/coach/`, id]);
+  private loadTotalCount(): void {
+    const count$ = this.coachesService.getTrainersCount().subscribe(count => {
+      this.totalCoachesCount = count;
+    });
+    this.subscription.add(count$);
+  }
+
+  private loadCoaches(pageIndex: number = 0): void {
+    const cursor = pageIndex > 0 ? this.lastVisible : null;
+
+    const coaches$ = this.coachesService.getTrainersPaginated(this.pageSize, cursor).subscribe(result => {
+      this.coaches = result.coaches;
+      this.lastVisible = result.lastVisible;
+    });
+    this.subscription.add(coaches$);
   }
 }

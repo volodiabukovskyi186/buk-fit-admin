@@ -1,0 +1,39 @@
+.users-filters {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0 16px;
+
+  &__field {
+    min-width: 160px;
+
+    &--search {
+      min-width: 220px;
+    }
+  }
+
+  &__reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 14px;
+    height: 36px;
+    border: 1px solid var(--hs-color-error, #e74c3c);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--hs-color-error, #e74c3c);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+    align-self: flex-end;
+    margin-bottom: 2px;
+
+    &:hover {
+      background: var(--hs-color-error, #e74c3c);
+      color: #fff;
+    }
+  }
+}

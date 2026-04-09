@@ -1,11 +1,16 @@
 <div class="h-100 w-100 p-12 flex flex-column" style="display: flex; flex-direction: column;">
-  <div class="flex  justify-content-between">
+  <div class="flex justify-content-between align-items-center">
     <h2 class="fc-primary">Користувачів: {{ totalUsersCount }}</h2>
   </div>
 
+<!--  <app-users-filters-->
+<!--    [currentUser]="user"-->
+<!--    (filtersChange)="onFiltersChange($event)">-->
+<!--  </app-users-filters>-->
+
   <div class="w-100 h-100 table-wrapper">
-    <hs-table-grid *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
-                   [allowMultiplySorting]="false" [data]="users" (clickOnRow)="moveToMessage($event.id)">
+    <hs-table-grid *ngIf="filteredUsers.length" [dataType]="tableGridDataTypeEnum.API"
+                   [allowMultiplySorting]="false" [data]="filteredUsers" (clickOnRow)="moveToMessage($event.id)">
 
       <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
 

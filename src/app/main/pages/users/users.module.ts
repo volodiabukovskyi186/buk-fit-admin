@@ -39,6 +39,7 @@ import {UserSurveyComponent} from "./pages/user-detail/components/user-info/feat
 import {IQMenuModule} from "../../../core/components/menu";
 import {UserPaymentComponent} from "./pages/user-detail/components/user-payment/user-payment.component";
 import {UserBodyMetricsComponent} from './pages/user-detail/components/user-body-metrics/user-body-metrics.component';
+import {UsersFiltersComponent} from './components/users-filters/users-filters.component';
 
 
 
@@ -51,7 +52,8 @@ import {UserBodyMetricsComponent} from './pages/user-detail/components/user-body
     UserMealsComponent,
     UserCaloriesComponent,
     UserInfoComponent,
-    UserMealsTextComponent
+    UserMealsTextComponent,
+    UsersFiltersComponent,
   ],
   imports: [
     MatNativeDateModule,

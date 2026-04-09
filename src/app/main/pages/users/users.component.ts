@@ -11,6 +11,7 @@ import {PAYMENT_DATE_ENUM} from '../../../core/enums/payment-date/payment-date.e
 import {BKCheckPaymentDateService} from '../../../core/services/date/check-payment-date.service';
 import {UsersService} from './users.service';
 import {Timestamp} from '@angular/fire/firestore';
+import {UsersFiltersInterface} from './interfaces/users-filters.interface';
 
 @Component({
   selector: 'app-users',
@@ -21,14 +22,16 @@ export class UsersComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   users: EnrichedClientInterface[] = [];
+  filteredUsers: EnrichedClientInterface[] = [];
   totalUsersCount = 0;
-  pageSize = 10;
+  pageSize = 20;
   user: UserInterface;
 
   readonly tableGridDataTypeEnum = TableGridDataTypeEnum;
   readonly paymentDateEnum = PAYMENT_DATE_ENUM;
   readonly userRoleEnum = USER_ROLES_ENUM;
 
+  private activeFilters: UsersFiltersInterface | null = null;
   private lastVisible: DocumentSnapshot | null = null;
   private subscription: Subscription = new Subscription();
 
@@ -50,6 +53,18 @@ export class UsersComponent implements OnInit, OnDestroy {
   onPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.loadUsers(event.pageIndex, event.pageSize);
+  }
+
+  onFiltersChange(filters: UsersFiltersInterface): void {
+    this.activeFilters = filters;
+    this.lastVisible = null;
+
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+
+    this.loadTotalCount();
+    this.loadUsers(0, this.pageSize);
   }
 
   moveToMessage(id: string): void {
@@ -88,7 +103,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private loadTotalCount(): void {
     this.usersService
-      .getClientsCount(this.user.role, this.user.id)
+      .getClientsCount(this.user.role, this.user.id, this.activeFilters)
       .then(count => {
         this.totalUsersCount = count;
       });
@@ -102,11 +117,27 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     this.usersService
-      .getClientsPage(this.user.role, this.user.id, this.pageSize, pageIndex, this.lastVisible)
+      .getClientsPage(this.user.role, this.user.id, this.pageSize, pageIndex, this.lastVisible, this.activeFilters)
       .then(({ clients, lastVisible }) => {
         this.lastVisible = lastVisible;
         this.users = clients.map(user => this.enrichUserData(user));
+        this.applySearchFilter();
       });
+  }
+
+  private applySearchFilter(): void {
+    const search = this.activeFilters?.search?.toLowerCase();
+
+    if (!search) {
+      this.filteredUsers = this.users;
+      return;
+    }
+
+    this.filteredUsers = this.users.filter(user => {
+      const name = (user.name ?? '').toLowerCase();
+      const secondName = (user.secondName ?? '').toLowerCase();
+      return name.includes(search) || secondName.includes(search);
+    });
   }
 
   private enrichUserData(user: ClientInterface): EnrichedClientInterface {

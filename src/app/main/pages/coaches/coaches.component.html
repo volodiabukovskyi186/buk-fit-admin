@@ -1,80 +1,67 @@
 <div class="h-100 w-100 p-12 container">
-  <div class="flex  justify-content-between">
-    <h2 class="fc-primary">Користувачів: {{ totalUsersCount }}</h2>
+  <div class="flex justify-content-between">
+    <h2 class="fc-primary">Користувачів: {{ totalCoachesCount }}</h2>
   </div>
 
-  <div class="w-100 " style="overflow: scroll; max-height: 100%; height: 100%;">
-    <hs-table-grid style=" height: 100% !important;" *ngIf="users.length" [dataType]="tableGridDataTypeEnum.API"
-                   [allowMultiplySorting]="false" [data]="users" (clickOnRow)="moveToMessage($event.id)">
+  <div class="w-100" style="overflow: scroll; max-height: 100%; height: 100%;">
+    <hs-table-grid
+      style="height: 100% !important;"
+      *ngIf="coaches.length"
+      [dataType]="tableGridDataTypeEnum.API"
+      [allowMultiplySorting]="false"
+      [data]="coaches"
+      (clickOnRow)="moveToCoach($event.id)"
+    >
 
       <div hsTableColumn caption="ID" width="70px" fieldName="id" [allowResize]="true"></div>
 
       <div hsTableColumn fieldName="status" caption="Статус" width="120px" [cellTemplate]="statusTmpl" [allowResize]="true">
         <ng-template #statusTmpl let-data="cellData">
-          <hs-status [statusType]="data?.status"></hs-status>
+          <hs-status [type]="data?.status"></hs-status>
         </ng-template>
       </div>
 
-
-      <div hsTableColumn fieldName="img" caption="Імя" width="120px" [cellTemplate]="idNumberTmpl" [allowResize]="true">
-        <ng-template #idNumberTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.name }}
-          </div>
+      <div hsTableColumn fieldName="name" caption="Імʼя" width="120px" [cellTemplate]="nameTmpl" [allowResize]="true">
+        <ng-template #nameTmpl let-data="cellData">
+          <div class="m-2">{{ data?.name }}</div>
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="img" caption="Відкритий до клієнтів" width="120px" [cellTemplate]="openToClientsTmpl" [allowResize]="true">
+      <div hsTableColumn fieldName="openToClients" caption="Відкритий до клієнтів" width="160px" [cellTemplate]="openToClientsTmpl" [allowResize]="true">
         <ng-template #openToClientsTmpl let-data="cellData">
           <div class="m-2 flex justify-content-center">
             <span class="fc-success" *ngIf="data?.openToClients">YES</span>
-            <span  class="fc-error"  *ngIf="!data?.openToClients">NO</span>
+            <span class="fc-error" *ngIf="!data?.openToClients">NO</span>
           </div>
         </ng-template>
       </div>
 
-
-      <div hsTableColumn fieldName="img" caption="Прізвище" width="120px" [cellTemplate]="idNumberChatTmpl"
-           [allowResize]="true">
-        <ng-template #idNumberChatTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.secondName }}
-          </div>
+      <div hsTableColumn fieldName="secondName" caption="Прізвище" width="120px" [cellTemplate]="secondNameTmpl" [allowResize]="true">
+        <ng-template #secondNameTmpl let-data="cellData">
+          <div class="m-2">{{ data?.secondName }}</div>
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="img" caption="E-mail" width="120px" [cellTemplate]="emailChatTmpl"
-           [allowResize]="true">
-        <ng-template #emailChatTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.email }}
-          </div>
+      <div hsTableColumn fieldName="email" caption="E-mail" width="120px" [cellTemplate]="emailTmpl" [allowResize]="true">
+        <ng-template #emailTmpl let-data="cellData">
+          <div class="m-2">{{ data?.email }}</div>
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="img" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl"
-           [allowResize]="true">
+      <div hsTableColumn fieldName="createdAt" caption="Дата створення" width="120px" [cellTemplate]="createdTmpl" [allowResize]="true">
         <ng-template #createdTmpl let-data="cellData">
-          <div class="m-2">
-            {{ data?.createdAt.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}
-          </div>
+          <div class="m-2">{{ data?.createdAt?.seconds * 1000 | date: 'dd.MM.yyyy HH:mm' }}</div>
         </ng-template>
       </div>
 
     </hs-table-grid>
-
-
   </div>
+
   <mat-paginator
-    [length]="totalUsersCount"
+    [length]="totalCoachesCount"
     [pageSize]="pageSize"
     [pageSizeOptions]="[5, 10, 20]"
     (page)="onPageChange($event)"
   >
   </mat-paginator>
-
 </div>
-
-
-
-
