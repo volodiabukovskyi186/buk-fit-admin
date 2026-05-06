@@ -46,7 +46,6 @@ export class MenuListComponent implements OnInit, OnDestroy {
 
   getUserLocal(): void {
     // const user = JSON.parse(localStorage.getItem('admin'))
-    // console.log('user', user);
 
     // this.role = user.role;
   }

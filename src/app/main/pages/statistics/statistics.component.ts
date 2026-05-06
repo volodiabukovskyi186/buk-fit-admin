@@ -91,7 +91,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
     const coaches$ = this.vtCoachesService.getCoaches().subscribe((coaches: any[]) => {
       if (coaches?.length) this.coaches = coaches;
-      console.log('coaches--', coaches)
     });
     this.subscription.add(coaches$);
 

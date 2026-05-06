@@ -132,7 +132,6 @@ export class TableGridComponent<T> implements AfterViewInit, OnDestroy {
         }
       });
     } else {
-      console.log('tableColumn', currentColumn);
       sortingColumns.push({
         prop: currentColumn.fieldName,
         dir: currentColumn.sortDirection

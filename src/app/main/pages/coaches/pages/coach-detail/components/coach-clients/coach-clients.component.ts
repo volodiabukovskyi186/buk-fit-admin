@@ -102,7 +102,6 @@ export class CoachClientsComponent  implements OnInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
 
     // ✅ Передаємо новий `pageSize`, якщо він змінюється
     this.getUsers(event.pageIndex, event.pageSize);

@@ -61,7 +61,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideStorage(() => {
       const storage = getStorage();
-      console.log('✅ Firebase Storage отримано:', storage);
       return storage;
     }),
     provideFirestore(() => {

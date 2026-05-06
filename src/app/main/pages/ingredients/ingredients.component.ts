@@ -45,7 +45,6 @@ export class IngredientsComponent {
     collectionData(productsCollection, { idField: 'id' }).subscribe(
       (data: any) => {
         this.users = data;
-        console.log(' this.users ', this.users);
       },
       error => console.error("Помилка отримання користувачів: ", error)
     );

@@ -92,6 +92,13 @@ export class MenuListService {
           role:[USER_ROLES_ENUM.SUPER_ADMIN, USER_ROLES_ENUM.MANAGER]
         },
         {
+          title: 'Утримання клієнтів',
+          icon: '',
+          isOpen: false,
+          url: 'retention',
+          role: [USER_ROLES_ENUM.SUPER_ADMIN, USER_ROLES_ENUM.MANAGER]
+        },
+        {
           title: 'Привітальне повідомлення',
           icon: '',
           isOpen: false,

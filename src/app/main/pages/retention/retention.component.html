@@ -1,0 +1,237 @@
+<div class="retention-page">
+
+  <!-- Header -->
+  <div class="retention-header">
+    <div class="retention-header__bg-dots"></div>
+    <div class="retention-header__bg-circle"></div>
+
+    <div class="retention-header__top">
+      <div class="retention-header__icon-wrap">
+        <i class="hs-icon icon-arrow-up fs-20"></i>
+      </div>
+      <div class="retention-header__texts">
+        <div class="retention-header__title">Утримання клієнтів</div>
+        <div class="retention-header__subtitle">Retention &amp; Churn аналіз за обраний період</div>
+      </div>
+    </div>
+
+    <div class="retention-filter-wrap">
+      <!-- Quick filters -->
+      <div class="retention-quick-filters">
+        <button
+          class="retention-quick-btn"
+          [class.retention-quick-btn--active]="activeQuickFilter === '3m'"
+          (click)="setQuickFilter('3m')">
+          3 місяці
+        </button>
+        <button
+          class="retention-quick-btn"
+          [class.retention-quick-btn--active]="activeQuickFilter === '6m'"
+          (click)="setQuickFilter('6m')">
+          6 місяців
+        </button>
+        <button
+          class="retention-quick-btn"
+          [class.retention-quick-btn--active]="activeQuickFilter === '1y'"
+          (click)="setQuickFilter('1y')">
+          Рік
+        </button>
+      </div>
+
+      <!-- Filter -->
+      <div class="retention-filter" [formGroup]="formGroup">
+        <hs-form-field>
+          <hs-label>З</hs-label>
+          <div class="flex">
+            <input formControlName="fromDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerFrom" readonly/>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+            <hs-icon-button (click)="pickerFrom.open()">
+              <i class="hs-icon icon-calendar fs-24"></i>
+            </hs-icon-button>
+          </div>
+        </hs-form-field>
+
+        <hs-form-field>
+          <hs-label>По</hs-label>
+          <div class="flex">
+            <input formControlName="toDate" [placeholder]="'DD.MM.YYYY'" iqInput [matDatepicker]="pickerTo" readonly/>
+            <mat-datepicker #pickerTo></mat-datepicker>
+            <hs-icon-button (click)="pickerTo.open()">
+              <i class="hs-icon icon-calendar fs-24"></i>
+            </hs-icon-button>
+          </div>
+        </hs-form-field>
+
+        <hs-form-field *ngIf="coaches.length && showCoachFilter" style="width: 200px">
+          <hs-label>Тренер</hs-label>
+          <hs-select formControlName="coachId" [dropdownMinWidth]="180" (selectionChange)="applyFilters()">
+            <hs-select-option value="">Всі</hs-select-option>
+            <hs-select-option *ngFor="let coach of coaches" [value]="coach.id">{{ coach.name }}</hs-select-option>
+          </hs-select>
+        </hs-form-field>
+
+        <button class="retention-filter__btn" (click)="loadData()" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Показати</span>
+          <span *ngIf="isLoading" class="retention-filter__loading">
+            <span class="spinner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="retention-content" *ngIf="hasData">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-card--blue">
+        <div class="kpi-card__icon"><i class="hs-icon icon-arrow-up fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ renewalRate }}%</div>
+          <div class="kpi-card__label">Renewal Rate</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--green">
+        <div class="kpi-card__icon"><i class="hs-icon icon-wallet fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ renewalCount }}</div>
+          <div class="kpi-card__label">Продовження</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--orange">
+        <div class="kpi-card__icon"><i class="hs-icon icon-person fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ newCount }}</div>
+          <div class="kpi-card__label">Нові клієнти</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+
+      <div class="kpi-card kpi-card--purple">
+        <div class="kpi-card__icon"><i class="hs-icon icon-person fs-22"></i></div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ uniqueClients }}</div>
+          <div class="kpi-card__label">Унікальних клієнтів</div>
+        </div>
+        <div class="kpi-card__accent"></div>
+      </div>
+    </div>
+
+    <!-- Line Chart -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <span class="chart-card__title">Динаміка Renewal Rate</span>
+        <div class="chart-legend">
+          <span class="legend-dot legend-dot--blue"></span><span>Renewal Rate %</span>
+        </div>
+      </div>
+      <div class="chart-card__body">
+        <canvas #retentionLineCanvas></canvas>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <span class="chart-card__title">Нові vs Продовження по місяцях</span>
+        <div class="chart-legend">
+          <span class="legend-dot legend-dot--blue"></span><span>Нові</span>
+          <span class="legend-dot legend-dot--green"></span><span>Продовження</span>
+        </div>
+      </div>
+      <div class="chart-card__body">
+        <canvas #retentionBarCanvas></canvas>
+      </div>
+    </div>
+
+    <!-- Coach Table -->
+    <div class="coach-table-card" *ngIf="showCoachTable && coachRows.length">
+      <div class="coach-table-card__header">
+        <span class="coach-table-card__title">Статистика по тренерах</span>
+        <span class="payments-count">{{ coachRows.length }} тренерів</span>
+      </div>
+
+      <!-- Desktop table -->
+      <div class="payments-table-wrapper desktop-only">
+        <table class="payments-table">
+          <thead>
+            <tr>
+              <th>Тренер</th>
+              <th>Нових</th>
+              <th>Продовжень</th>
+              <th>Renewal Rate</th>
+              <th>Загальна сума</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of coachRows" class="payments-table__row">
+              <td class="td-coach-name">{{ row.coachName }}</td>
+              <td>{{ row.newCount }}</td>
+              <td>{{ row.renewalCount }}</td>
+              <td>
+                <span
+                  class="rate-badge"
+                  [class.rate-badge--high]="row.renewalRate >= 60"
+                  [class.rate-badge--mid]="row.renewalRate >= 30 && row.renewalRate < 60"
+                  [class.rate-badge--low]="row.renewalRate < 30">
+                  {{ row.renewalRate }}%
+                </span>
+              </td>
+              <td class="td-price">{{ row.totalRevenue | number }} ₴</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile cards -->
+      <div class="mobile-only payment-cards-list">
+        <div class="payment-mobile-card" *ngFor="let row of coachRows">
+          <div class="pmc-top">
+            <div class="pmc-top__left">
+              <span class="td-coach-name">{{ row.coachName }}</span>
+            </div>
+            <div class="pmc-top__price">{{ row.totalRevenue | number }} ₴</div>
+          </div>
+          <div class="pmc-rows">
+            <div class="pmc-row">
+              <span class="pmc-row__label">Нових</span>
+              <span class="pmc-row__value">{{ row.newCount }}</span>
+            </div>
+            <div class="pmc-row">
+              <span class="pmc-row__label">Продовжень</span>
+              <span class="pmc-row__value">{{ row.renewalCount }}</span>
+            </div>
+            <div class="pmc-row">
+              <span class="pmc-row__label">Renewal Rate</span>
+              <span class="pmc-row__value">
+                <span
+                  class="rate-badge"
+                  [class.rate-badge--high]="row.renewalRate >= 60"
+                  [class.rate-badge--mid]="row.renewalRate >= 30 && row.renewalRate < 60"
+                  [class.rate-badge--low]="row.renewalRate < 30">
+                  {{ row.renewalRate }}%
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Empty state -->
+  <div class="retention-empty" *ngIf="!hasData && !isLoading">
+    <div class="retention-empty__icon">
+      <i class="hs-icon icon-arrow-up fs-40"></i>
+    </div>
+    <div class="retention-empty__title">Оберіть період та натисніть "Показати"</div>
+    <div class="retention-empty__sub">Аналіз утримання клієнтів за обраний діапазон дат з'явиться тут</div>
+  </div>
+
+</div>

@@ -75,11 +75,9 @@ export class BotMessagesComponent implements OnInit {
 
 
   getMessages() {
-    console.log(64353);
 
     this.http.get(`https://api.telegram.org/bot${this.botToken}/getUpdates`).subscribe(response => {
       // Обробіть відповідь, щоб витягнути повідомлення
-      console.log('222223,', response);
       // Припустимо, що ви хочете повернути лише текст повідомлень
 
     });
@@ -126,13 +124,11 @@ export class BotMessagesComponent implements OnInit {
     let payload: any = {}
 
 
-    console.log('payload.schedule_date', payload.schedule_date);
     let formData1
     const formData: FormData = new FormData();
 
 
     if (this.message?.medias?.length === 1) {
-      console.log(1111, this.message.medias[0].type);
 
       if (this.message.medias[0].type === 'video' || this.message.medias[0].type === 'video/mp4') {
         apiUrl = `https://api.telegram.org/bot${this.botToken}/sendVideo`;
@@ -192,7 +188,6 @@ export class BotMessagesComponent implements OnInit {
 
     this.http.post(apiUrl, formData).pipe(
       catchError((err) => {
-        console.log(111, err);
 
         this.snackBar.open(err.error?.description);
         this.isSending = false;
@@ -200,7 +195,6 @@ export class BotMessagesComponent implements OnInit {
       })
     ).subscribe((data: any) => {
       if (data) {
-        console.log(11231, data);
         this.isSending = false;
         this.snackBar.open('Повідомлення успішно надіслано')
       }

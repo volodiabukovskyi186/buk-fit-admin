@@ -39,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // private checkToken(): void {
   //   const token = localStorage.getItem('token');
-  //   console.log('token---->', token)
   // }
 
 

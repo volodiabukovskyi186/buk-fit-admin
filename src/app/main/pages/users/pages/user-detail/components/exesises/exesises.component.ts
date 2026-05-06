@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {collection, doc, Firestore, getDocs, query, setDoc, updateDoc, where} from '@angular/fire/firestore';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -85,6 +86,24 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     this.activeDay = Math.min(this.activeDay, this.days.length - 1);
   }
 
+  dropDay(event: CdkDragDrop<any[]>): void {
+    const from = event.previousIndex;
+    const to = event.currentIndex;
+    if (from === to) return;
+
+    const control = this.days.at(from);
+    this.days.removeAt(from);
+    this.days.insert(to, control);
+
+    if (this.activeDay === from) {
+      this.activeDay = to;
+    } else if (from < to && this.activeDay > from && this.activeDay <= to) {
+      this.activeDay--;
+    } else if (from > to && this.activeDay >= to && this.activeDay < from) {
+      this.activeDay++;
+    }
+  }
+
   addExercise(dayIndex: number) {
     const exerciseGroup = this.fb.group({
       exerciseName: ['', Validators.required],
@@ -110,10 +129,8 @@ export class ExesisesComponent implements OnInit, OnDestroy {
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) {
-        console.log('⚠️ Вправи не знайдено.');
       } else {
         const userData: any = snapshot.docs[0].data();
-        console.log('✅ Отримані вправи:', userData);
 
         this.days.clear();
         userData.days.forEach((day: any) => {
@@ -138,7 +155,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
           this.days.push(dayGroup);
         });
 
-        console.log('📌 Форма оновлена:', this.formGroup.value);
       }
     } catch (error) {
       console.error("❌ Помилка отримання вправ:", error);
@@ -157,7 +173,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
         days: this.formGroup.value.days
       };
 
-      console.log('📌 Оновлення користувача:', payload);
 
       const collectionRef = collection(this.firestore, 'exercises');
       const q = query(collectionRef, where('id', '==', this.user.id));
@@ -217,7 +232,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   }
 
   selectExesise(data: any, control) {
-    console.log('📌 Вибір вправи:', data, control);
     control.get('comment').setValue(data.comment);
     control.get('videoURL').setValue(data.videoURL);
     control.get('url').setValue(data?.url);
@@ -330,7 +344,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
     formData.append('chat_id', (chatId as any));
     this.usersService.sendMessage(apiUrl, formData).subscribe((response: any) => {
-      console.log('response', response);
       this.snackBar.open('Ви успішно надіслали повідомлення в бот про оновлення вправ', 'Закрити', {duration: 2000});
     })
   }

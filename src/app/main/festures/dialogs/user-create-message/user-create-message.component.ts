@@ -100,7 +100,6 @@ export class UserCreateMessageComponent implements OnInit {
     let payload: any = {}
 
 
-    console.log('payload.schedule_date', payload.schedule_date);
 
     const formData: FormData = new FormData();
 

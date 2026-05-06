@@ -147,7 +147,6 @@ export class UserCaloriesComponent implements OnInit {
   getCaloriesData(): void {
     this.firestore.collection('calories', ref => ref.where('id', '==', this.user.id)).get().subscribe(snapshot => {
       if (snapshot.empty) {
-        console.log('No matching documents.');
       } else {
         snapshot.forEach(doc => {
           const userData: any = doc.data();
@@ -190,7 +189,6 @@ export class UserCaloriesComponent implements OnInit {
               this.calculateNutrients(dayIndex, mealIndex);
             });
           });
-          console.log('Form after population:', this.formGroup.value);
         });
       }
     }, error => {
@@ -243,7 +241,6 @@ export class UserCaloriesComponent implements OnInit {
       .valueChanges()
       .subscribe((users: any[]) => {
         this.user = users[0];
-        console.log(' this.user', this.user);
         this.getCaloriesData();
       });
   }

@@ -74,7 +74,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
     ).subscribe((token: string) => {
 
-      console.log('Отримано токен:', token);
       localStorage.setItem(TOKEN_ENUM, token);
       this.router.navigate(['/users']);
     });

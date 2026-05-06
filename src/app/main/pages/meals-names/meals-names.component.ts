@@ -61,13 +61,11 @@ export class MealsNamesComponent implements OnInit {
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
         this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log('1111, this.users', this.users)
       }
     }).catch(error => console.error("Помилка отримання страв: ", error));
   }
 
   onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
 
     // ✅ Передаємо новий `pageSize`, якщо він змінюється
     this.getUsers(event.pageIndex, event.pageSize);

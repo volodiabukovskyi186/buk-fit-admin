@@ -185,14 +185,12 @@ export class UserPaymentsComponent implements OnInit {
     getDocs(q)
       .then(snapshot => {
         this.totalpaymentsCount = snapshot.size;
-        console.log('📊 Загальна кількість оплат:', this.totalpaymentsCount);
       })
       .catch(error => console.error("❌ Помилка отримання кількості оплат: ", error));
   }
 
   getpayments(pageIndex: number = 0, newPageSize: number = this.pageSize): void {
     this.pageSize = newPageSize; // ✅ Оновлюємо `pageSize`
-    console.log(11111,  this.id)
     const filters = [];
     filters.push(where('userId', '==', this.id));
 
@@ -294,14 +292,12 @@ export class UserPaymentsComponent implements OnInit {
     }));
 
     this.usersService.sendMessage(apiUrl, formData).subscribe(response => {
-      console.log('response', response);
       this.snackBar.open('Повідомлення про оплату надіслано успішно', 'Закрити', { duration: 2000 });
     });
   }
 
 
   onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
 
     // ✅ Передаємо новий `pageSize`, якщо він змінюється
     this.getpayments(event.pageIndex, event.pageSize);

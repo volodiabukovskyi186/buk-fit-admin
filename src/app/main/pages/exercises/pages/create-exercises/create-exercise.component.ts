@@ -66,7 +66,6 @@ export class CreateExerciseComponent implements OnInit {
         };
 
         await addDoc(collectionRef, payload);
-        console.log('ADDED===>', payload)
         // Пауза 1 секунда перед наступною вправою
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }

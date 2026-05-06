@@ -85,7 +85,6 @@ export class UserMealsTextComponent implements OnInit {
         snapshot.forEach(docSnap => {
           const userData: any = docSnap.data();
           this.formGroup.setValue(userData);
-          console.log('✅ Отримано дані про калорії:', userData);
         });
       }
     }).catch(error => console.error('❌ Помилка отримання даних про калорії:', error));

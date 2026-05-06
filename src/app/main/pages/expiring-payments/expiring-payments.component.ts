@@ -115,13 +115,11 @@ export class ExpiringPaymentsComponent implements OnInit, OnDestroy {
     }
 
     getDocs(q).then(snapshot => {
-      console.log('snapshot',  snapshot.docs)
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
         this.users = (snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any);
         this.users =  this.users.map((user: any) => {
           (user.paymentStatus as any) = this.bkCheckPaymentDateService.checkPaymentDate(user.endDate);
-          console.log('32', user)
           return user;
         });
 
@@ -132,7 +130,6 @@ export class ExpiringPaymentsComponent implements OnInit, OnDestroy {
 
 
   onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
 
     // ✅ Передаємо новий `pageSize`, якщо він змінюється
     this.getUsers(event.pageIndex, event.pageSize);

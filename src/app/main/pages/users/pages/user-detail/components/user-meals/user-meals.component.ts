@@ -79,7 +79,6 @@ export class UserMealsComponent implements OnInit {
       totalCarbohydrates
     });
 
-    console.log('Updated meal group:', meal.value); // Debugging
 
     // Manually trigger change detection
     this.cdr.detectChanges();
@@ -144,19 +143,15 @@ export class UserMealsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formGroup.value);
   }
 
   getmeals(): void {
     this.firestore.collection('meals', ref => ref.where('id', '==', this.user.id)).get().subscribe(snapshot => {
-      console.log('snapshot', snapshot);
 
       if (snapshot.empty) {
-        console.log('No matching documents.');
       } else {
         snapshot.forEach(doc => {
           const userData: any = doc.data();
-          console.log('Retrieved user data:', userData);
 
           // Clear existing days
           while (this.days.length) {
@@ -193,7 +188,6 @@ export class UserMealsComponent implements OnInit {
             this.days.push(dayGroup);
           });
 
-          console.log('Form after population:', this.formGroup.value);
         });
       }
     }, error => {
@@ -241,12 +235,10 @@ export class UserMealsComponent implements OnInit {
 
   private addMeals(): void {
     // from(this.data).pipe(delay(300)).subscribe((data: any) => {
-    //   console.log('111111', data);
 
     // })
     // this.data.forEach((meal) => {
     //   this.firestore.collection('products').add(meal);
-    //   console.log('meal', meal);
 
     // })
   }

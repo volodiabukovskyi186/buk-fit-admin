@@ -119,7 +119,6 @@ export class AuthService {
   register(email: string, password: string): Observable<string> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       tap((userCredential) => {
-        console.log('✅ Реєстрація успішна:', userCredential);
       }),
       map((userCredential) => userCredential.user?.uid || '')
     );
@@ -155,7 +154,6 @@ export class AuthService {
   private monitorAuthState() {
     onAuthStateChanged(this.auth, (user) => {
 
-      console.log(user ? `Користувач залогований: ${user.email}` : 'Користувач не залогований');
     });
   }
 }

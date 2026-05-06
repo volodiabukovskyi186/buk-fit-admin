@@ -138,7 +138,6 @@ export class UserPaymentCustomComponent implements OnInit {
       ...this.preparePayload(),
       createdAt: Timestamp.now(),
     }
-    console.log('payload----', payload)
     const clientsCollection = collection(this.firestore, 'users-payments');
     try {
       await setDoc(doc(clientsCollection), payload);

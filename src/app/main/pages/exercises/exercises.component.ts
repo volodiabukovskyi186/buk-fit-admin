@@ -63,13 +63,11 @@ export class ExercisesComponent implements OnInit {
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
         this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log('this.users---', this.users)
       }
     }).catch(error => console.error("Помилка отримання вправ: ", error));
   }
 
   onPageChange(event: PageEvent) {
-    console.log("📌 Зміна сторінки:", event);
 
     // ✅ Передаємо новий `pageSize`, якщо він змінюється
     this.getUsers(event.pageIndex, event.pageSize);

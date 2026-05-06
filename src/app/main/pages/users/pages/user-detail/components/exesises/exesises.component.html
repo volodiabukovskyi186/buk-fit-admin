@@ -26,12 +26,14 @@
   <!-- Таб-бар днів -->
   <div class="bk-days-tabs" *ngIf="days.length > 0">
     <div class="bk-days-tabs-row">
-      <div hsButtonToggleSwitcher [value]="activeDay" (change)="activeDay = $event">
-        <hs-tab-switcher *ngFor="let day of days.controls; let i = index" [value]="i">
+      <div hsButtonToggleSwitcher [value]="activeDay" (change)="activeDay = $event"
+           cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropDay($event)">
+        <hs-tab-switcher *ngFor="let day of days.controls; let i = index" [value]="i" cdkDrag cdkDragPreviewClass="bk-day-drag-preview">
           День {{ i + 1 }}
           <span class="bk-tab-count" *ngIf="day.get('exercises').controls.length > 0">
             {{ day.get('exercises').controls.length }}
           </span>
+          <div class="bk-day-drag-placeholder" *cdkDragPlaceholder></div>
         </hs-tab-switcher>
         <button class="bk-add-day-tab" (click)="addDay()" type="button">+</button>
         <div class="switcher-empty-space"></div>

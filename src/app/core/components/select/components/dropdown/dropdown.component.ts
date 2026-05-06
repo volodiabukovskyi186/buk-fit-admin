@@ -64,7 +64,6 @@ export class HSDropdownComponent implements OnDestroy {
     this.moveMoveEvent.emit(event);
   }
   test(): void{
-    console.log(12312313123123123)
   }
 
   show(): void {

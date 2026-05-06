@@ -10,8 +10,6 @@ export class HSUtcToLocalPipe implements PipeTransform {
 
     const parsedDateTime =  moment('07-18-2013 12:00', 'MM-DD-YYYY HH:mm')
  
-    console.log('value', moment(parsedDateTime).add(2, 'hours'));
-    // console.log('value', moment.utc(value).local().format(format));
     
     // Перевірка на валідну дату
     if (!moment(value).isValid()) {

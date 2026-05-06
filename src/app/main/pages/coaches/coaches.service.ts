@@ -20,7 +20,6 @@ export class CoachesService {
 
 
   getUpdates(offset):Observable<any> {
-    console.log('offset',offset);
 
     return this.http.get(`https://api.telegram.org/bot${this.botToken}/getUpdates?offset=${offset}`)
   }
@@ -29,7 +28,6 @@ export class CoachesService {
 
     return this.http.post(apiUrl, formData).pipe(
       catchError((err) => {
-        console.log('ERROR=====>', err);
 
         return of({ error: err })
       })

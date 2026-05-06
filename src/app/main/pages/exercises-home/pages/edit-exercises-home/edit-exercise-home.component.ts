@@ -76,7 +76,6 @@ export class EditExerciseHomeComponent implements OnInit {
 
   // ✅ Отримання вправи за ID
   getExerciseById(id: string): void {
-    console.log('id====1', id)
     const collectionRef = collection(this.firestore, 'exercise-names-home');
     const q = query(collectionRef, where('id', '==', id));
 
@@ -85,7 +84,6 @@ export class EditExerciseHomeComponent implements OnInit {
         this.exercise = snapshot.docs[0].data();
         this.formGroup.patchValue(this.exercise);
         this.initialCdnUrl = this.exercise?.url || null;
-        console.log('✅ Вправа:', this.exercise);
       }
     }).catch(error => console.error('❌ Помилка отримання вправи:', error));
   }

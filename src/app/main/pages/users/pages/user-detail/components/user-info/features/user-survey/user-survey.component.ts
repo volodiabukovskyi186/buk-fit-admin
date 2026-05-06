@@ -249,7 +249,6 @@ export class UserSurveyComponent implements OnInit, OnDestroy {
 
 
     this.usersService.sendMessage(apiUrl, formData).subscribe((response: any) => {
-      console.log('response', response);
       this.snackBar.open('Ви успішно надіслали повідомлення в бот про оновлення вправ', 'Закрити', {duration: 2000});
     })
   }

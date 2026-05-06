@@ -6,7 +6,12 @@
       "Bash(npx tsc:*)",
       "Bash(ng build:*)",
       "Bash(mkdir -p /Users/volodiabukovskyi/BUK/buk-fit-admin/src/app/main/pages/users/interfaces)",
-      "Bash(mkdir -p /Users/volodiabukovskyi/BUK/buk-fit-admin/src/app/main/pages/users/components/users-filters)"
+      "Bash(mkdir -p /Users/volodiabukovskyi/BUK/buk-fit-admin/src/app/main/pages/users/components/users-filters)",
+      "Bash(find:*)",
+      "Bash(cat)",
+      "Read(//tmp/**)",
+      "Skill(update-config)",
+      "Bash(npx ng *)"
     ]
   }
 }

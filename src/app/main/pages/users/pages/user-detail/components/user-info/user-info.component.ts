@@ -118,7 +118,6 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     const stream$ = this.authService.userState$.subscribe((user: UserInterface) => {
       this.admin = user;
       if (user.role === USER_ROLES_ENUM.TRAINER) {
-        console.log('ADMIN===', user)
         this.formGroup.get('coachId').disable();
       }
     });

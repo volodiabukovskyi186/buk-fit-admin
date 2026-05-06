@@ -84,7 +84,6 @@ export class EditExerciseComponent implements OnInit {
         this.exercise = snapshot.docs[0].data();
         this.formGroup.patchValue(this.exercise);
         this.initialCdnUrl = this.exercise?.url || null;
-        console.log('✅ Вправа:', this.exercise);
       }
     }).catch(error => console.error('❌ Помилка отримання вправи:', error));
   }

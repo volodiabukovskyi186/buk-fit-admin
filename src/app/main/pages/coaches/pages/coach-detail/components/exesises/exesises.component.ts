@@ -93,10 +93,8 @@ export class ExesisesComponent implements OnInit, OnDestroy {
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) {
-        console.log('⚠️ Вправи не знайдено.');
       } else {
         const userData:any = snapshot.docs[0].data();
-        console.log('✅ Отримані вправи:', userData);
 
         this.days.clear();
         userData.days.forEach((day: any) => {
@@ -120,7 +118,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
           this.days.push(dayGroup);
         });
 
-        console.log('📌 Форма оновлена:', this.formGroup.value);
       }
     } catch (error) {
       console.error("❌ Помилка отримання вправ:", error);
@@ -139,7 +136,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
         days: this.formGroup.value.days
       };
 
-      console.log('📌 Оновлення користувача:', payload);
 
       const collectionRef = collection(this.firestore, 'exercises');
       const q = query(collectionRef, where('id', '==', this.user.id));
@@ -180,7 +176,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   }
 
   selectExesise(data: any, control) {
-    console.log('📌 Вибір вправи:', data, control);
     control.get('comment').setValue(data.comment);
     control.get('videoURL').setValue(data.videoURL);
   }
@@ -202,7 +197,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
   private getExercisesState(): void {
     const stream$ = this.vtExercisesService.userExerciseListState$.subscribe((exercises: any[]) => {
-      console.log('1231231', exercises)
       if (exercises.length) {
        this.exersiceNames = [...exercises];
       }
@@ -229,7 +223,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   //     if (!snapshot.empty) {
   //       this.lastVisible = snapshot.docs[snapshot.docs.length - 1]; // Запам'ятовуємо останній елемент
   //       this.exersiceNames = [...this.exersiceNames, ...snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))];
-  //       console.log('✅ Довантажені вправи:', this.exersiceNames);
   //     }
   //   } catch (error) {
   //     console.error("❌ Помилка отримання вправ:", error);
@@ -240,7 +233,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
   // // Викликається при скролі вниз у списку
   // scrollEnd(): void {
-  //   console.log('📌 Користувач доскролив до кінця списку, догружаємо ще 10 вправ');
   //   this.getExerciseNames();
   // }
 
@@ -265,7 +257,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   //     const snapshot = await getDocs(q);
   //     this.exersiceNames = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   //
-  //     console.log('✅ Знайдені вправи:', this.exersiceNames);
   //   } catch (error) {
   //     console.error("❌ Помилка пошуку вправ:", error);
   //   }
