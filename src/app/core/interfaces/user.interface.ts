@@ -41,4 +41,6 @@ export interface ClientInterface {
 export interface EnrichedClientInterface extends ClientInterface {
   paymentStatus: PAYMENT_DATE_ENUM;
   programUpdateStatus: 'NORMAL' | 'WARNING' | 'DANGER';
+  daysLeft?: number;
+  daysTotal?: number;
 }

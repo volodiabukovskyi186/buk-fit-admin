@@ -34,6 +34,18 @@
         </ng-template>
       </div>
 
+      <div hsTableColumn fieldName="daysLeft" caption="Днів до оплати" width="130px" [cellTemplate]="daysLeftTmpl" [allowResize]="true">
+        <ng-template #daysLeftTmpl let-data="cellData">
+          <div class="bk-days-cell">
+            <div class="bk-days-row" [bkDaysMilestone]="data?.daysLeft">
+              <span *ngIf="data?.daysLeft != null" class="bk-days-value">{{ data.daysLeft }}</span>
+              <span *ngIf="data?.daysLeft == null" class="fc-secondary-grey-03">—</span>
+              <span *ngIf="data?.daysTotal != null" class="bk-days-total">{{ data.daysTotal }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
       <div hsTableColumn fieldName="name" caption="Імя" width="120px" [cellTemplate]="nameTmpl" [allowResize]="true">
         <ng-template #nameTmpl let-data="cellData">
           <div class="m-2">

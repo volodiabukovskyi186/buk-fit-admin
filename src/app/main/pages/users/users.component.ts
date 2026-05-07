@@ -145,6 +145,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       ...user,
       paymentStatus: this.bkCheckPaymentDateService.checkPaymentDate(user.payDate),
       programUpdateStatus: this.getProgramUpdateStatus(user.programUpdatedAt),
+      daysLeft: user.payDate?.seconds
+        ? Math.floor((user.payDate.seconds * 1000 - Date.now()) / (1000 * 60 * 60 * 24))
+        : undefined,
+      daysTotal: user.createdAt?.seconds
+        ? Math.floor((Date.now() - user.createdAt.seconds * 1000) / (1000 * 60 * 60 * 24))
+        : undefined,
     };
   }
 
