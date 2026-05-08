@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { JsonImportDialogComponent } from './dialogs/json-import-dialog/json-import-dialog.component';
 import { MealTypeEnum } from '../../enums/meal-type.enum';
 
@@ -36,6 +37,7 @@ export class EditMealsNameComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private clipboard: Clipboard,
   ) { }
 
   ngOnInit(): void {
@@ -166,6 +168,12 @@ export class EditMealsNameComponent implements OnInit {
     } catch (error) {
       console.error('Помилка видалення:', error);
     }
+  }
+
+  copyJson(): void {
+    const json = JSON.stringify(this.mealsArray.value, null, 2);
+    this.clipboard.copy(json);
+    this.snackBar.open('JSON скопійовано', 'Закрити', { duration: 2000 });
   }
 
   openJsonImportDialog(): void {
