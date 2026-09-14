@@ -168,7 +168,7 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
       const payload = {
         id: this.user.id,
-        days: this.formGroup.value.days
+        days: this.withoutUndefined(this.formGroup.value.days),
       };
 
 
@@ -230,8 +230,23 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   }
 
   selectExesise(data: any, control) {
-    control.get('comment').setValue(data.comment);
-    control.get('url').setValue(data?.url);
+    // у старих вправ каталогу поля url може не бути; Firestore не приймає undefined
+    control.get('comment').setValue(data?.comment ?? null);
+    control.get('url').setValue(data?.url ?? null);
+  }
+
+  /**
+   * Firestore відхиляє документ, якщо в ньому є undefined (а воно зʼявляється,
+   * коли у вправи каталогу немає якогось поля). Перетворюємо на null.
+   */
+  private withoutUndefined<T>(value: T): T {
+    if (Array.isArray(value)) return value.map(v => this.withoutUndefined(v)) as any;
+    if (value && typeof value === 'object') {
+      return Object.fromEntries(
+        Object.entries(value as any).map(([k, v]) => [k, v === undefined ? null : this.withoutUndefined(v)]),
+      ) as any;
+    }
+    return (value === undefined ? null : value) as any;
   }
 
   selectExesiseRestTime(data: any, control) {

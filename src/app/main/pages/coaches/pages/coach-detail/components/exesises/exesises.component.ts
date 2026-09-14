@@ -176,8 +176,9 @@ export class ExesisesComponent implements OnInit, OnDestroy {
   }
 
   selectExesise(data: any, control) {
-    control.get('comment').setValue(data.comment);
-    control.get('url').setValue(data?.url);
+    // у старих вправ каталогу поля url може не бути; Firestore не приймає undefined
+    control.get('comment').setValue(data?.comment ?? null);
+    control.get('url').setValue(data?.url ?? null);
   }
 
   async onSubmit(): Promise<void> {
