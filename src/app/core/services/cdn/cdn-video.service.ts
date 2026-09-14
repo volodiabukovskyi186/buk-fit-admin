@@ -6,9 +6,19 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CdnVideoService {
-  private readonly uploadBaseUrl = 'https://api.buk-fit.online';
-  private readonly cdnBaseUrl = 'https://cdn.buk-fit.online';
-  private readonly allowedHosts = ['cdn.buk-fit.online', 'api.buk-fit.online'];
+  /**
+   * Новий домен (buk-fit.com). Старий buk-fit.online спливає 23.09.2026.
+   * У allowedHosts лишені ОБИДВА домени: старі посилання на .online мають
+   * розпізнаватись і видалятись доти, доки всі URL у базі не переписані.
+   */
+  private readonly uploadBaseUrl = 'https://api.buk-fit.com';
+  private readonly cdnBaseUrl = 'https://cdn.buk-fit.com';
+  private readonly allowedHosts = [
+    'cdn.buk-fit.com',
+    'api.buk-fit.com',
+    'cdn.buk-fit.online',
+    'api.buk-fit.online',
+  ];
 
   constructor(private http: HttpClient) {}
 

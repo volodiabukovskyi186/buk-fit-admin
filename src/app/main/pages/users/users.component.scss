@@ -16,76 +16,109 @@
   display: none;
 }
 
-// ─── Days cell ────────────────────────────────────────────────────────────────
-::ng-deep .bk-days-cell {
+// ─── Прогрес 60-денного циклу ────────────────────────────────────────────────
+::ng-deep .bk-cycle {
   padding: 4px 8px;
+  min-width: 0;
+
+  --bk-cycle-color: #8a8a8a;
+  --bk-cycle-track: rgba(0, 0, 0, 0.07);
 }
 
-::ng-deep .bk-days-row {
+::ng-deep .bk-cycle__label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bk-cycle-color);
+  white-space: nowrap;
+}
+
+::ng-deep .bk-cycle__bar {
+  height: 4px;
+  margin: 4px 0 3px;
+  border-radius: 2px;
+  background: var(--bk-cycle-track);
+  overflow: hidden;
+}
+
+::ng-deep .bk-cycle__bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--bk-cycle-color);
+  transition: width 0.2s ease;
+}
+
+::ng-deep .bk-cycle__sub {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #8a8a8a;
+  white-space: nowrap;
+}
+
+// Йде робота — спокійний синій
+::ng-deep .bk-cycle--in_progress { --bk-cycle-color: #3fa1fb; }
+
+// Вікно продовження (≤10 днів) — помаранчевий, тут тренер дожимає
+::ng-deep .bk-cycle--renewal {
+  --bk-cycle-color: #ffa502;
+
+  .bk-cycle__sub { color: #d98200; font-weight: 600; }
+}
+
+// Фініш (≤3 днів) — червоний
+::ng-deep .bk-cycle--final {
+  --bk-cycle-color: #ff4757;
+
+  .bk-cycle__sub { color: #ff4757; font-weight: 600; }
+}
+
+// Прострочено
+::ng-deep .bk-cycle--overdue {
+  --bk-cycle-color: #ff4757;
+
+  .bk-cycle__label { color: #ff4757; }
+  .bk-cycle__sub { color: #ff4757; font-weight: 600; }
+}
+
+::ng-deep .bk-cycle--unknown {
+  --bk-cycle-color: #c4c4c4;
+}
+
+// ─── Остання активність у застосунку ─────────────────────────────────────────
+::ng-deep .bk-activity {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 3px 6px;
-  border-radius: 6px;
-  transition: background 0.15s ease;
-}
-
-::ng-deep .bk-days-value {
+  padding: 4px 8px;
+  font-size: 12px;
   font-weight: 600;
-  font-size: 13px;
-}
-
-::ng-deep .bk-days-total {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  height: 20px;
-  padding: 0 5px;
-  border-radius: 4px;
-  background: #f0f0f0;
-  color: #888;
-  font-size: 11px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-::ng-deep .bk-days-milestone-badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 6px;
-  border-radius: 4px;
   white-space: nowrap;
-  letter-spacing: 0.3px;
+
+  --bk-activity-color: #c4c4c4;
+
+  color: var(--bk-activity-color);
 }
 
-// При активному мілстоуні — ховаємо число (бейдж вже показує скільки днів)
-::ng-deep .bk-days-milestone-1,
-::ng-deep .bk-days-milestone-2,
-::ng-deep .bk-days-milestone-3 {
-  .bk-days-value { display: none; }
+::ng-deep .bk-activity__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bk-activity-color);
 }
 
-// 10 днів — синій
-::ng-deep .bk-days-milestone-1 {
-  background: rgba(63, 161, 251, 0.08);
+// Заходив сьогодні або вчора
+::ng-deep .bk-activity--active { --bk-activity-color: #27ae60; }
 
-  .bk-days-milestone-badge { background: #3fa1fb; color: #fff; }
-}
+// 2–4 дні тому
+::ng-deep .bk-activity--idle { --bk-activity-color: #ffa502; }
 
-// 6 днів — помаранчевий
-::ng-deep .bk-days-milestone-2 {
-  background: rgba(255, 165, 0, 0.1);
+// 5+ днів тому
+::ng-deep .bk-activity--lost { --bk-activity-color: #ff4757; }
 
-  .bk-days-milestone-badge { background: #ffa502; color: #fff; }
-}
+// Жодного входу
+::ng-deep .bk-activity--never {
+  --bk-activity-color: #c4c4c4;
 
-// 3 дні — червоний
-::ng-deep .bk-days-milestone-3 {
-  background: rgba(255, 71, 87, 0.08);
-
-  .bk-days-milestone-badge { background: #ff4757; color: #fff; }
+  font-weight: 500;
 }

@@ -18,6 +18,7 @@ import {HSInputModule} from '../../../../core/components/input';
 import {HSSelectModule} from '../../../../core/components/select/select.module';
 import {USER_PAYMENTS_TARIFF_ENUM} from '../../../../core/enums/user-payments-tariff.enum';
 import {PAYMENT_STATUS_ENUM} from '../../../../core/enums/payments-status.enum';
+import {calcPaymentEndDate, getTariffPrice} from '../../../../core/config/payment.config';
 
 @Component({
   selector: 'bk-edit-payment-dialog',
@@ -75,18 +76,14 @@ export class EditPaymentDialogComponent implements OnInit, OnDestroy {
     // skip(1) — ignore the first emission that hs-select triggers on init
     this.subs.add(
       this.formGroup.get('tariff')!.valueChanges.pipe(skip(1)).subscribe(tariff => {
-        const prices: Record<string, string> = {
-          [USER_PAYMENTS_TARIFF_ENUM.BASIC]:    '1920',
-          [USER_PAYMENTS_TARIFF_ENUM.STANDARD]: '2880',
-          [USER_PAYMENTS_TARIFF_ENUM.PREMIUM]:  '4800',
-        };
-        if (prices[tariff]) this.formGroup.get('price')?.setValue(prices[tariff]);
+        const price = getTariffPrice(tariff);
+        if (price !== null) this.formGroup.get('price')?.setValue(price);
       })
     );
 
     this.subs.add(
       this.formGroup.get('fromDate')!.valueChanges.pipe(skip(1)).subscribe(fromDate => {
-        if (fromDate) this.formGroup.get('toDate')?.setValue(moment(fromDate).add(1, 'month'));
+        if (fromDate) this.formGroup.get('toDate')?.setValue(calcPaymentEndDate(fromDate));
       })
     );
   }
