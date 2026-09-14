@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Firestore} from '@angular/fire/firestore'; // ✅ Замінено `AngularFirestore`
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {catchError, Subscription} from 'rxjs';
 import {AdminsService} from 'src/app/core/services/admins/admin.service';
 import {AuthService} from '../../core/services/auth/auth.service';
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private firestore: Firestore, // ✅ Використовуємо новий Firestore API
     private snackBar: MatSnackBar,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder
   ) {
@@ -75,7 +76,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     ).subscribe((token: string) => {
 
       localStorage.setItem(TOKEN_ENUM, token);
-      this.router.navigate(['/users']);
+
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      this.router.navigateByUrl(returnUrl || '/users');
     });
 
 
