@@ -34,14 +34,27 @@
         </ng-template>
       </div>
 
-      <div hsTableColumn fieldName="daysLeft" caption="Днів до оплати" width="130px" [cellTemplate]="daysLeftTmpl" [allowResize]="true">
-        <ng-template #daysLeftTmpl let-data="cellData">
-          <div class="bk-days-cell">
-            <div class="bk-days-row" [bkDaysMilestone]="data?.daysLeft">
-              <span *ngIf="data?.daysLeft != null" class="bk-days-value">{{ data.daysLeft }}</span>
-              <span *ngIf="data?.daysLeft == null" class="fc-secondary-grey-03">—</span>
-              <span *ngIf="data?.daysTotal != null" class="bk-days-total">{{ data.daysTotal }}</span>
+      <div hsTableColumn fieldName="cycle" caption="Прогрес циклу" width="180px" [cellTemplate]="cycleTmpl" [allowResize]="true">
+        <ng-template #cycleTmpl let-data="cellData">
+          <div class="bk-cycle"
+               [ngClass]="'bk-cycle--' + (data?.cycle?.state | lowercase)"
+               [title]="data?.daysTotal != null ? 'У сервісі ' + data.daysTotal + ' дн.' : ''">
+            <div class="bk-cycle__label">{{ data?.cycle?.label }}</div>
+            <div class="bk-cycle__bar">
+              <div class="bk-cycle__bar-fill" [style.width.%]="data?.cycle?.progressPercent"></div>
             </div>
+            <div class="bk-cycle__sub">{{ data?.cycle?.sublabel }}</div>
+          </div>
+        </ng-template>
+      </div>
+
+      <div hsTableColumn fieldName="lastSeenAt" caption="Остання активність" width="150px" [cellTemplate]="activityTmpl" [allowResize]="true">
+        <ng-template #activityTmpl let-data="cellData">
+          <div class="bk-activity"
+               [ngClass]="'bk-activity--' + (data?.activity?.state | lowercase)"
+               [title]="data?.activity?.title">
+            <span class="bk-activity__dot"></span>
+            <span class="bk-activity__label">{{ data?.activity?.label }}</span>
           </div>
         </ng-template>
       </div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { BkDaysMilestoneDirective } from './directives/days-milestone.directive';
 import {HSTabSwitcherModule} from "src/app/core/components/tab-switcher/tab-switcher.module";
 import { UsersComponent } from './users.component';
 import { UsersRoutingModule } from './users-routing.module';
@@ -47,7 +46,6 @@ import {UsersFiltersComponent} from './components/users-filters/users-filters.co
 
 @NgModule({
   declarations: [
-    BkDaysMilestoneDirective,
     UsersComponent,
     UserDetailComponent,
     CreateUserComponent,

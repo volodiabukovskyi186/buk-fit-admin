@@ -12,6 +12,8 @@ import {BKCheckPaymentDateService} from '../../../core/services/date/check-payme
 import {UsersService} from './users.service';
 import {Timestamp} from '@angular/fire/firestore';
 import {UsersFiltersInterface} from './interfaces/users-filters.interface';
+import {getCycleProgress} from '../../../core/config/payment.config';
+import {getClientActivity} from '../../../core/config/activity.config';
 
 @Component({
   selector: 'app-users',
@@ -121,6 +123,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       .then(({ clients, lastVisible }) => {
         this.lastVisible = lastVisible;
         this.users = clients.map(user => this.enrichUserData(user));
+        console.log('this.users--->', this.users)
         this.applySearchFilter();
       });
   }
@@ -145,9 +148,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       ...user,
       paymentStatus: this.bkCheckPaymentDateService.checkPaymentDate(user.payDate),
       programUpdateStatus: this.getProgramUpdateStatus(user.programUpdatedAt),
-      daysLeft: user.payDate?.seconds
-        ? Math.floor((user.payDate.seconds * 1000 - Date.now()) / (1000 * 60 * 60 * 24))
-        : undefined,
+      cycle: getCycleProgress(user.payDate),
+      activity: getClientActivity(user.lastSeenAt),
       daysTotal: user.createdAt?.seconds
         ? Math.floor((Date.now() - user.createdAt.seconds * 1000) / (1000 * 60 * 60 * 24))
         : undefined,
