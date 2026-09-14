@@ -17,6 +17,10 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {CUSTOM_DATE_FORMATS} from '../../../../../../../../../app.config';
 import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 import {PAYMENT_STATUS_ENUM} from '../../../../../../../../../core/enums/payments-status.enum';
+import {
+  calcPaymentEndDate,
+  getTariffPrice
+} from '../../../../../../../../../core/config/payment.config';
 
 @Component({
   selector: 'bk-user-payment-template',
@@ -89,29 +93,17 @@ export class UserPaymentTemplateComponent implements OnInit {
 
   private setupFormSubscriptions(): void {
     this.formGroup.get('tariff')?.valueChanges.subscribe(tariff => {
-      const cost = this.getTariffCost(tariff);
-      this.formGroup.get('price')?.setValue(cost);
+      const cost = getTariffPrice(tariff);
+      if (cost !== null) {
+        this.formGroup.get('price')?.setValue(cost);
+      }
     });
 
     this.formGroup.get('fromDate')?.valueChanges.subscribe(fromDate => {
       if (fromDate) {
-        const toDate = moment(fromDate).add(1, 'month');
-        this.formGroup.get('toDate')?.setValue(toDate);
+        this.formGroup.get('toDate')?.setValue(calcPaymentEndDate(fromDate));
       }
     });
-  }
-
-  private getTariffCost(tariff: string): string {
-    switch (tariff) {
-      case USER_PAYMENTS_TARIFF_ENUM.BASIC:
-        return '6000';
-      case USER_PAYMENTS_TARIFF_ENUM.STANDARD:
-        return '8000';
-      case USER_PAYMENTS_TARIFF_ENUM.PREMIUM:
-        return '20000';
-      default:
-        return '';
-    }
   }
 
   private async loadData(): Promise<void> {
