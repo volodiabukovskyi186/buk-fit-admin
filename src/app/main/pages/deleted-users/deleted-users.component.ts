@@ -112,6 +112,7 @@ export class DeletedUsersComponent implements OnInit, OnDestroy {
       if (!snapshot.empty) {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
         this.users = (snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any);
+        console.log('this.users==1', this.users)
         this.users =  this.users.map((user: any) => {
           (user.paymentStatus as any) = this.bkCheckPaymentDateService.checkPaymentDate(user.payDate);
           return user;

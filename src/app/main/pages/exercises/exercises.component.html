@@ -38,14 +38,6 @@
           </div>
 
 
-          <div hsTableColumn fieldName="videoURL" caption="URL video"  width="150px" [cellTemplate]="videoURLTmpl" [allowResize]="true">
-            <ng-template #videoURLTmpl let-data="cellData">
-              <div class="m-2 bk-link" (click)="moveToTGExegesis(data?.videoURL); $event.stopPropagation();">
-                {{ data?.videoURL }}
-              </div>
-            </ng-template>
-          </div>
-
 <!--          <div hsTableColumn fieldName="videoURL" caption="Дата створеня"  width="150px" [cellTemplate]="creatAtTmpl" [allowResize]="true">-->
 <!--            <ng-template #creatAtTmpl let-data="cellData">-->
 <!--              <div class="m-2">-->

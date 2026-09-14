@@ -111,7 +111,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
       weight: ['', Validators.required],
       comment: ['', Validators.required],
       restTime: ['', Validators.required],
-      videoURL: ['', Validators.required],
       url: [''],
     });
 
@@ -145,7 +144,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
               weight: [exercise.weight, Validators.required],
               comment: [exercise.comment, Validators.required],
               restTime: [exercise.restTime, Validators.required],
-              videoURL: [exercise.videoURL, Validators.required],
               url: [exercise?.url  ? exercise?.url : null, Validators.required],
             });
 
@@ -233,7 +231,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
 
   selectExesise(data: any, control) {
     control.get('comment').setValue(data.comment);
-    control.get('videoURL').setValue(data.videoURL);
     control.get('url').setValue(data?.url);
   }
 
@@ -348,10 +345,6 @@ export class ExesisesComponent implements OnInit, OnDestroy {
     })
   }
 
-
-  moveToTG(videoURL: string) {
-    window.open(videoURL)
-  }
 
   private getExercises() {
       const gymExercise$ = this.vtExercisesService.getExerciseNames();

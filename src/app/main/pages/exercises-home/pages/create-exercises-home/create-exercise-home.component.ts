@@ -29,7 +29,6 @@ export class CreateExerciseHomeComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: this.fb.control(null),
       comment: this.fb.control(null),
-      videoURL: this.fb.control(null),
       url: this.fb.control(null),
     });
   }

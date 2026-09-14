@@ -46,7 +46,6 @@ export class EditMealsNameComponent implements OnInit {
       id: this.fb.control(null),
       name: this.fb.control(null),
       comment: this.fb.control(null),
-      videoURL: this.fb.control(null),
       meals: this.fb.array([]),
     });
 
